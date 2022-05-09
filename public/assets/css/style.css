@@ -1,0 +1,77 @@
+.img-logo{
+    max-width: 100px;
+}
+
+.img-preview{
+    margin-top:20px;
+    max-width: 200px;
+    max-height: 200px;
+}
+.lang_pl .custom-file-label::after{
+    content: "Przeglądaj..."
+}
+
+.lang_en .custom-file-label::after{
+    content: "Browse..."
+}
+.valueSpan{
+    width: 30px;
+    text-align: right;
+}
+
+input:checked+label.list-group-item{
+    background: #0062cc !important;
+    color: #fff;
+}
+
+.rounded-left-0{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.vote-box{
+    border:1px solid black;
+    width: 50px;
+    padding: 5px;
+    height: 30px;
+    font-size:14px;
+    text-align: center;
+    background: #eee;
+    align-content: center;
+    vertical-align: center;
+}
+.vote-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.vote_progress .vote-row{
+ width: 100%;
+}
+.vote_progress .progress{
+    width: 500px;
+    max-width: 95%;
+    height: 30px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-radius: 0;
+}
+
+.second-turn{
+    border:2px solid #28a745;
+}
+
+.h-60px{
+    height: 60px;
+}
+
+.votes-span{
+    padding:5px;
+}
+
+.course-box{
+    width:49px;
+    height:49px;
+    border-right: 1px solid white;
+}
