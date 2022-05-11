@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -57,6 +59,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      */
     private $userType;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $blocked=false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Code::class, mappedBy="user")
+     */
+    private $codes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Polling::class, mappedBy="user")
+     */
+    private $pollings;
+
+
+    public function __construct()
+    {
+        $this->codes = new ArrayCollection();
+        $this->ankiety = new ArrayCollection();
+        $this->pollings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -175,4 +200,77 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return self::TYPE_NAMES[$this->getUserType()];
     }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Code>
+     */
+    public function getCodes(): Collection
+    {
+        return $this->codes;
+    }
+
+    public function addCode(Code $code): self
+    {
+        if (!$this->codes->contains($code)) {
+            $this->codes[] = $code;
+            $code->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCode(Code $code): self
+    {
+        if ($this->codes->removeElement($code)) {
+            // set the owning side to null (unless already changed)
+            if ($code->getUser() === $this) {
+                $code->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Polling>
+     */
+    public function getPollings(): Collection
+    {
+        return $this->pollings;
+    }
+
+    public function addPolling(Polling $polling): self
+    {
+        if (!$this->pollings->contains($polling)) {
+            $this->pollings[] = $polling;
+            $polling->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePolling(Polling $polling): self
+    {
+        if ($this->pollings->removeElement($polling)) {
+            // set the owning side to null (unless already changed)
+            if ($polling->getUser() === $this) {
+                $polling->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\QuestionTypeRepository;
+use App\Repository\PageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=QuestionTypeRepository::class)
+ * @ORM\Entity(repositoryClass=PageRepository::class)
  */
-class QuestionType
+class Page
 {
     /**
      * @ORM\Id
@@ -20,12 +20,18 @@ class QuestionType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Polling::class, inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $name;
+    private $polling;
 
     /**
-     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="type")
+     * @ORM\Column(type="integer")
+     */
+    private $number;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="page")
      */
     private $questions;
 
@@ -39,14 +45,26 @@ class QuestionType
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getPolling(): ?Polling
     {
-        return $this->name;
+        return $this->polling;
     }
 
-    public function setName(string $name): self
+    public function setPolling(?Polling $polling): self
     {
-        $this->name = $name;
+        $this->polling = $polling;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(int $number): self
+    {
+        $this->number = $number;
 
         return $this;
     }
@@ -63,7 +81,7 @@ class QuestionType
     {
         if (!$this->questions->contains($question)) {
             $this->questions[] = $question;
-            $question->setType($this);
+            $question->setPage($this);
         }
 
         return $this;
@@ -73,8 +91,8 @@ class QuestionType
     {
         if ($this->questions->removeElement($question)) {
             // set the owning side to null (unless already changed)
-            if ($question->getType() === $this) {
-                $question->setType(null);
+            if ($question->getPage() === $this) {
+                $question->setPage(null);
             }
         }
 
