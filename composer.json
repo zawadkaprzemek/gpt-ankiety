@@ -15,9 +15,10 @@
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
+        "doctrine/persistence": "^2.2",
         "gos/web-socket-bundle": "^3.7",
         "gregwar/captcha-bundle": "^2.1",
-        "knplabs/knp-paginator-bundle": "^5.4",
+        "knplabs/knp-paginator-bundle": "^5.8",
         "knplabs/knp-snappy-bundle": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpoffice/phpspreadsheet": "^1.19",
@@ -52,11 +53,12 @@
         "symfony/validator": "5.4.*",
         "symfony/web-link": "5.4.*",
         "symfony/webapp-meta": "^1.0",
-        "symfony/webpack-encore-bundle": "^1.12",
+        "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "5.4.*",
         "symfonycasts/reset-password-bundle": "^1.1",
-        "symfonycasts/verify-email-bundle": "^1.0",
+        "symfonycasts/verify-email-bundle": "^1.10",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.3",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
@@ -114,7 +116,8 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "doctrine/orm": "2.12.0"
     },
     "extra": {
         "symfony": {
