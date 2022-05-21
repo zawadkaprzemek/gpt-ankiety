@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj pytanie{% endblock %}
+
+{% block body %}
+
+
+{{ form_start(form,{'attr':{'id':'questionForm'}}) }}
+
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.type) }}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.type) }}
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.content) }}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.content) }}
+        </div>
+    </div>
+    
+    {% include 'form/_switch_input.html.twig' with {'field':form.required, 'extra_class':''} %}
+
+    {% include 'form/_switch_input.html.twig' with {'field':form.commentOn, 'extra_class':''} %}
+    <div class="row form-group comment d-none">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.comment) }}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.comment) }}
+        </div>
+    </div>
+
+    {% include 'form/_switch_input.html.twig' with {'field':form.valueLabels, 'extra_class':'type-3 d-none'} %}
+
+
+    <div class="row type-3 d-none">
+        <div class="col-12 mb-3">
+            <div class="d-flex nps-answers w-100 justify-content-between">
+                {% for i in 0..10 %}
+                <div class="text-center col border py-2">{{i}}</div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+    <div class="row value-labels d-none">
+        <div class="col-12 col-sm-4">
+            {{form_row(form.minValText)}}
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="text-center pt-2">
+            {{form_row(form.middleValueLabel)}}
+            </div>
+            <div class="d-none middleLabel">
+            {{form_row(form.middleValText)}}
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            {{form_row(form.maxValText)}}
+        </div>
+    </div>
+
+<div class="type-2 d-none">
+<button type="button" class="btn btn-secondary add-answer btn-sm mb-2" 
+data-list-selector=".answers-list"
+>Dodaj odpowiedź</button>
+<h5 class="mb-3">{% trans %}answers{% endtrans %}:</h5>
+    <div class="answers-list"
+    data-prototype="{{ form_row(form.answers.vars.prototype)|e }}" 
+data-widget-tags="{{ '<div class="answer"></div>'|e }}"
+data-widget-counter="{{ form.answers|length }}"
+    >
+    {% for key,answer in form.answers %}
+    <div class="answer">
+    <div class="row form-group" data-item="{{(key+1)}}">
+        {% for child in answer.children %}
+            <div class="col-12 col-sm-3 col-form-label">
+                {{ form_label(child)| replace({"__X__": key+1})|raw }}
+            </div>
+            <div class="col-11 col-sm-8">
+                {{ form_widget(child) }}
+            </div>
+            <div class="col-1 text-right"><button class="btn btn-dark btn-sm btn-delete-answer" type="button">Usuń</button></div>
+        {% endfor %}
+    </div>
+    </div>
+    {% endfor %}
+
+    </div>
+    </div>
+    
+    {{ form_row(form._token) }}
+    {{ form_row(form.submit) }}
+{{ form_end(form,{render_rest:false}) }}
+{% endblock %}

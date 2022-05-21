@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Page;
+use App\Entity\Polling;
 use App\Entity\Question;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Question>
@@ -37,6 +39,66 @@ class QuestionRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+
+    public function getPollingQuestionsSorted(Polling $polling,Page $page)
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.polling = :polling')
+            ->andWhere('q.page = :page')
+            ->addOrderBy('q.sort', 'ASC')
+            ->setParameter('polling',$polling)
+            ->setParameter('page',$page)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getQuestionsCountFromPreviousPages(Polling $polling,Page $page)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('count(q.id) as count')
+            ->join('q.page','p')
+            ->andWhere('q.polling = :polling')
+            ->andWhere('p.number < :number')
+            ->addOrderBy('q.sort', 'ASC')
+            ->setParameter('polling',$polling)
+            ->setParameter('number',$page->getNumber())
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function getPreviousQuestionsCountFromCurrentPage(Polling $polling,Page $page,int $sort)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('count(q.id) as count')
+            ->andWhere('q.polling = :polling')
+            ->andWhere('q.page = :page')
+            ->andWhere('q.sort < :sort')
+            ->addOrderBy('q.sort', 'ASC')
+            ->setParameter('polling',$polling)
+            ->setParameter('page',$page)
+            ->setParameter('sort',$sort)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function getQuestionsFromPageWithHiggerSort(Polling $polling,Page $page,int $sort)
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.polling = :polling')
+            ->andWhere('q.page = :page')
+            ->andWhere('q.sort > :sort')
+            ->addOrderBy('q.sort', 'ASC')
+            ->setParameter('polling',$polling)
+            ->setParameter('page',$page)
+            ->setParameter('sort',$sort)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    /**

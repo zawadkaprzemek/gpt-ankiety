@@ -1,0 +1,51 @@
+<div class="question">
+<div class="row">
+<div class="col-12 pt-2">{{question.type.name}}</div>
+<div class="col-9">
+<p class="{%if question.required%}required{%endif%}">{{question|question_number}}. {{question.content}}</p>
+</div>
+<div class="col-3 text-right">
+{%if disabled %}
+<div class="btn-group btn-group-sm">
+<a href="{{path('app_polling_edit_question',{'id':question.polling.id,'page':question.page.number,'q_id':question.id})}}" class="btn btn-outline-secondary btn-sm">
+Edycja</a>
+{% include 'polling/_delete_question_form.html.twig' with {'question': question} %}
+</div>
+{%endif%}
+</div>
+</div>
+
+
+{%if question.comment is not null %}
+<p class="small text-muted">{{question.comment}}</p>
+{%endif%}
+
+{%if question.type.id==1%}
+
+<textarea id="question-{{question.id}}" {%if disabled%}disabled{%endif%} class="form-control mb-2" rows="2"></textarea>
+{% elseif question.type.id==2 %}
+{%for answer in question.answers %}
+<div class="form-check {%if disabled%}disabled{%endif%}">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="question-{{question.id}}-answer-{{answer.id}}" value="{{question.id}}" {%if disabled%}disabled{%endif%}>
+  <label class="form-check-label" for="question-{{question.id}}-answer-{{answer.id}}">
+    {{answer.content}}
+  </label>
+</div>
+{%endfor%}
+{%else%}
+<div class="d-flex nps-answers w-100 justify-content-between">
+    {% for i in 0..10 %}
+    <div class="text-center col border py-2">{{i}}</div>
+    {%endfor%}
+</div>
+{% if question.minValText is not null%}
+    <div class="row pt-2">
+        <div class="col-4">{{question.minValText}}</div>
+        {%if question.middleValText is not null %}
+        <div class="col-4 text-center">{{question.middleValText}}</div>
+        {%endif%}
+        <div class="col-4 text-right">{{question.maxValText}}</div>
+    </div>
+{%endif%}
+{%endif%}
+</div>

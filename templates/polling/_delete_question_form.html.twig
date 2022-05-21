@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_polling_delete_question', {'id':question.polling.id, 'page':question.page.number, 'q_id':question.id}) }}"
+      onsubmit="return confirm('Na pewno chcesz usunąć to pytanie?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
+    <button class="btn btn-sm btn-outline-danger rounded-left-0">{% trans %}delete{% endtrans %}</button>
+</form>

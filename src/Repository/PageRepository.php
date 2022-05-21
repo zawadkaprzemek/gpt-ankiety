@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Page;
+use App\Entity\Polling;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,30 @@ class PageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getMaxPageNumber(Polling $polling)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('max(p.number) as number')
+            ->andWhere('p.polling = :polling')
+            ->setParameter('polling',$polling)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    public function getPagesFromPollingWithHiggerNumber(Page $page)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.polling = :polling')
+            ->andWhere('p.number > :number')
+            ->setParameter('polling',$page->getPolling())
+            ->setParameter('number',$page->getNumber())
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    /**

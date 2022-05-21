@@ -31,7 +31,7 @@ class Page
     private $number;
 
     /**
-     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="page")
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="page", cascade={"persist", "remove"})
      */
     private $questions;
 
@@ -97,5 +97,15 @@ class Page
         }
 
         return $this;
+    }
+
+    public function decreaseNumber()
+    {
+        $this->number--;
+    }
+
+    public function increaseNumber()
+    {
+        $this->number++;
     }
 }

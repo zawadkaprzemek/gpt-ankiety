@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj ankiete{% endblock %}
+
+{% block body %}
+
+
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.name)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.textContent)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.textContent) }}
+        </div>
+    </div>
+    
+    {{ form_row(form._token) }}
+    {{ form_row(form.submit) }}
+{{ form_end(form) }}
+{% endblock %}

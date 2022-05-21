@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista ankiet{% endblock %}
+
+{% block body %}
+
+<h1>Moje ankiety</h1>
+
+<div class="row">
+
+<a class="btn btn-primary col-sm-3 d-flex text-center align-items-center justify-content-center" href="{{path('app_polling_new')}}">Dodaj ankiete</a>
+
+
+{%for polling in pollings%}
+<div class="col-sm-3 text-center">
+<p>{{polling.name}}</p>
+<p>{{polling.questions|length}} pytań</td>
+
+<div class="btn-group btn-group-sm">
+<a class="btn btn-secondary" href="{{path('app_polling_panel',{'id':polling.id})}}">Zobacz</a>
+<a class="btn btn-secondary" href="{{path('app_polling_edit',{'id':polling.id})}}">Edytuj</a>
+<a class="btn btn-dark" href="{{path('app_polling_edit',{'id':polling.id})}}">Usuń</a>
+</div>
+</div>
+{%endfor%}
+
+</div>
+
+
+
+{% endblock %}

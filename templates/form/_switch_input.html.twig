@@ -1,0 +1,11 @@
+<div class="row form-group {{extra_class}}">
+    <div class="col-12 col-sm-3 col-form-label">
+        {{form_label(field)}}
+    </div>
+    <div class="col-12 col-sm-9">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" {% if(field.vars.attr.checked is defined and field.vars.attr.checked)%}checked{% endif %} name="{{ field.vars.full_name }}" class="custom-control-input" id="{{ field.vars.id }}" value="{{ field.vars.value }}">
+            <label class="custom-control-label" for="{{ field.vars.id }}">{{ field.vars.label|trans }}</label>
+        </div>
+    </div>
+</div>

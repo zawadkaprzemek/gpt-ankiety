@@ -39,7 +39,7 @@ class Polling
     private $textContent;
 
     /**
-     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="polling")
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="polling", cascade={"persist", "remove"})
      */
     private $pages;
 

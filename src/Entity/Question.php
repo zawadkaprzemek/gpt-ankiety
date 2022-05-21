@@ -76,7 +76,7 @@ class Question
     private $maxValText;
 
     /**
-     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question")
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question", cascade={"persist", "remove"})
      */
     private $answers;
 
@@ -273,6 +273,18 @@ class Question
             }
         }
 
+        return $this;
+    }
+
+    public function decreaseSort():self
+    {
+        $this->sort--;
+        return $this;
+    }
+
+    public function increaseSort():self
+    {
+        $this->sort++;
         return $this;
     }
 }

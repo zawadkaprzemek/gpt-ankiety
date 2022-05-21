@@ -110,6 +110,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
+    public function __toString()
+    {
+        return $this->email;
+    }
+
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
