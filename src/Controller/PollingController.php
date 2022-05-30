@@ -99,6 +99,11 @@ class PollingController extends AbstractController
      */
     public function pollingPanel(Polling $polling,int $page=1)
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
         $em=$this->getDoctrine()->getManager();
         $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page]);
         if($page==null){
@@ -120,6 +125,11 @@ class PollingController extends AbstractController
      */
     public function addNewPollingPage(Polling $polling)
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
         $page=new Page();
         $page->setPolling($polling);
         $number=$this->pollingService->getPollingMaxPageNumber($polling);
@@ -138,6 +148,11 @@ class PollingController extends AbstractController
      */
     public function addQuestion(Polling $polling,int $page=1,Request $request)
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
         $em=$this->getDoctrine()->getManager();
         $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page]);
         if($page==null){
@@ -173,6 +188,11 @@ class PollingController extends AbstractController
      */
     public function deletePage(Polling $polling,int $page=1,PageRepository $pageRepository,Request $request)
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
         $em=$this->getDoctrine()->getManager();
         $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page]);
         if($page==null){
@@ -193,6 +213,11 @@ class PollingController extends AbstractController
      */
     public function editQuestion(Polling $polling,int $page=1, Question $question,Request $request)
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
         $em=$this->getDoctrine()->getManager();
         $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page]);
         if($page==null){
@@ -226,7 +251,7 @@ class PollingController extends AbstractController
     /**
      * @Route("/{id}/open", name="app_polling_open", methods={"POST"})
      */
-    public function openPolling(Request $request, Polling $polling): Response
+    public function openPolling(Polling $polling): Response
     {
         $user=$this->getUser();
         if($polling->getUser()!==$user)
@@ -248,6 +273,12 @@ class PollingController extends AbstractController
      */
     public function deletePolling(Request $request, Polling $polling, PollingRepository $pollingRepository): Response
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$polling->getId(), $request->request->get('_token'))) {
             $pollingRepository->remove($polling, true);
             $this->addFlash('success','Usunięto ankietę');
@@ -263,6 +294,12 @@ class PollingController extends AbstractController
      */
     public function deleteQuestion(Polling $polling,int $page=1,Request $request, Question $question): Response
     {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $em=$this->getDoctrine()->getManager();
             $question->setDeleted(true);
