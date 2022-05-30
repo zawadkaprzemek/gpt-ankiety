@@ -38,8 +38,17 @@ class SessionUser
      */
     private $votes;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="integer")
+     * 0 - głosuje
+     * 1 - zakończone
+     */
+    private $status=0;
+
+    public function __construct(Code $code,string $ipAddress)
     {
+        $this->code=$code;
+        $this->ipAddress=$ipAddress;
         $this->votes = new ArrayCollection();
     }
 
@@ -98,6 +107,18 @@ class SessionUser
                 $vote->setSessionUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

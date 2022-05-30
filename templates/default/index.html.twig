@@ -6,13 +6,16 @@
 
 {% if is_granted('ROLE_USER') %}
 
-<div class="btn-group btn-group-sm">
+<div class="btn-group btn-group-sm mb-5">
 <a href="{{path('app_my_pollings')}}" class="btn btn-primary">Moje ankiety</a>
-<a href="" class="btn btn-primary">Moje kody</a>
-<a href="" class="btn btn-primary">Moje ankiety</a>
-<a href="" class="btn btn-primary">Moje ankiety</a>
-<a href="" class="btn btn-primary">Moje ankiety</a>
+<a href="{{path('app_my_codes')}}" class="btn btn-primary">Moje kody</a>
 </div>
 {% endif %}
+
+
+<div class="col-12">
+{{ form_start(form) }}
+{{ form_end(form) }}
+</div>
 
 {% endblock %}

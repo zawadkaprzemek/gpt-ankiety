@@ -6,12 +6,15 @@ use App\Repository\CodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CodeRepository::class)
  */
 class Code
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -39,6 +42,12 @@ class Code
      * @ORM\OneToMany(targetEntity=SessionUser::class, mappedBy="code")
      */
     private $sessionUsers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Polling::class, inversedBy="codes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $polling;
 
     public function __construct()
     {
@@ -112,6 +121,18 @@ class Code
                 $sessionUser->setCode(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPolling(): ?Polling
+    {
+        return $this->polling;
+    }
+
+    public function setPolling(?Polling $polling): self
+    {
+        $this->polling = $polling;
 
         return $this;
     }

@@ -1,6 +1,8 @@
 <div class="question">
 <div class="row">
+{%if disabled%}
 <div class="col-12 pt-2">{{question.type.name}}</div>
+{%endif%}
 <div class="col-9">
 <p class="{%if question.required%}required{%endif%}">{{question|question_number}}. {{question.content}}</p>
 </div>
@@ -40,11 +42,11 @@ Edycja</a>
 </div>
 {% if question.minValText is not null%}
     <div class="row pt-2">
-        <div class="col-4">{{question.minValText}}</div>
+        <div class="col-{%if question.middleValText is not null %}4{%else%}6{%endif%}">{{question.minValText}}</div>
         {%if question.middleValText is not null %}
         <div class="col-4 text-center">{{question.middleValText}}</div>
         {%endif%}
-        <div class="col-4 text-right">{{question.maxValText}}</div>
+        <div class="col-{%if question.middleValText is not null %}4{%else%}6{%endif%} text-right">{{question.maxValText}}</div>
     </div>
 {%endif%}
 {%endif%}

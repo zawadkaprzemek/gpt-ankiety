@@ -23,7 +23,7 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $content;
 
@@ -56,7 +56,7 @@ class Question
     private $required;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
 
@@ -84,6 +84,11 @@ class Question
      * @ORM\OneToMany(targetEntity=Vote::class, mappedBy="question")
      */
     private $votes;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted=0;
 
     public function __construct()
     {
@@ -285,6 +290,18 @@ class Question
     public function increaseSort():self
     {
         $this->sort++;
+        return $this;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
         return $this;
     }
 }

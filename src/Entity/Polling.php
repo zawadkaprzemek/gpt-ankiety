@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\PollingRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PollingRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -48,10 +49,26 @@ class Polling
      */
     private $questions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Code::class, mappedBy="polling")
+     */
+    private $codes;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $hash;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $open=0;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
         $this->questions = new ArrayCollection();
+        $this->codes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,7 +147,8 @@ class Polling
      */
     public function getQuestions(): Collection
     {
-        return $this->questions;
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("deleted", false));
+        return $this->questions->matching($criteria);
     }
 
     public function addQuestion(Question $question): self
@@ -151,6 +169,60 @@ class Polling
                 $question->setPolling(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Code>
+     */
+    public function getCodes(): Collection
+    {
+        return $this->codes;
+    }
+
+    public function addCode(Code $code): self
+    {
+        if (!$this->codes->contains($code)) {
+            $this->codes[] = $code;
+            $code->setPolling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCode(Code $code): self
+    {
+        if ($this->codes->removeElement($code)) {
+            // set the owning side to null (unless already changed)
+            if ($code->getPolling() === $this) {
+                $code->setPolling(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getHash(): ?string
+    {
+        return $this->hash;
+    }
+
+    public function setHash(string $hash): self
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    public function isOpen(): ?bool
+    {
+        return $this->open;
+    }
+
+    public function setOpen(bool $open): self
+    {
+        $this->open = $open;
 
         return $this;
     }

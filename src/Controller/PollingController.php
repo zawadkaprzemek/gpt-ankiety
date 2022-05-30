@@ -4,18 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Entity\User;
-use App\Entity\Answer;
 use App\Entity\Polling;
 use App\Entity\Question;
 use App\Form\PollingType;
 use App\Form\QuestionType;
 use App\Service\PollingService;
+use App\Service\ExcellGenerator;
 use App\Repository\PageRepository;
 use App\Repository\PollingRepository;
 use App\Repository\QuestionRepository;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -76,6 +79,7 @@ class PollingController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid())
         {
+            $polling->setHash(uniqid());
             $em=$this->getDoctrine()->getManager();
             $em->persist($polling);
             $em->flush();
@@ -220,6 +224,26 @@ class PollingController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/open", name="app_polling_open", methods={"POST"})
+     */
+    public function openPolling(Request $request, Polling $polling): Response
+    {
+        $user=$this->getUser();
+        if($polling->getUser()!==$user)
+        {
+            return new JsonResponse(['status'=>'error']);
+        }
+
+        $polling->setOpen(!$polling->isOpen());
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($polling);
+        $em->flush();
+
+        return new JsonResponse(['status'=>'success','open'=>$polling->isOpen()]);
+    }
+
+
+    /**
      * @Route("/{id}/delete", name="app_polling_delete", methods={"POST"})
      */
     public function deletePolling(Request $request, Polling $polling, PollingRepository $pollingRepository): Response
@@ -237,14 +261,44 @@ class PollingController extends AbstractController
      * @Route("/{id}/{page}/pytanie/{q_id}/delete", name="app_polling_delete_question", requirements={"page"="\d+"}, defaults={"page":1}, methods={"POST"})
      * @ParamConverter("question", options={"mapping": {"q_id": "id"}})
      */
-    public function deleteQuestion(Polling $polling,int $page=1,Request $request, Question $question, QuestionRepository $questionRepository): Response
+    public function deleteQuestion(Polling $polling,int $page=1,Request $request, Question $question): Response
     {
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
-            $questionRepository->remove($question, true);
+            $em=$this->getDoctrine()->getManager();
+            $question->setDeleted(true);
+            $em->persist($question);
+            $em->flush();
             $this->pollingService->updateQuestionsSort($question);
             $this->addFlash('success','Usunięto pytanie');
         }
 
         return $this->redirectToRoute('app_polling_panel', ['id'=>$polling->getId(),'page'=>$page], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/wyniki/pobierz", name="app_polling_results_excell")
+     * @param Polling $polling
+     * @param ExcellGenerator $generator
+     */
+    public function pollingResults(Polling $polling,ExcellGenerator $generator)
+    {
+        $user=$this->getUser();
+        if($user!==$polling->getUser())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $filename=str_replace(' ','_',strtolower($polling->getName())).'_wyniki.xlsx';
+        $streamedResponse = new StreamedResponse();
+        $streamedResponse->setCallback(function () use ($generator, $polling) {
+            $excel=$generator->createExcel($polling);
+            $writer =  new Xlsx($excel);
+            $writer->save('php://output');
+        });
+        $streamedResponse->setStatusCode(Response::HTTP_OK);
+        $streamedResponse->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        return $streamedResponse->send();
     }
 }

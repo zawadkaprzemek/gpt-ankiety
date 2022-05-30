@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{polling.name}}{% endblock %}
+
+{% block body %}
+
+
+
+{%if current_page.number==1 %}
+<div class="row">
+    <div class="col-9">
+        <h1>{{polling.name}}</h1>
+        <h4>{{polling.textContent}}</h4>
+    </div>
+</div>
+{%endif%}
+
+<form id="voteForm" method="POST" data-polling="{{polling.id}}" data-save-url="{{path("app_vote_save",{"hash":polling.hash})}}" action="{{path('app_vote_polling',{'hash':polling.hash,'page':current_page.number})}}">
+{%for question in questions%}
+{% include 'vote/question_view.html.twig' with {'question':question,'votes':votes,'errors':errors} %}
+{%endfor%}
+
+
+<div class="w-100 text-center">
+    <button type="submit" class="btn btn-primary">DALEJ</button>
+</div>
+</form>
+
+
+
+{% endblock %}

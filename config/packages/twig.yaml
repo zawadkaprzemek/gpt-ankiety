@@ -6,6 +6,7 @@ twig:
     exception_controller: null
     globals:
         upload_image_directory: '/assets/uploads/images/'
+        text_answer_min_lenght: '%text_answer_min_lenght%'
 
 when@test:
     twig:

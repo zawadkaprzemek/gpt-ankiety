@@ -7,19 +7,22 @@
 <h1>Moje ankiety</h1>
 
 <div class="row">
-
-<a class="btn btn-primary col-sm-3 d-flex text-center align-items-center justify-content-center" href="{{path('app_polling_new')}}">Dodaj ankiete</a>
-
+<div class="col-sm-3 text-center ">
+<a class="btn btn-primary w-100 text-center align-items-center justify-content-center polling-box" href="{{path('app_polling_new')}}">Dodaj ankiete</a>
+</div>
 
 {%for polling in pollings%}
-<div class="col-sm-3 text-center">
-<p>{{polling.name}}</p>
-<p>{{polling.questions|length}} pytań</td>
+<div class="col-sm-3 text-center" data-open="{{path('app_polling_open',{'id':polling.id})}}">
+    <div class="card polling-box">
+    <i class="fa fa-circle {%if polling.open%}on{%endif%}" title="{%if polling.open%}Włączona{%else%}Wyłączona{%endif%}"></i>
+    <p class="title">{{polling.name}}</p>
+    <p>{{polling.questions|length}} pytań</td>
 
-<div class="btn-group btn-group-sm">
-<a class="btn btn-secondary" href="{{path('app_polling_panel',{'id':polling.id})}}">Zobacz</a>
-<a class="btn btn-secondary" href="{{path('app_polling_edit',{'id':polling.id})}}">Edytuj</a>
-<a class="btn btn-dark" href="{{path('app_polling_edit',{'id':polling.id})}}">Usuń</a>
+    <div class="btn-group btn-group-sm w-100">
+    <a class="btn btn-secondary" href="{{path('app_polling_panel',{'id':polling.id})}}">Zobacz</a>
+    <a class="btn btn-secondary" href="{{path('app_polling_edit',{'id':polling.id})}}">Edytuj</a>
+    <a class="btn btn-secondary" href="{{path('app_polling_results_excell',{'id':polling.id})}}">Wyniki</a>
+    </div>
 </div>
 </div>
 {%endfor%}

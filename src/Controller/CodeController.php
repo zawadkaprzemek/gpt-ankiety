@@ -2,19 +2,65 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Code;
+use App\Entity\User;
+use App\Form\CodeGeneratorType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/panel/moje_kody")
+ * @IsGranted("ROLE_USER")
+ */
 class CodeController extends AbstractController
 {
     /**
-     * @Route("/code", name="app_code")
+     * @Route("/", name="app_my_codes")
      */
     public function index(): Response
     {
+        /** @var User $user */
+        $user=$this->getUser();
+
+        $codes=$user->getCodes();
         return $this->render('code/index.html.twig', [
-            'controller_name' => 'CodeController',
+            'codes'=>$codes
         ]);
+    }
+
+    /**
+     * @Route("/generuj", name="app_codes_generate")
+     */
+    public function createCodes(Request $request)
+    {
+         /** @var User $user */
+         $user=$this->getUser();
+         $form=$this->createForm(CodeGeneratorType::class,[]);
+         $form->handleRequest($request);
+         if($form->isSubmitted()&&$form->isValid())
+         {
+            $data=$form->getData();
+            $em=$this->getDoctrine()->getManager();
+            for($i=0;$i<$data['count'];$i++)
+            {
+                /** @var Code $code */
+                $code=new Code();
+                $code->setContent(uniqid($data['prefix']))
+                    ->setMulti($data['multi'])
+                    ->setPolling($data['polling'])
+                    ->setUser($user);
+                $em->persist($code);
+            }
+            $em->flush();
+            $this->addFlash('success',"Wygenerowano {$data['count']} kodów");
+            return $this->redirectToRoute('app_my_codes');
+         }
+
+         return $this->render('code/form.html.twig',[
+            'form'=>$form->createView()
+         ]);
     }
 }

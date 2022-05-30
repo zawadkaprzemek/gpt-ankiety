@@ -20,7 +20,6 @@ class QuestionType extends AbstractType
     {
 
         $question=$options['data'];
-        dump($question);
         $builder
             ->add('content',TextareaType::class,['label'=>'Treść pytania'])
             ->add('required',CheckboxType::class,[

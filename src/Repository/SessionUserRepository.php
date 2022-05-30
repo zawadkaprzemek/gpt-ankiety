@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Polling;
 use App\Entity\SessionUser;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<SessionUser>
@@ -37,6 +38,17 @@ class SessionUserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getAllUsersForPolling(Polling $polling)
+    {
+        return $this->createQueryBuilder('su')
+            ->join('su.code','c')
+            ->andWhere('c.polling = :polling')
+            ->setParameter('polling',$polling)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    /**

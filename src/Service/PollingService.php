@@ -24,7 +24,8 @@ class PollingService
         return $repo->findBy(
             [
                 'polling'=>$polling,
-                'page'=>$page
+                'page'=>$page,
+                'deleted'=>false
             ]
         );
     }

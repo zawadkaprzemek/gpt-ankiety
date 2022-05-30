@@ -82,8 +82,9 @@ function showFields(checked,elem)
         elem.find('label').removeClass('required');
         elem.addClass('d-none');
     }
-
     elem.find('input,textarea').prop('required',checked).prop('disabled',!checked);
+    $('#question_middleValueLabel').prop('required',false);
+    $('#question_middleValText').prop('required',$('#question_middleValueLabel').prop('checked'));
 }
 
 $('#question_commentOn').on('change',function(){
@@ -96,7 +97,7 @@ $('#question_middleValueLabel').on('change',function(){
     if($(this).prop('checked'))
     {
         $(this).parent().parent().parent().removeClass('pt-2');
-        $(this).parent().parent().remove();
+        $(this).parent().parent().addClass('d-none');
     }
 });
 
@@ -135,10 +136,97 @@ $('body').on('click','.btn-delete-answer',function(){
                 counter--;
                 list.data('widget-counter', counter);
             });
-            btn.parent().parent().parent().remove();
         }
+        btn.parent().parent().parent().remove();
     }
 });
 
     
+$('#voteForm input,#voteForm textarea').on('change',function(){
+    let val=$(this).val().trim(),
+        question=$(this).data('question'),
+        url=$('#voteForm').data('save-url'),
+        required=$(this).prop('required'),
+        type=$(this).attr('type'),
+        minlenght=$(this).attr('minlength')
+        ;
+
+        $('#question-error-'+question).removeClass('d-block');
+    if(required&&(val==''||type=="textarea"&&val.length<minlenght))
+    {
+        $('#question-error-'+question).addClass('d-block');
+        $(this).focus();
+        return;
+    }
+    $.ajax({
+        method: 'POST',
+        url: url,
+        data: JSON.stringify({question:question,value:val}),
+        success: function(data, textStatus, xhr) {
+            console.log(data);
+        },
+        complete: function (xhr, textStatus) {
+            
+        }
+    });
+})
+
+
+$("#voteForm").on('submit',function(e){
+    let form=$(this);
+    $('.question-error').removeClass('d-block');
+    let data=$(this).serializeArray(),
+    errors =0;
+    $(data).each(function(i,elem){
+        let question=elem.name.replace('question-','');
+        let field=form.find('[data-question="'+question+'"]'),
+        required=field.prop('required');
+        if(required)
+        {
+            if(field.length==1 && field.prop('type')=="textarea")
+            {
+                let minlenght=$(this).attr('minlength');
+                if(elem.value=='' || elem.value.length< minlenght)
+                {
+                    $('#question-error-'+question).addClass('d-block');
+                    errors++;
+                }
+            }else{
+                if(elem.value=='')
+                {
+                    $('#question-error-'+question).addClass('d-block');
+                    errors++;
+                }
+            }
+        }
+        
+    });
+
+    if(errors>0)
+    {
+        e.preventDefault();
+    }
+});
+
+
+
+
+$('.polling-box i').on('click',function(){
+    let url=$(this).parent().parent().data('open');
+    let elem=$(this);
+    $.ajax({
+        method: 'POST',
+        url: url,
+        success: function(data, textStatus, xhr) {
+            if(data.status=='success'){
+                elem.toggleClass('on');
+                elem.prop('title',(data.open? 'Włączona' : 'Wyłączona'));
+            }
+        },
+        complete: function (xhr, textStatus) {
+            
+        }
+    });
+});
+
 });

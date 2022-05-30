@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CodeController!{% endblock %}
+{% block title %}Moje kody{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1>Moje kody</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/przemek/Projects/gpt-ankiety/src/Controller/CodeController.php'|file_link(0) }}">src/Controller/CodeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/przemek/Projects/gpt-ankiety/templates/code/index.html.twig'|file_link(0) }}">templates/code/index.html.twig</a></code></li>
-    </ul>
+
+<div class="btn-group btn-group-sm">
+    <a href="{{path('app_codes_generate')}}" class="btn btn-primary">Generuj kody</a>
 </div>
+<table class="table table-stripped text-center">
+<thead>
+<tr>
+<th>Kod</th>
+<th>Ankieta</th>
+<th>Ilość użyć</th>
+<th>Data wygenerowania</th>
+</tr>
+</thead>
+<tbody>
+{% for code in codes|reverse %}
+<tr>
+<td class="text-left">{{code.content}}</td>
+<td>{{code.polling.name}}</td>
+<td>{{code.sessionUsers|length}}/{%if code.multi%}<span class="font-big">&#8734;</span>{%else%}1{%endif%}</td>
+<td>{{code.createdAt|date('d/m/Y H:i')}}</td>
+</tr>
+{%else%}
+<tr>
+<td colspan="4">
+<div class="alert alert-info">Brak kodów</div>
+</td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
 {% endblock %}

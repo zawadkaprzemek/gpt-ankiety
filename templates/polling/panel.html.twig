@@ -4,6 +4,13 @@
 
 {% block body %}
 
+{% if polling|polling_answers %}
+<div class="row">
+    <div class="col-12 text-center py-4 px-3 ">
+    <i class="fas fa-exclamation-triangle"></i> Posiadasz już odpowiedzi, pamiętaj, że edytowanie pytań może wpłynąć na zebrane już wyniki.
+    </div>
+</div>
+{%endif%}
 <div class="pages-list">
     {%for page in polling.pages%}
     <div class="btn-group btn-group-sm">

@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Polling;
+use App\Entity\SessionUser;
 use App\Entity\Vote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +39,31 @@ class VoteRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findSessionUserAnswers(SessionUser $user,array $questions)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.sessionUser = :user')
+            ->andWhere('v.question in (:questions)')
+            ->setParameter('user',$user)
+            ->setParameter('questions',$questions)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getAnswersCountForPolling(Polling $polling)
+    {
+        return $this->createQueryBuilder('v')
+            ->select('count(v) as ilosc')
+            ->join('v.question','q')
+            ->andWhere('q.polling = :polling')
+            ->setParameter('polling',$polling)
+            ->getQuery()
+            ->getSingleScalarResult()
+
+        ;
     }
 
 //    /**

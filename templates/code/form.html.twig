@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Generuj kody{% endblock %}
+
+{% block body %}
+
+<h1>Generuj kody</h1>
+
+
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.prefix)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.prefix) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.count)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.count) }}
+        </div>
+    </div>
+        {% include 'form/_switch_input.html.twig' with {'field':form.multi, 'extra_class':''} %}
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.polling)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.polling) }}
+        </div>
+    </div>
+    
+    {{ form_row(form._token) }}
+    {{ form_row(form.submit) }}
+{{ form_end(form,{render_rest:false}) }}
+{% endblock %}
