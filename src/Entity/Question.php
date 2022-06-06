@@ -90,10 +90,16 @@ class Question
      */
     private $deleted=0;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Logic::class, mappedBy="question")
+     */
+    private $logics;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->logics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -301,6 +307,36 @@ class Question
     public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Logic>
+     */
+    public function getLogics(): Collection
+    {
+        return $this->logics;
+    }
+
+    public function addLogic(Logic $logic): self
+    {
+        if (!$this->logics->contains($logic)) {
+            $this->logics[] = $logic;
+            $logic->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogic(Logic $logic): self
+    {
+        if ($this->logics->removeElement($logic)) {
+            // set the owning side to null (unless already changed)
+            if ($logic->getQuestion() === $this) {
+                $logic->setQuestion(null);
+            }
+        }
 
         return $this;
     }
