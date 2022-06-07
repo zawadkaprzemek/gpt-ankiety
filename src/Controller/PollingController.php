@@ -338,4 +338,28 @@ class PollingController extends AbstractController
 
         return $streamedResponse->send();
     }
+
+
+    /**
+     * @Route("/{id}/{q_id}/ustaw_pozycje", name="app_polling_question_update_position", methods={"POST"})
+     * @ParamConverter("question", options={"mapping": {"q_id": "id"}})
+     * @param Polling $polling
+     * @param Question $question
+     * @param Request $request
+     */
+    public function updatePosition(Polling $polling,Question $question,Request $request)
+    {
+        $user=$this->getUser();
+        if($polling->getUser()!==$user||$question->getPolling()!=$polling)
+        {
+            return new JsonResponse(['status'=>'error']);
+        }
+        $content=json_decode($request->getContent(),true);
+        $em= $this->getDoctrine()->getManager();
+
+        $question->setSort($content['position']);
+        $em->persist($question);
+        $em->flush();
+        return new JsonResponse(['status'=>'success','position'=>$question->getSort()]);
+    }
 }

@@ -41,10 +41,12 @@
 
 <a href="{{path('app_polling_add_question',{'id':polling.id,'page':current_page.number})}}" class="btn btn-sm btn-primary mt-3">Dodaj pytanie</a>
 
+<div class="sortable" data-polling="{{polling.id}}">
 {%for question in questions%}
 
 {% include 'polling/question_view.html.twig' with {'question':question, 'disabled':true} %}
 {%endfor%}
+</div>
 
 
 

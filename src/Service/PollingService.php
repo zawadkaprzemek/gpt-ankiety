@@ -21,12 +21,9 @@ class PollingService
     public function getPollingQuestions(Polling $polling,Page $page)
     {
         $repo=$this->em->getRepository(Question::class);
-        return $repo->findBy(
-            [
-                'polling'=>$polling,
-                'page'=>$page,
-                'deleted'=>false
-            ]
+        return $repo->getPollingQuestionsSorted(
+            $polling,
+            $page
         );
     }
 

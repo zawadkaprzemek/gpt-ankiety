@@ -1,20 +1,20 @@
-<div class="question">
-<div class="row">
-{%if disabled%}
-<div class="col-12 pt-2">{{question.type.name}}</div>
-{%endif%}
-<div class="col-9">
-<p class="{%if question.required%}required{%endif%}">{{question|question_number}}. {{question.content}}</p>
-</div>
-<div class="col-3 text-right">
-{%if disabled %}
-<div class="btn-group btn-group-sm">
-<a href="{{path('app_polling_edit_question',{'id':question.polling.id,'page':question.page.number,'q_id':question.id})}}" class="btn btn-outline-secondary btn-sm">
-Edycja</a>
-{% include 'polling/_delete_question_form.html.twig' with {'question': question} %}
-</div>
-{%endif%}
-</div>
+<div class="question" draggable="true" rel="{{question.sort}}" data-number="{{question|question_number}}">
+<div class="row question_header" data-index="{{question.sort-1}}" data-question="{{question.id}}">
+  {%if disabled%}
+  <div class="col-12 pt-2">{{question.type.name}}</div>
+  {%endif%}
+  <div class="col-9">
+  <p class="{%if question.required%}required{%endif%}"><span class="question_number">{{question|question_number}}</span>. {{question.content}}</p>
+  </div>
+  <div class="col-3 text-right">
+    {%if disabled %}
+    <div class="btn-group btn-group-sm">
+      <a href="{{path('app_polling_edit_question',{'id':question.polling.id,'page':question.page.number,'q_id':question.id})}}" 
+      class="btn btn-outline-secondary btn-sm">Edycja</a>
+      {% include 'polling/_delete_question_form.html.twig' with {'question': question} %}
+    </div>
+    {%endif%}
+  </div>
 </div>
 
 

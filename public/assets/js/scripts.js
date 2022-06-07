@@ -229,4 +229,97 @@ $('.polling-box i').on('click',function(){
     });
 });
 
+
+
+let sortable=$('.sortable');
+if(sortable.length>0)
+{
+    let first=$(sortable).find('.question')[0];
+    sortable.attr('data-number',($(first).data('number')-1));
+}
+
+
+function handleDragStart(e) {
+    this.style.opacity = '0.4';
+    dragSrcEl = this;
+
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', this.innerHTML);
+  }
+
+  function handleDragEnd(e) {
+    this.style.opacity = '1';
+
+    items.forEach(function (item) {
+      item.classList.remove('over');
+    });
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    return false;
+  }
+
+  function handleDragEnter(e) {
+    this.classList.add('over');
+  }
+
+  function handleDragLeave(e) {
+    this.classList.remove('over');
+  }
+
+  function handleDrop(e) {
+    e.stopPropagation(); // stops the browser from redirecting.
+    if (dragSrcEl !== this) {
+        dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData('text/html');
+        updatePositions();
+    }
+    
+    //console.log($('.sortable .question').index(this));
+    return false;
+  }
+  
+  let items = document.querySelectorAll('.sortable .question');
+  items.forEach(function (item) {
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('dragenter', handleDragEnter);
+    item.addEventListener('dragleave', handleDragLeave);
+    item.addEventListener('dragend', handleDragEnd);
+    item.addEventListener('drop', handleDrop);
+  });
+
+
+  function updatePositions()
+  {
+    let items = document.querySelectorAll('.sortable .question');
+    items.forEach(function (item) {
+        let data_index= $(item).find('.question_header').prop('data-index');
+        let index= $('.sortable .question').index(item);
+        if(data_index!==index)
+        {
+            let question=$(item).find('.question_header').data('question');
+            let start=parseInt($('.sortable').attr('data-number'));
+            let polling =$('.sortable').data('polling');
+            let url="/panel/ankieta/"+polling+"/"+question+"/ustaw_pozycje";
+            $.ajax({
+                method: 'POST',
+                url: url,
+                data: JSON.stringify({position:index+1}),
+                success: function(data, textStatus, xhr) {
+                    $(item).find('.question_number').html(data.position+start);
+                    $(item).find('.question_header').prop('data-index',index);
+                },
+                complete: function (xhr, textStatus) {
+                    
+                }
+            });
+        }
+    });
+  }
+
 });
+
+
+

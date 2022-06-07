@@ -119,3 +119,13 @@ textarea{
         padding: 15px 5px;
     }
 }
+
+.sortable .question {
+    user-select: none;
+    -webkit-user-drag: element;
+    cursor: move;
+}
+
+.sortable{
+    display: grid;
+}
