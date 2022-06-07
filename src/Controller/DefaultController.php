@@ -34,7 +34,6 @@ class DefaultController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $data=$form->getData();
             $code=$em->getRepository(Code::class)->findOneBy(['content'=>$data['code']]);
-            dump($data,$code);
             if($code!==null)
             {
                 if($code->getPolling()->isOpen())
