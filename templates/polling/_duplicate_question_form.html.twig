@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_question_duplicate', {'id':question.polling.id, 'page':question.page.number, 'q_id':question.id}) }}"
+      onsubmit="return confirm('Na pewno chcesz skopiować to pytanie?');">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('duplicate' ~ question.id) }}">
+    <button class="btn btn-sm btn-outline-secondary rounded-right-0 rounded-left-0">Powiel</button>
+</form>

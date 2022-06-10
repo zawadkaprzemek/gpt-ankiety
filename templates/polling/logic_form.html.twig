@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block body %}
+
+<p class="{%if question.required%}required{%endif%}"><span class="question_number">{{question|question_number}}</span>. {{question.content}}</p>
+{{ form_start(form,{'attr':{'id':'logicForm'}}) }}
+<div class="row">
+<div class="col-md-6">
+    <div class="row form-group">
+        <div class="col-12 col-form-label">
+            {{form_label(form.begin_action)}}
+        </div>
+        <div class="col-12">
+            {{ form_widget(form.begin_action) }}
+        </div>
+    </div>
+    <div class="row form-group d-none begin_action_value">
+        <div class="col-12">
+            {{ form_widget(form.begin_action_value) }}
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="row form-group">
+        <div class="col-12 col-form-label">
+            {{form_label(form.end_action)}}
+        </div>
+        <div class="col-12">
+            {{ form_widget(form.end_action) }}
+        </div>
+    </div>
+    <div class="row form-group end_action_value">
+        <div class="col-12">
+            {{ form_widget(form.end_action_value) }}
+        </div>
+    </div>
+    </div>
+    </div>  
+    {{ form_row(form._token) }}
+    {{ form_row(form.submit) }}
+{{ form_end(form) }}
+{% endblock %}

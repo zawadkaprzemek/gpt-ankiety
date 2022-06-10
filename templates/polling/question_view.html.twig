@@ -11,6 +11,7 @@
     <div class="btn-group btn-group-sm">
       <a href="{{path('app_polling_edit_question',{'id':question.polling.id,'page':question.page.number,'q_id':question.id})}}" 
       class="btn btn-outline-secondary btn-sm">Edycja</a>
+      {% include 'polling/_duplicate_question_form.html.twig' with {'question': question} %}
       {% include 'polling/_delete_question_form.html.twig' with {'question': question} %}
     </div>
     {%endif%}

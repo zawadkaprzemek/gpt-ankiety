@@ -122,7 +122,13 @@ class ExcellGenerator
         /** @var $repo SessionUserRepository */
         $repo=$this->em->getRepository(SessionUser::class);
         $allUsers=sizeof($repo->getAllUsersForPolling($question->getPolling()));
-        $voted=sizeof($votes);
+        $voted=[];
+        foreach($votes as $vote)
+        {
+            if($vote->getAnswer()[0]!=""&&$vote->getAnswer()[0]!==null)
+            $voted[]=$vote;
+        }
+        $voted=sizeof($voted);
         $skipped=$allUsers-$voted;
         if($allUsers==0)
         {

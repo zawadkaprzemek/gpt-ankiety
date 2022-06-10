@@ -319,6 +319,33 @@ function handleDragStart(e) {
     });
   }
 
+
+  let logicForm=$('#logicForm');
+  if(logicForm.length>0){
+    logicActionChange($('#logic_begin_action').val(),$('.begin_action_value'));
+    logicActionChange($('#logic_end_action').val(),$('.end_action_value'));
+  }
+
+  $('#logic_begin_action').on('change',function(){
+    logicActionChange($(this).val(),$('.begin_action_value'));
+  });
+
+  $('#logic_end_action').on('change',function(){
+    logicActionChange($(this).val(),$('.end_action_value'));
+  });
+
+
+  function logicActionChange(val,elem)
+  {
+    if(val=="answer_question"||val=="dont_answer_question"||val=="end_polling")
+    {
+        elem.addClass('d-none');
+        elem.find('select').prop('disabled',true);
+    }else{
+        elem.removeClass('d-none');
+        elem.find('select').prop('disabled',false);
+    }
+  }
 });
 
 

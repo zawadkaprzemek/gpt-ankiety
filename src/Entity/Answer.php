@@ -56,4 +56,9 @@ class Answer
 
         return $this;
     }
+
+    public function __clone()
+    {
+        $this->id=null;
+    }
 }

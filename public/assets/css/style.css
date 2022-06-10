@@ -38,6 +38,11 @@ textarea{
     border-bottom-left-radius: 0;
 }
 
+.rounded-right-0{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .font-big{
     font-size:32px;
     vertical-align: top;
@@ -128,4 +133,37 @@ textarea{
 
 .sortable{
     display: grid;
+}
+
+body{
+    background-color: #eee;
+}
+
+.white-box{
+    background-color: #fff;
+    border: 1px solid #111;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.white-box p{
+    font-size: 14px;
+}
+
+.white-box span.text-muted{
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-left: 20px;
+}
+
+.logic-list h3{
+    margin:30px 0 20px;
+}
+
+.logic-info li{
+    margin-bottom: 5px;
 }

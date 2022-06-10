@@ -35,6 +35,11 @@ class Page
      */
     private $questions;
 
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $introText;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -107,5 +112,17 @@ class Page
     public function increaseNumber()
     {
         $this->number++;
+    }
+
+    public function getIntroText(): ?string
+    {
+        return $this->introText;
+    }
+
+    public function setIntroText(?string $introText): self
+    {
+        $this->introText = $introText;
+
+        return $this;
     }
 }

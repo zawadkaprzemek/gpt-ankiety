@@ -12,7 +12,7 @@
 </div>
 
 {%for polling in pollings%}
-<div class="col-sm-3 text-center" data-open="{{path('app_polling_open',{'id':polling.id})}}">
+<div class="col-sm-3 text-center mb-4" data-open="{{path('app_polling_open',{'id':polling.id})}}">
     <div class="card polling-box">
     <i class="fa fa-circle {%if polling.open%}on{%endif%}" title="{%if polling.open%}Włączona{%else%}Wyłączona{%endif%}"></i>
     <p class="title">{{polling.name}}</p>

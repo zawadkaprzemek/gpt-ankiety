@@ -64,6 +64,11 @@ class Polling
      */
     private $open=0;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $thankYouText;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -223,6 +228,18 @@ class Polling
     public function setOpen(bool $open): self
     {
         $this->open = $open;
+
+        return $this;
+    }
+
+    public function getThankYouText(): ?string
+    {
+        return $this->thankYouText;
+    }
+
+    public function setThankYouText(string $thankYouText): self
+    {
+        $this->thankYouText = $thankYouText;
 
         return $this;
     }

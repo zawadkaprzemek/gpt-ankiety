@@ -60,6 +60,31 @@ class VoteController extends AbstractController
         }
         $questions=$this->pollingService->getPollingQuestions($polling,$page);
         $votes=$em->getRepository(Vote::class)->findSessionUserAnswers($user,$questions);
+        
+        if($page->getNumber()>1)
+        {
+            for($i=1;$i<$page->getNumber();$i++)
+            {
+                $p_page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$i]);
+                $p_questions=$this->pollingService->getPollingQuestions($polling,$p_page);
+                $p_votes=$em->getRepository(Vote::class)->findSessionUserAnswers($user,$p_questions);
+                $p_votesArray=$this->prepareVotes($p_votes);
+                $p_logic=$this->pollingService->checkLogic($p_votesArray,$p_questions);
+                if(!empty($p_logic))
+                {
+                    if(!empty($p_logic))
+                    {
+                        /** Sprawdzam czy nie ma wymuszenia pominięcia strony */
+                        foreach($p_logic as $item)
+                        {
+                            if($item['end_action']=='skip_page'&&$item['end_action_value']==$page->getNumber())
+                            return $this->redirectToRoute('app_vote_polling',['hash'=>$polling->getHash(),'page'=>$page->getNumber()+1]);
+                        }
+                    }
+                }
+            }
+        }
+
         $votesArray=$this->prepareVotes($votes);
         $errors=[];
         if($request->getMethod()=="POST")
@@ -68,6 +93,26 @@ class VoteController extends AbstractController
             $errors=$this->checkErrors($answers,$questions);
             if(sizeof($errors)===0)
             {
+                $logic=$this->pollingService->checkLogic($votesArray,$questions);
+                if(!empty($logic))
+                {
+                    /** Najpierw sprawdzam czy nie ma wymuszenia zakończenia ankiety */
+                    foreach($logic as $item)
+                    {
+                        if($item['end_action']=='end_polling')
+                        return $this->redirectToRoute('app_vote_thankyou_page',['hash'=>$polling->getHash()]);
+                    }
+                    /*foreach($logic as $item)
+                    {
+                        if($item['end_action']=='skip_page'&&$item['end_action_value']==($page->getNumber()+1))
+                        return $this->redirectToRoute('app_vote_polling',['hash'=>$polling->getHash(),'page'=>$page->getNumber()+2]);
+                    }*/
+                    foreach($logic as $item)
+                    {
+                        if($item['end_action']=='go_to_page')
+                        return $this->redirectToRoute('app_vote_polling',['hash'=>$polling->getHash(),'page'=>$item['end_action_value']]);
+                    }
+                }
                 $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page->getNumber()+1]);
                 if($page==null)
                 {

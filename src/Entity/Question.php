@@ -340,4 +340,17 @@ class Question
 
         return $this;
     }
+
+    public function __clone()
+    {
+        $this->id=null;
+        $org_answers=$this->getAnswers();
+        $this->createdAt= new \DateTime();
+        foreach($org_answers as $ans)
+        {
+            $d_answ=clone $ans;
+            $this->removeAnswer($ans);
+            $this->addAnswer($d_answ);
+        }
+    }
 }

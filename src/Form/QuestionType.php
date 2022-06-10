@@ -43,10 +43,10 @@ class QuestionType extends AbstractType
             ->add('middleValText',TextType::class,['attr'=>['placeholder'=>'Etykieta środkowa'],'label'=>false,'required'=>false])
             ->add('maxValText',TextType::class,['attr'=>['placeholder'=>'Etykieta prawa'],'label'=>false,'required'=>false])
             ->add('type',EntityType::class,[
-                'label'=>($question->getId()!=null ? false : 'Typ pytania'),
+                'label'=>(sizeof($question->getVotes())>0 ? false : 'Typ pytania'),
                 'class'=>EntityQuestionType::class,
                 'placeholder'=>'Wybierz typ pytania',
-                'attr'=>['class'=>($question->getId()!=null ? 'd-none' : '')]
+                'attr'=>['class'=>(sizeof($question->getVotes())>0 ? 'd-none' : '')]
                 ])
             ->add('answers',CollectionType::class,[
                     'label'=>'Odpowiedzi',

@@ -4,6 +4,16 @@
 
 {% block body %}
 
+
+<div class="row">
+<div class="col-12 mb-3">
+    <div class="btn-group btn-group-sm">
+        <a href="{{path('app_polling_logic_list',{id:polling.id})}}" class="btn btn-outline-primary">Logika</a>
+    </div>
+</div>
+</div>
+
+
 {% if polling|polling_answers %}
 <div class="row">
     <div class="col-12 text-center py-4 px-3 ">
@@ -40,7 +50,13 @@
 {%endif%}
 
 <a href="{{path('app_polling_add_question',{'id':polling.id,'page':current_page.number})}}" class="btn btn-sm btn-primary mt-3">Dodaj pytanie</a>
+{% if current_page.number >1%}
+<a href="{{path('app_polling_edit_page',{'id':polling.id,'page':current_page.number})}}" class="btn btn-sm btn-secondary mt-3">Wiadomość powitalna</a>
 
+    {%if current_page.introText is not null%}
+    <h4 class="mt-3">{{current_page.introText}}</h4>
+    {%endif%}
+{%endif%}
 <div class="sortable" data-polling="{{polling.id}}">
 {%for question in questions%}
 

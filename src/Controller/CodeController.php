@@ -48,7 +48,8 @@ class CodeController extends AbstractController
             {
                 /** @var Code $code */
                 $code=new Code();
-                $code->setContent(uniqid($data['prefix']))
+                $str=str_replace(" ",'',$data['prefix']).$this->generateRandomString(6);
+                $code->setContent($str)
                     ->setMulti($data['multi'])
                     ->setPolling($data['polling'])
                     ->setUser($user);
@@ -62,5 +63,9 @@ class CodeController extends AbstractController
          return $this->render('code/form.html.twig',[
             'form'=>$form->createView()
          ]);
+    }
+
+    private function generateRandomString($length = 10) {
+        return substr(str_shuffle(str_repeat($x='123456789abcdefghjkmnpqrstuvwxyz', ceil($length/strlen($x)) )),1,$length);
     }
 }
