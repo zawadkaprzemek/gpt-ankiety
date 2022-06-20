@@ -3,7 +3,13 @@
 {% block title %}Moje kody{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
 
+<div class="btn-group btn-group-sm mb-5">
+<a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary">Moje ankiety</a>
+<a href="{{path('app_my_codes')}}" class="btn btn-outline-primary active">Moje kody</a>
+</div>
+{% endif %}
 <h1>Moje kody</h1>
 
 
@@ -17,6 +23,7 @@
 <th>Ankieta</th>
 <th>Ilość użyć</th>
 <th>Data wygenerowania</th>
+<th>&nbsp;</th>
 </tr>
 </thead>
 <tbody>
@@ -26,6 +33,16 @@
 <td>{{code.polling.name}}</td>
 <td>{{code.sessionUsers|length}}/{%if code.multi%}<span class="font-big">&#8734;</span>{%else%}1{%endif%}</td>
 <td>{{code.createdAt|date('d/m/Y H:i')}}</td>
+<td>
+{%if code.sessionUsers|length ==0 %}
+<form method="post" action="{{ path('app_code_delete', {'id':code.id}) }}"
+      onsubmit="return confirm('Na pewno chcesz usunąć ten kod?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ code.id) }}">
+    <button class="btn btn-sm btn-outline-danger">{% trans %}delete{% endtrans %}</button>
+</form>
+{%endif%}
+</td>
 </tr>
 {%else%}
 <tr>

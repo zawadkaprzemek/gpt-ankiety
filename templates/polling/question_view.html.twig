@@ -1,4 +1,6 @@
-<div class="question" draggable="true" rel="{{question.sort}}" data-number="{{question|question_number}}">
+<div class="question row" draggable="true" rel="{{question.sort}}" data-number="{{question|question_number}}">
+<div class="col-1 drag-icon"><i class="fa-solid fa-sort"></i></div>
+<div class="col-11">
 <div class="row question_header" data-index="{{question.sort-1}}" data-question="{{question.id}}">
   {%if disabled%}
   <div class="col-12 pt-2">{{question.type.name}}</div>
@@ -51,4 +53,5 @@
     </div>
 {%endif%}
 {%endif%}
+</div>
 </div>

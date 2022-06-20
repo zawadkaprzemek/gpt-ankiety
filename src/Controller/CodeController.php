@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Code;
 use App\Entity\User;
 use App\Form\CodeGeneratorType;
+use App\Repository\CodeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,5 +68,28 @@ class CodeController extends AbstractController
 
     private function generateRandomString($length = 10) {
         return substr(str_shuffle(str_repeat($x='123456789abcdefghjkmnpqrstuvwxyz', ceil($length/strlen($x)) )),1,$length);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="app_code_delete", methods={"POST"})
+     */
+    public function deleteCode(Request $request, Code $code, CodeRepository $codeRepository): Response
+    {
+        $user=$this->getUser();
+        if($user!==$code->getUser()&&!$user->isAdmin())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
+        if(sizeof($code->getSessionUsers())>0)
+        {
+            $this->addFlash('warning','Nie można usunąć tego kodu');
+        }else{
+            if ($this->isCsrfTokenValid('delete'.$code->getId(), $request->request->get('_token'))) {
+                $codeRepository->remove($code, true);
+                $this->addFlash('success','Usunięto kod');
+            }
+        }
+        return $this->redirectToRoute('app_my_codes', [], Response::HTTP_SEE_OTHER);
     }
 }

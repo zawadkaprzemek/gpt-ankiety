@@ -167,3 +167,9 @@ body{
 .logic-info li{
     margin-bottom: 5px;
 }
+
+.drag-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

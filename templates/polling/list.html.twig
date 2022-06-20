@@ -3,6 +3,14 @@
 {% block title %}Lista ankiet{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
+
+<div class="btn-group btn-group-sm mb-5">
+<a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary active">Moje ankiety</a>
+<a href="{{path('app_my_codes')}}" class="btn btn-outline-primary">Moje kody</a>
+</div>
+{% endif %}
+
 
 <h1>Moje ankiety</h1>
 
