@@ -46,6 +46,7 @@ class SessionUserRepository extends ServiceEntityRepository
             ->join('su.code','c')
             ->andWhere('c.polling = :polling')
             ->setParameter('polling',$polling)
+            ->addOrderBy('su.id')
             ->getQuery()
             ->getResult()
             ;

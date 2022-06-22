@@ -66,6 +66,18 @@ class VoteRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getLastVoteForUser(SessionUser $user)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.sessionUser = :user')
+            ->setParameter('user', $user)
+            ->addOrderBy('v.updatedAt','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return Vote[] Returns an array of Vote objects
 //     */

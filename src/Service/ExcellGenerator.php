@@ -4,7 +4,6 @@
 namespace App\Service;
 
 
-use App\Entity\MeetingVoting;
 use App\Entity\Polling;
 use App\Entity\Question;
 use App\Entity\SessionUser;
@@ -16,17 +15,20 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExcellGenerator
 {
     private ParameterBagInterface $parameterBag;
     private EntityManagerInterface $em;
+    private PollingService $service;
+
+    const LETTERS= ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     
-    public function __construct(ParameterBagInterface $parameterBag,EntityManagerInterface $em)
+    public function __construct(ParameterBagInterface $parameterBag,EntityManagerInterface $em,PollingService $pollingService)
     {
         $this->parameterBag = $parameterBag;
         $this->em=$em;
+        $this->service=$pollingService;
     }
 
     private function getParameter(string $name)
@@ -34,13 +36,19 @@ class ExcellGenerator
         return $this->parameterBag->get($name);
     }
 
-    public function createExcel(Polling $polling): Spreadsheet
+    public function createExcel(Polling $polling,bool $split=false): Spreadsheet
     {
         $excell=new Spreadsheet();
         $excell->getDefaultStyle()->getFont()->setName('Arial');
         $excell->getDefaultStyle()->getFont()->setSize(8);
 
-        return $this->generateSheets($excell,$polling);
+        if($split)
+        {
+            return $this->generateSheets($excell,$polling);
+        }else{
+            return $this->generateOneSheet($excell,$polling);
+        }
+        
      
     }
 
@@ -66,12 +74,50 @@ class ExcellGenerator
         return $excell;
     }
 
+    private function generateOneSheet(Spreadsheet $excell,Polling $polling)
+    {
+        $sheet=$excell->getActiveSheet();
+        $sheet->setTitle('Analiza');
+        $sheet->getDefaultColumnDimension()->setWidth(20);
+        $sheet= $this->printResultHeaders($sheet);
+        $questions=$polling->getQuestions();
+        $number=4;
+        foreach ($questions as $key => $question)
+        {
+            if($number<sizeof(self::LETTERS))
+            {
+                $letter=self::LETTERS[$number];
+            }else{
+                $prefix_num=floor($number/sizeof(self::LETTERS),0);
+                $letter_num=$number - $prefix_num* sizeof(self::LETTERS);
+                $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
+            }
+            
+            $sheet->setCellValue($letter."1",($key+1)." ".$question->getContent());
+            $number++;
+        }
+        $sheet=$this->printUsersAnswers($sheet,$polling,$questions);
+        return $excell;
+    }
+
     private function saveFile($excell)
     {
         $writer= new Xlsx($excell);
         $writer->setOffice2003Compatibility(true);
         $file=$this->getParameter('excell_xlsx_path').'course_raport.xlsx';
         $writer->save($file);
+    }
+
+    private function printResultHeaders(Worksheet $sheet)
+    {
+        $sheet
+            ->setCellValue('A1','ID')
+            ->setCellValue('B1','Identyfikator sieci')
+            ->setCellValue('C1','Data rozpoczęcia')
+            ->setCellValue('D1','Czas wypełniania')
+            ;
+
+        return $sheet;
     }
 
     private function printVotingTitle(Worksheet $sheet, Question $question)
@@ -86,6 +132,88 @@ class ExcellGenerator
             ;
         $sheet=$this->printAnswers($sheet,$question);
         return $this->printVotesHeaders($sheet);
+    }
+
+    private function printUsersAnswers(Worksheet $sheet,Polling $polling,$questions)
+    {
+        /** @var $users SessionUser[] */
+        $users=$this->service->getPollingUsers($polling);
+
+        $number=3;
+        $usedAnswers=[];
+        foreach($users as $user)
+        {
+            $diff=$this->calculateDiff($user);
+            $sheet
+                ->setCellValue('A'.$number,$user->getId())
+                ->setCellValue('B'.$number,$user->getCode()->getContent())
+                ->setCellValue('C'.$number,$user->getCreatedAt()->format('d-m-Y H:i'))
+                ->setCellValue('D'.$number,$diff)
+                ;
+
+            $letter_number=4;
+            /** @var $votes Vote[] */
+            $votes=$user->getVotes();
+            foreach ($questions as $question)
+            {
+                $find=false;
+                if($letter_number<sizeof(self::LETTERS)){
+                    $letter=self::LETTERS[$letter_number];
+                }else{
+                    $prefix_num=floor($letter_number/sizeof(self::LETTERS),0);
+                    $letter_num=$letter_number - $prefix_num* sizeof(self::LETTERS);
+                    $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
+                }
+
+                foreach($votes as $vote)
+                {
+                    if($vote->getQuestion()==$question)
+                    {
+                        $find=true;
+                        if($question->getType()->getId()==2){
+                            $answerId=$vote->getAnswer()[0];
+                            if(array_key_exists($answerId,$usedAnswers))
+                            {
+                                $answer=$usedAnswers[$answerId];
+                            }else{
+                                $answer=$this->service->getAnswerContent($answerId);
+                                $usedAnswers[$answerId]=$answer;
+                            }
+                            
+                        }else{
+                            $answer=$vote->getAnswer()[0];
+                        }
+
+                        $sheet->setCellValue($letter.$number,$answer);
+                    }
+                }
+
+                if(!$find)
+                {
+                    $sheet->setCellValue($letter.$number,'');
+                }
+                $letter_number++;
+            }
+
+            $number++;
+        }
+
+        return $sheet;
+    }
+
+    private function calculateDiff(SessionUser $user)
+    {
+        $lastVote=$this->service->getLastVoteTimeForUser($user);
+        if($lastVote==null)
+        {
+            $lastVote=$user->getUpdatedAt();
+        }
+        $diff=$user->getCreatedAt()->diff($lastVote);
+        $days=$diff->days*24*60*60;
+        $hours=$diff->h*60*60;
+        $minutes=$diff->i*60;
+        $seconds=$diff->s;
+        return $days+$hours+$minutes+$seconds;
     }
 
     private function printAnswers(Worksheet $sheet,Question $question)

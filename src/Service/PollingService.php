@@ -3,9 +3,12 @@
 namespace App\Service;
 
 use App\Entity\Page;
+use App\Entity\Vote;
 use App\Entity\Logic;
+use App\Entity\Answer;
 use App\Entity\Polling;
 use App\Entity\Question;
+use App\Entity\SessionUser;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PollingService
@@ -120,5 +123,29 @@ class PollingService
                 
         }
         return $matched;
+    }
+
+    public function getPollingUsers(Polling $polling)
+    {
+        /** @var $repo SessionUserRepository */
+        $repo=$this->em->getRepository(SessionUser::class);
+
+        return $repo->getAllUsersForPolling($polling);
+    }
+
+    public function getAnswerContent(int $answerId):string
+    {
+        $repo=$this->em->getRepository(Answer::class);
+        $answer=$repo->find($answerId);
+
+        return ($answer!=null ? $answer->getContent() : 'brak odpowiedzi');
+    }
+
+    public function getLastVoteTimeForUser(SessionUser $user)
+    {
+        $repo=$this->em->getRepository(Vote::class);
+        $lastVote=$repo->getLastVoteForUser($user);
+
+        return ($lastVote!=null ? $lastVote->getUpdatedAt() : null);
     }
 }

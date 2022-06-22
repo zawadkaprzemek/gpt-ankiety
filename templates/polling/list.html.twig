@@ -27,9 +27,21 @@
     <p>{{polling.questions|length}} pytań</td>
 
     <div class="btn-group btn-group-sm w-100">
-    <a class="btn btn-secondary" href="{{path('app_polling_panel',{'id':polling.id})}}">Zobacz</a>
-    <a class="btn btn-secondary" href="{{path('app_polling_edit',{'id':polling.id})}}">Edytuj</a>
-    <a class="btn btn-secondary" href="{{path('app_polling_results_excell',{'id':polling.id})}}">Wyniki</a>
+        <a class="btn btn-secondary" href="{{path('app_polling_panel',{'id':polling.id})}}">Zobacz</a>
+        <a class="btn btn-secondary" href="{{path('app_polling_edit',{'id':polling.id})}}">Edytuj</a>
+        
+        <div class="dropdown">
+        <a class="btn btn-secondary btn-sm dropdown-toggle rounded-left-0" href="#" role="button" id="dropdownMenuLink{{polling.id}}" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+            Wyniki
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink{{polling.id}}">
+            <a class="dropdown-item" href="{{path('app_polling_analysis_excell',{'id':polling.id})}}">Analiza</a>
+            <a class="dropdown-item" href="{{path('app_polling_results_excell',{'id':polling.id})}}">Wyniki</a>
+        </div>
+        </div>
+
+
     </div>
 </div>
 </div>

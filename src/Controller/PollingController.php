@@ -402,6 +402,33 @@ class PollingController extends AbstractController
         return $streamedResponse->send();
     }
 
+    /**
+     * @Route("/{id}/analiza/pobierz", name="app_polling_analysis_excell")
+     * @param Polling $polling
+     * @param ExcellGenerator $generator
+     */
+    public function pollingAnalysis(Polling $polling,ExcellGenerator $generator)
+    {
+        $user=$this->getUser();
+        if($user!==$polling->getUser()&&!$user->isAdmin())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $filename=str_replace(' ','_',strtolower($polling->getName())).'_analiza.xlsx';
+        $streamedResponse = new StreamedResponse();
+        $streamedResponse->setCallback(function () use ($generator, $polling) {
+            $excel=$generator->createExcel($polling,true);
+            $writer =  new Xlsx($excel);
+            $writer->save('php://output');
+        });
+        $streamedResponse->setStatusCode(Response::HTTP_OK);
+        $streamedResponse->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        return $streamedResponse->send();
+    }
+
 
     /**
      * @Route("/{id}/{q_id}/ustaw_pozycje", name="app_polling_question_update_position", methods={"POST"})
