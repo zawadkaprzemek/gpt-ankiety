@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_polling_duplicate', {'id':polling.id}) }}"
+      onsubmit="return confirm('Na pewno chcesz skopiować tą ankietę?');">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('duplicate' ~ polling.id) }}">
+    <button class="btn btn-sm btn-outline-primary">Duplikuj ankietę</button>
+</form>

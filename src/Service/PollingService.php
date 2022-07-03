@@ -24,6 +24,7 @@ class PollingService
 
     public function getPollingQuestions(Polling $polling,Page $page)
     {
+        /** @var $repo QuestionRepository */
         $repo=$this->em->getRepository(Question::class);
         return $repo->getPollingQuestionsSorted(
             $polling,
@@ -33,6 +34,7 @@ class PollingService
 
     public function getPollingMaxPageNumber(Polling $polling)
     {
+        /** @var $repo PageRepository */
         $repo=$this->em->getRepository(Page::class);
         return $repo->getMaxPageNumber($polling)['number'];
     }
@@ -45,6 +47,7 @@ class PollingService
 
     public function updateQuestionsSort(Question $question)
     {
+        /** @var $repo QuestionRepository */
         $repo=$this->em->getRepository(Question::class);
         $questions=$repo->getQuestionsFromPageWithHiggerSort($question->getPolling(),$question->getPage(),$question->getSort());
         foreach($questions as $quest)
@@ -57,6 +60,7 @@ class PollingService
 
     public function updatePagesNumber(Page $page)
     {
+        /** @var $repo PageRepository */
         $repo=$this->em->getRepository(Page::class);
         $pages=$repo->getPagesFromPollingWithHiggerNumber($page);
         foreach($pages as $tmp_page)
@@ -143,9 +147,92 @@ class PollingService
 
     public function getLastVoteTimeForUser(SessionUser $user)
     {
+        /** @var $repo VoteRepository */
         $repo=$this->em->getRepository(Vote::class);
         $lastVote=$repo->getLastVoteForUser($user);
 
         return ($lastVote!=null ? $lastVote->getUpdatedAt() : null);
+    }
+
+    public function duplicatePolling(Polling $polling)
+    {
+        $d_polling=clone $polling;
+
+        $pages=[];
+        foreach($d_polling->getPages() as $page)
+        {
+            $d_polling->removePage($page);
+            $d_page=clone $page;
+            $pages[$page->getNumber()]=$d_page;
+            $d_polling->addPage($d_page);
+
+        }
+        foreach($d_polling->getQuestions() as $question)
+        {
+            $d_question= $this->duplicateQuestion($question);
+            $d_question->setPolling($d_polling);
+            $d_question->setPage($pages[$question->getPage()->getNumber()]);
+            $d_question->setSort($question->getSort());
+        }
+
+        foreach($d_polling->getCodes() as $code)
+        {
+            $d_polling->removeCode($code);
+        }
+        $this->em->persist($d_polling);
+        $this->em->flush();
+
+        return $d_polling;
+    }
+
+    public function duplicateQuestion(Question $question)
+    {
+        $d_question=clone $question;
+        $org_answers=$d_question->getAnswers();
+        foreach($org_answers as $ans)
+        {
+            $d_answ=clone $ans;
+            $d_question->removeAnswer($ans);
+            $d_question->addAnswer($d_answ);
+        }
+
+        $questions=$this->getPollingQuestions($d_question->getPolling(),$d_question->getPage());
+        $d_question->setSort(sizeof($questions)+1);
+        $this->em->persist($d_question->getPolling());
+        $this->em->persist($d_question);
+        $this->em->flush();
+        foreach($question->getLogics() as $logic)
+        {
+            $d_logic=clone $logic;
+            $d_logic->setQuestion($d_question);
+            if($d_question->getType()->getId()==2)
+            {
+                $ifAction=$d_logic->getIfAction();
+                if($ifAction['begin_action_value']!=null)
+                {
+                    $orgAnswer=$this->getAnswer($ifAction['begin_action_value']);
+                    $d_answer_id=null;
+                    foreach($d_question->getAnswers() as $answer)
+                    {
+                        if($answer->getContent()===$orgAnswer->getContent())
+                        {
+                            $d_answer_id=$answer->getId();
+                        }
+                    }
+                    $ifAction['begin_action_value']=$d_answer_id;
+                    $d_logic->setIfAction($ifAction);
+                }
+                
+            }
+            $this->em->persist($d_logic);
+            $this->em->flush();
+        }
+
+        return $d_question;
+    }
+
+    private function getAnswer(int $id):Answer
+    {
+        return $this->em->getRepository(Answer::class)->find($id);
     }
 }

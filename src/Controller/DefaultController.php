@@ -28,11 +28,14 @@ class DefaultController extends AbstractController
     {
         $form=$this->createForm(EnterPollingType::class,[]);
         $form->handleRequest($request);
+        $pollingCode=$request->query->get('kod_ankiety');
+        //dd($pollingCode);
 
-        if($form->isSubmitted()&&$form->isValid())
+        if(($form->isSubmitted()&&$form->isValid())||($pollingCode!==null&&$pollingCode!==""))
         {
             $em=$this->getDoctrine()->getManager();
             $data=$form->getData();
+            $data['code']=$pollingCode;
             $code=$em->getRepository(Code::class)->findOneBy(['content'=>$data['code']]);
             if($code!==null)
             {

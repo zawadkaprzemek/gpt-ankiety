@@ -45,7 +45,7 @@ class Polling
     private $pages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="polling")
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="polling", cascade={"persist", "remove"})
      */
     private $questions;
 
@@ -242,5 +242,19 @@ class Polling
         $this->thankYouText = $thankYouText;
 
         return $this;
+    }
+
+    public function __clone()
+    {
+        $this->id=null;
+        $this->name.=" - Kopia";
+        $this->createdAt= new \DateTime();
+        $this->hash=uniqid();
+    }
+
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

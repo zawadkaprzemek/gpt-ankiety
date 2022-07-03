@@ -20,7 +20,7 @@ class Page
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Polling::class, inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity=Polling::class, inversedBy="pages", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $polling;

@@ -586,9 +586,7 @@ class PollingController extends AbstractController
         if ($this->isCsrfTokenValid('duplicate'.$question->getId(), $request->request->get('_token'))) 
         {    
 
-            $d_question=clone $question;
-            $questions=$this->pollingService->getPollingQuestions($polling,$page);
-            $d_question->setSort(sizeof($questions)+1);
+            $d_question=$this->pollingService->duplicateQuestion($question);
             $em->persist($d_question);
             $em->flush();
 
@@ -596,5 +594,29 @@ class PollingController extends AbstractController
         }
 
         return $this->redirectToRoute('app_polling_panel',['id'=>$polling->getId(),'page'=>$page->getNumber()],Response::HTTP_SEE_OTHER);
+    }
+
+    /** 
+     * @Route("/{id}/duplikuj", name="app_polling_duplicate", methods={"POST"})
+    */
+    public function duplicatePolling(Polling $polling,Request $request,int $page=1)
+    {
+        $user=$this->getUser();
+        if($user!==$polling->getUser()&&!$user->isAdmin())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+        $em=$this->getDoctrine()->getManager();
+        if ($this->isCsrfTokenValid('duplicate'.$polling->getId(), $request->request->get('_token'))) 
+        {    
+
+            $d_polling=$this->pollingService->duplicatePolling($polling);
+            $em->persist($d_polling);
+            $em->flush();
+
+            $this->addFlash('success','Powielono ankietę');
+        }
+
+        return $this->redirectToRoute('app_polling_panel',['id'=>$d_polling->getId(),'page'=>1],Response::HTTP_SEE_OTHER);
     }
 }
