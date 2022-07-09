@@ -58,7 +58,7 @@ class DefaultController extends AbstractController
                                 'form' => $form->createView(),
                             ]);
                         }
-                        return $this->redirectToRoute('app_vote_thankyou_page',['hash'=>$code->getPolling()->getHash()]);
+                        //return $this->redirectToRoute('app_vote_thankyou_page',['hash'=>$code->getPolling()->getHash()]);
                     }
 
                     if($cookie==null)
