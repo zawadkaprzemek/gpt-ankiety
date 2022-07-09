@@ -35,7 +35,11 @@ class DefaultController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $data=$form->getData();
-            $data['code']=$pollingCode;
+            if($pollingCode!==null&&$pollingCode!=="")
+            {
+                $data['code']=$pollingCode;
+            }
+            
             $code=$em->getRepository(Code::class)->findOneBy(['content'=>$data['code']]);
             if($code!==null)
             {
