@@ -1,8 +1,9 @@
 $(document).ready(function(){
 
-const QUESTION_PROTOTYPE='<div class="form-group row" data-item="__X__">'+
-'<div class="col-12 col-sm-3 col-form-label"><label for="question_answers___name___content" class="required">Odpowiedź __X__</label></div>'+
-'<div class="col-11 col-sm-8"><input type="text" id="question_answers___name___content" name="question[answers][__name__][content]" required="required" class="form-control" /></div>'+
+const QUESTION_PROTOTYPE='<div class="form-group row" data-item="__X__" data-index="__NUMBER__">'+
+'<div class="col-1 drag-icon"><i class="fa-solid fa-sort"></i></div>'+
+'<div class="col-11 col-sm-3 col-form-label"><label for="question_answers___name___content" class="required">Odpowiedź __X__</label></div>'+
+'<div class="col-11 col-sm-7"><input type="text" id="question_answers___name___content" name="question[answers][__name__][content]" required="required" class="form-control" /></div>'+
 '<div class="col-1 text-right"><button class="btn btn-dark btn-sm btn-delete-answer" type="button">Usuń</button></div>'+
 '</div>';
 let questionForm=$('#questionForm');
@@ -50,7 +51,7 @@ function showQuestionTypeFields(type)
             $('.type-2').addClass('d-none');
             $('.type-2 input').prop('required',false).prop('disabled',true);
             $('.type-3').removeClass('d-none');
-            $('.type-3 input').prop('required',true).prop('disabled',false);
+            $('.type-3 input').prop('required',false).prop('disabled',false);
             break;
         default:
             $('.type-2').addClass('d-none');
@@ -106,12 +107,24 @@ $('.add-answer').on('click',function(){
     let list = jQuery(jQuery(this).attr('data-list-selector'));
     let newWidget = QUESTION_PROTOTYPE;
     let counter = $('.answers-list .answer').length;
+    let tag=list.attr('data-widget-tags');
     newWidget = newWidget.replace(/__name__/g, counter);
     counter++;
-    newWidget=newWidget.replaceAll('__X__',counter);
+    newWidget=newWidget.replaceAll('__X__',counter).replaceAll('__NUMBER__',counter-1);
+    tag=tag.replaceAll('__X__',counter);
     list.data('widget-counter', counter);
-    var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+    var newElem = jQuery(tag).html(newWidget);
         newElem.appendTo(list);
+        
+        let answers = document.querySelectorAll('.sortable .answer');
+        answers.forEach(function (answer) {
+          answer.addEventListener('dragstart', handleDragStart);
+          answer.addEventListener('dragover', handleDragOver);
+          answer.addEventListener('dragenter', handleDragEnter);
+          answer.addEventListener('dragleave', handleDragLeave);
+          answer.addEventListener('dragend', handleDragEnd);
+          answer.addEventListener('drop', handleDropAnswer);
+        });
 });
 
 
@@ -276,7 +289,17 @@ function handleDragStart(e) {
         updatePositions();
     }
     
-    //console.log($('.sortable .question').index(this));
+    return false;
+  }
+
+  function handleDropAnswer(e) {
+    e.stopPropagation(); // stops the browser from redirecting.
+    if (dragSrcEl !== this) {
+        dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData('text/html');
+        updateAnswersPositions();
+    }
+    
     return false;
   }
   
@@ -290,6 +313,16 @@ function handleDragStart(e) {
     item.addEventListener('drop', handleDrop);
   });
 
+
+  let answers = document.querySelectorAll('.sortable .answer');
+  answers.forEach(function (answer) {
+    answer.addEventListener('dragstart', handleDragStart);
+    answer.addEventListener('dragover', handleDragOver);
+    answer.addEventListener('dragenter', handleDragEnter);
+    answer.addEventListener('dragleave', handleDragLeave);
+    answer.addEventListener('dragend', handleDragEnd);
+    answer.addEventListener('drop', handleDropAnswer);
+  });
 
   function updatePositions()
   {
@@ -315,6 +348,25 @@ function handleDragStart(e) {
                     
                 }
             });
+        }
+    });
+  }
+
+  function updateAnswersPositions()
+  {
+    let items = document.querySelectorAll('.sortable .answer');
+    items.forEach(function (item) {
+        let data_index= $(item).find('.form-group').data('index');
+        let index= $('.sortable .answer').index(item);
+        if(data_index!==index)
+        {
+            let label=$(item).find('label');
+            label.prop('for',label.prop('for').replace(data_index,index));
+            label.text('Odpowiedź '+(index+1));
+            let input= $(item).find('input');
+            input.attr('id',input.attr('id').replace(data_index,index));
+            input.prop('name',input.prop('name').replace(data_index,index));
+            $(item).find('.form-group').attr('data-item',data_index).attr('data-index',index);
         }
     });
   }

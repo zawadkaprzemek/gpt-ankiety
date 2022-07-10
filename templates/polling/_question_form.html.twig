@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="row type-3 value-labels d-none">
+    <div class="row value-labels d-none">
         <div class="col-12 col-sm-4">
             {{form_row(form.minValText)}}
         </div>
@@ -71,19 +71,20 @@
 data-list-selector=".answers-list"
 >Dodaj odpowiedź</button>
 <h5 class="mb-3">{% trans %}answers{% endtrans %}:</h5>
-    <div class="answers-list"
+    <div class="answers-list sortable"
     data-prototype="{{ form_row(form.answers.vars.prototype)|e }}" 
-data-widget-tags="{{ '<div class="answer"></div>'|e }}"
+data-widget-tags="{{ '<div class="answer" draggable="true" rel="__X__" data-number="__X__"></div>'|e }}"
 data-widget-counter="{{ form.answers|length }}"
     >
     {% for key,answer in form.answers %}
-    <div class="answer">
-    <div class="row form-group" data-item="{{(key+1)}}">
+    <div class="answer" draggable="true" rel="{{(key+1)}}" data-number="{{key+1}}">
+    <div class="row form-group" data-item="{{(key+1)}}" data-index="{{key}}">
         {% for child in answer.children %}
-            <div class="col-12 col-sm-3 col-form-label">
+            <div class="col-1 drag-icon"><i class="fa-solid fa-sort"></i></div>
+            <div class="col-11 col-sm-3 col-form-label">
                 {{ form_label(child)| replace({"__X__": key+1})|raw }}
             </div>
-            <div class="col-11 col-sm-8">
+            <div class="col-11 col-sm-7">
                 {{ form_widget(child) }}
             </div>
             <div class="col-1 text-right"><button class="btn btn-dark btn-sm btn-delete-answer" type="button">Usuń</button></div>
