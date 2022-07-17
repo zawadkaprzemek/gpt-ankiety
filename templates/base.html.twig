@@ -21,8 +21,14 @@
         <script src="https://kit.fontawesome.com/e5e6caf8de.js" crossorigin="anonymous"></script>
     {% endblock %}
 </head>
-<body class="lang_{{ app.request.locale }}">
+{%set _route=app.request.attributes.get('_route')%}
+<body class="lang_{{ app.request.locale}}">
+ {%if _route in without_header_routes %}
+ <div class="background">
+{%endif%}
+
 {{ include('default/header.html.twig') }}
+<main>
 <div class="container">
     <div class="row">
         <div class="col-12 alert-container">
@@ -46,6 +52,8 @@
         </div>
     </div>
 </div>
+</div>
+</main>
 {% block javascripts %}
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script>

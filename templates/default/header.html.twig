@@ -1,3 +1,5 @@
+{%set _route=app.request.attributes.get('_route')%}
+{%if _route not in without_header_routes%}
 <header class="bg-dark">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -15,10 +17,6 @@
                             {% if app.user %}
                                 {% if is_granted("ROLE_ADMIN") %}
                                 {% endif %}
-                                {#<a class="dropdown-item" href="{{ path('app_profile')}}">{% trans %}profile.my{% endtrans %}</a>
-                                <a class="dropdown-item" href="{{ path('app_profile_edit')}}">{% trans %}profile.edit{% endtrans %}</a>
-                                <a class="dropdown-item" href="{{ path('app_profile_change_password')}}">{% trans %}profile.change_password{% endtrans %}</a>
-                                <a class="dropdown-item" href="#">{% trans %}profile.settings{% endtrans %}</a>#}
                                 <a class="dropdown-item" href="{{path('app_logout')}}">{% trans %}logout{% endtrans %}</a>
                             {% else %}
                                 <a class="dropdown-item" href="{{ path('app_login')}}">{% trans %}login{% endtrans %}</a>
@@ -32,7 +30,8 @@
         </nav>
     </div>
 </header>
-<header class="bg-light">
+{%endif%}
+<header>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{path('app_home')}}"><img src="{{ asset('images/oopiece_logo.png') }}" style="max-width: 220px;" /></a>
