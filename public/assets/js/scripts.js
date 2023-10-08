@@ -398,6 +398,23 @@ function handleDragStart(e) {
         elem.find('select').prop('disabled',false);
     }
   }
+
+    $('.filter-container .btn').click(function () {
+        let polling = $(this).attr('data-filter');
+        showCodes(polling);
+        $(".filter-container .btn").removeClass("active");
+        $(this).addClass("active");
+    });
+
+    function showCodes(polling)
+    {
+        if (polling === "all") {
+            $('.polling-row').show('2000');
+        }else{
+            $(".polling-row").not('.polling-row-' + polling).hide('4000');
+            $('.polling-row').filter('.polling-row-' + polling).show('4000');
+        }
+    }
 });
 
 

@@ -3,19 +3,40 @@
 {% block title %}Moje kody{% endblock %}
 
 {% block body %}
-{% if is_granted('ROLE_USER') %}
-
+    {% if polling is defined %}
+<div class="row">
+    <div class="col-9 mb-3">
+        <div class="btn-group btn-group-sm">
+            <a href="{{path('app_polling_panel',{'id':polling.id})}}" class="btn btn-outline-primary">Pytania</a>
+            <a href="{{path('app_polling_logic_list',{id:polling.id})}}" class="btn btn-outline-primary">Logika</a>
+            <a href="{{path('app_polling_codes_list',{id:polling.id})}}" class="btn btn-outline-primary active">Kody</a>
+        </div>
+    </div>
+</div>
+        {% else %}
 <div class="btn-group btn-group-sm mb-5">
 <a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary">Moje ankiety</a>
 <a href="{{path('app_my_codes')}}" class="btn btn-outline-primary active">Moje kody</a>
 </div>
-{% endif %}
+            {% endif %}
+
 <h1>Moje kody</h1>
 
 
 <div class="btn-group btn-group-sm">
     <a href="{{path('app_codes_generate')}}" class="btn btn-primary">Generuj kody</a>
 </div>
+    {% if pollings is defined %}
+    <div class="filter-container my-3">
+        <p>Filturuj kody po ankiecie</p>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-secondary btn-sm active" data-filter="all">Wszystkie</button>
+            {% for  key,polling in pollings %}
+                <button type="button" class="btn btn-outline-secondary btn-filter btn-sm" data-filter="{{ key }}">{{ polling }}</button>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 <table class="table table-stripped text-center">
 <thead>
 <tr>
@@ -28,7 +49,7 @@
 </thead>
 <tbody>
 {% for code in codes|reverse %}
-<tr>
+<tr class="polling-row polling-row-{{ code.polling.id }}">
 <td class="text-left">{{code.content}}</td>
 <td>{{code.polling.name}}</td>
 <td>{{code.sessionUsers|length}}/{%if code.multi%}<span class="font-big">&#8734;</span>{%else%}1{%endif%}</td>

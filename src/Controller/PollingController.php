@@ -17,6 +17,7 @@ use App\Repository\PageRepository;
 use App\Repository\PollingRepository;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -154,7 +155,7 @@ class PollingController extends AbstractController
     /**
      * @Route("/{id}/{page}/pytanie/nowe", name="app_polling_add_question", requirements={"page"="\d+"}, defaults={"page":1})
      */
-    public function addQuestion(Polling $polling,int $page=1,Request $request)
+    public function addQuestion(Request $request, Polling $polling,int $page=1)
     {
         $user=$this->getUser();
         if($user!==$polling->getUser()&&!$user->isAdmin())
@@ -194,7 +195,7 @@ class PollingController extends AbstractController
     /**
      * @Route("/{id}/{page}/delete", name="app_polling_delete_page", requirements={"page"="\d+"}, defaults={"page":1}, methods={"POST"})
      */
-    public function deletePage(Polling $polling,int $page=1,PageRepository $pageRepository,Request $request)
+    public function deletePage(Polling $polling,PageRepository $pageRepository,Request $request,int $page=1): RedirectResponse
     {
         $user=$this->getUser();
         if($user!==$polling->getUser()&&!$user->isAdmin())
@@ -219,7 +220,7 @@ class PollingController extends AbstractController
      * @Route("/{id}/{page}/pytanie/{q_id}/edycja", name="app_polling_edit_question", requirements={"page"="\d+"}, defaults={"page":1})
      * @ParamConverter("question", options={"mapping": {"q_id": "id"}})
      */
-    public function editQuestion(Polling $polling,int $page=1, Question $question,Request $request)
+    public function editQuestion(Polling $polling, Question $question,Request $request,int $page=1)
     {
         $user=$this->getUser();
         if($user!==$polling->getUser()&&!$user->isAdmin())
@@ -277,7 +278,7 @@ class PollingController extends AbstractController
     /**
      * @Route("/{id}/{page}/edycja", name="app_polling_edit_page", requirements={"page"="\d+"}, defaults={"page":1})
      */
-    public function editPage(Polling $polling,int $page=1, Request $request)
+    public function editPage(Request $request, Polling $polling,int $page=1)
     {
         $user=$this->getUser();
         if($user!==$polling->getUser()&&!$user->isAdmin())
@@ -355,7 +356,7 @@ class PollingController extends AbstractController
      * @Route("/{id}/{page}/pytanie/{q_id}/delete", name="app_polling_delete_question", requirements={"page"="\d+"}, defaults={"page":1}, methods={"POST"})
      * @ParamConverter("question", options={"mapping": {"q_id": "id"}})
      */
-    public function deleteQuestion(Polling $polling,int $page=1,Request $request, Question $question): Response
+    public function deleteQuestion(Request $request, Polling $polling, Question $question, int $page=1): Response
     {
         $user=$this->getUser();
         if($user!==$polling->getUser()&&!$user->isAdmin())
@@ -618,5 +619,19 @@ class PollingController extends AbstractController
         }
 
         return $this->redirectToRoute('app_polling_panel',['id'=>$d_polling->getId(),'page'=>1],Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/lista_kodow", name="app_polling_codes_list")
+     * @param Polling $polling
+     * @return Response
+     */
+    public function codesList(Polling $polling): Response
+    {
+        $codes=$polling->getCodes();
+        return $this->render('code/index.html.twig', [
+            'codes'=>$codes,
+            'polling'=>$polling
+        ]);
     }
 }

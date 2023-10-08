@@ -25,10 +25,17 @@ class CodeController extends AbstractController
     {
         /** @var User $user */
         $user=$this->getUser();
+        if($user->isAdmin())
+        {
+            $em=$this->getDoctrine()->getManager();
+            $codes=$em->getRepository(Code::class)->findAll();
+        }else{
+            $codes=$user->getCodes();
+        }
 
-        $codes=$user->getCodes();
         return $this->render('code/index.html.twig', [
-            'codes'=>$codes
+            'codes'=>$codes,
+            'pollings'=>$this->generatePollingsArray($codes)
         ]);
     }
 
@@ -90,6 +97,16 @@ class CodeController extends AbstractController
                 $this->addFlash('success','Usunięto kod');
             }
         }
-        return $this->redirectToRoute('app_my_codes', [], Response::HTTP_SEE_OTHER);
+        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
+    }
+
+    private function generatePollingsArray(array $codes): array
+    {
+        $pollings=[];
+        foreach($codes as $code)
+        {
+            $pollings[$code->getPolling()->getId()]=$code->getPolling()->getName();
+        }
+        return $pollings;
     }
 }
