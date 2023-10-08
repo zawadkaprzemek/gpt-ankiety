@@ -16,7 +16,6 @@ class LogicType extends AbstractType
     {
         $data=$options['data'];
         $question=$data->getQuestion();
-        dump($data);
         $builder
             ->add('begin_action',ChoiceType::class,[
                 'label'=>'Jeżeli odpowiadający...',
