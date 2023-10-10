@@ -27,6 +27,8 @@ input:checked+label.list-group-item{
 label.required::before,p.required::after{
     content: "*";
     color:red;
+    font-size: 28px;
+    line-height: 16px;
 }
 
 textarea{

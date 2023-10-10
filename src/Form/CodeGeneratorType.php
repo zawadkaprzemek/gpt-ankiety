@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Polling;
+use App\Entity\User;
+use App\Repository\CodeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,10 +19,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class CodeGeneratorType extends AbstractType
 {
     private $token;
+    private CodeRepository $repository;
 
-    public function __construct(TokenStorageInterface $token)
+    public function __construct(TokenStorageInterface $token, CodeRepository $repository)
     {
         $this->token = $token;
+        $this->repository = $repository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -46,7 +50,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => $user->getPollings(),
+                'choices' => ($user->isAdmin() ? $this->repository->findAll() : $user->getPollings()),
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])
