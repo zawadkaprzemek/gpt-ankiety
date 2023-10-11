@@ -12,21 +12,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CodeGeneratorType extends AbstractType
 {
-    private $token;
-
-    public function __construct(TokenStorageInterface $token)
-    {
-        $this->token = $token;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User $user */
-        $user=$this->token->getToken()->getUser();
+        $pollings = $options['pollings'];
         $builder
             ->add('prefix',TextType::class)
             ->add('count',NumberType::class,[
@@ -46,7 +37,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => $user->getPollings(),
+                'choices' => $pollings,
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])

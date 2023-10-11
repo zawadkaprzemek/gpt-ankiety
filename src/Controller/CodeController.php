@@ -46,12 +46,17 @@ class CodeController extends AbstractController
     {
          /** @var User $user */
          $user=$this->getUser();
-         $form=$this->createForm(CodeGeneratorType::class, []);
+        $em=$this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Code::class);
+         $form=$this->createForm(CodeGeneratorType::class, [],
+             [
+                'pollings'=> $user->isAdmin() ? $repo->findAll() : $user->getPollings()
+             ]
+         );
          $form->handleRequest($request);
          if($form->isSubmitted()&&$form->isValid())
          {
             $data=$form->getData();
-            $em=$this->getDoctrine()->getManager();
             for($i=0;$i<$data['count'];$i++)
             {
                 /** @var Code $code */
