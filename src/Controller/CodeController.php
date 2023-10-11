@@ -46,8 +46,7 @@ class CodeController extends AbstractController
     {
          /** @var User $user */
          $user=$this->getUser();
-         $code = new Code();
-         $form=$this->createForm(CodeGeneratorType::class, $code);
+         $form=$this->createForm(CodeGeneratorType::class, []);
          $form->handleRequest($request);
          if($form->isSubmitted()&&$form->isValid())
          {
