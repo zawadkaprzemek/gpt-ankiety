@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class CodeGeneratorType extends AbstractType
 {
     private $token;
-    private CodeRepository $repository;
+    private $repository;
 
     public function __construct(TokenStorageInterface $token, CodeRepository $repository)
     {
