@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Polling;
 use App\Entity\User;
+use App\Service\PollingService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,12 +13,23 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CodeGeneratorType extends AbstractType
 {
+    private $token;
+    private $pollingService;
+
+    public function __construct(TokenStorageInterface $token, PollingService $pollingService)
+    {
+        $this->token = $token;
+        $this->pollingService = $pollingService;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $pollings = $options['pollings'];
+        /** @var User $user */
+        $user=$this->token->getToken()->getUser();
         $builder
             ->add('prefix',TextType::class)
             ->add('count',NumberType::class,[
@@ -37,7 +49,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => $pollings,
+                'choices' => $this->pollingService->getPollingsToCodeGenerator($user),
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])

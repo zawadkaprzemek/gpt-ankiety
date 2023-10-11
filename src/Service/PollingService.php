@@ -2,13 +2,19 @@
 
 namespace App\Service;
 
+use App\Entity\Code;
 use App\Entity\Page;
+use App\Entity\User;
 use App\Entity\Vote;
 use App\Entity\Logic;
 use App\Entity\Answer;
 use App\Entity\Polling;
 use App\Entity\Question;
 use App\Entity\SessionUser;
+use App\Repository\PageRepository;
+use App\Repository\QuestionRepository;
+use App\Repository\SessionUserRepository;
+use App\Repository\VoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PollingService
@@ -19,6 +25,12 @@ class PollingService
     public function __construct(EntityManagerInterface $manager)
     {
         $this->em=$manager;
+    }
+
+    public function getPollingsToCodeGenerator(User $user)
+    {
+        $repo = $this->em->getRepository(Code::class);
+        return $user->isAdmin() ? $repo->findAll() : $user->getPollings();
     }
 
 
