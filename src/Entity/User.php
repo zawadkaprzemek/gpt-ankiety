@@ -258,7 +258,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPollings(): Collection
     {
-        dd($this->pollings);
         return $this->pollings;
     }
 
