@@ -6,6 +6,7 @@ use App\Entity\Code;
 use App\Entity\User;
 use App\Form\CodeGeneratorType;
 use App\Repository\CodeRepository;
+use App\Service\PollingService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CodeController extends AbstractController
 {
+
+    private PollingService $pollingService;
+
+    public function __construct(PollingService $pollingService)
+    {
+        $this->pollingService = $pollingService;
+    }
     /**
      * @Route("/", name="app_my_codes")
      */
@@ -46,7 +54,7 @@ class CodeController extends AbstractController
     {
          /** @var User $user */
          $user=$this->getUser();
-         $form=$this->createForm(CodeGeneratorType::class,[]);
+         $form=$this->createForm(CodeGeneratorType::class,[],['pollings'=>$this->pollingService->getPollingsToCodeGenerator($user)]);
          $form->handleRequest($request);
          if($form->isSubmitted()&&$form->isValid())
          {

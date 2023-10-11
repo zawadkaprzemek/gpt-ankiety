@@ -18,18 +18,17 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class CodeGeneratorType extends AbstractType
 {
     private $token;
-    private $pollingService;
 
-    public function __construct(TokenStorageInterface $token, PollingService $pollingService)
+    public function __construct(TokenStorageInterface $token)
     {
         $this->token = $token;
-        $this->pollingService = $pollingService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var User $user */
         $user=$this->token->getToken()->getUser();
+        $pollings= $options['pollings'];
         $builder
             ->add('prefix',TextType::class)
             ->add('count',NumberType::class,[
@@ -49,7 +48,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => $this->pollingService->getPollingsToCodeGenerator($user),
+                'choices' => $pollings,
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])
@@ -60,6 +59,7 @@ class CodeGeneratorType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'pollings' => null
         ]);
     }
 }
