@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Code;
 use App\Entity\Page;
 use App\Entity\User;
 use App\Entity\Vote;
@@ -15,7 +14,6 @@ use App\Repository\PageRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\SessionUserRepository;
 use App\Repository\VoteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -29,12 +27,10 @@ class PollingService
         $this->em=$manager;
     }
 
-    public function getPollingsToCodeGenerator(User $user)
+    public function getPollingsToCodeGenerator(User $user): array
     {
-        $repo = $this->em->getRepository(Code::class);
-        dump($repo->findAll());
-        dd((new ArrayCollection($repo->findAll()))->toArray());
-        return $user->isAdmin() ? (new ArrayCollection($repo->findAll()))->toArray() : $user->getPollings()->toArray();
+        $repo = $this->em->getRepository(Polling::class);
+        return $user->isAdmin() ? $repo->findAll() : $user->getPollings()->toArray();
     }
 
 
