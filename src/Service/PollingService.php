@@ -15,8 +15,9 @@ use App\Repository\PageRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\SessionUserRepository;
 use App\Repository\VoteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Constraints\Collection;
+
 
 class PollingService
 {
@@ -31,7 +32,7 @@ class PollingService
     public function getPollingsToCodeGenerator(User $user)
     {
         $repo = $this->em->getRepository(Code::class);
-        return $user->isAdmin() ? new Collection($repo->findAll()) : $user->getPollings();
+        return $user->isAdmin() ? new ArrayCollection($repo->findAll()) : $user->getPollings();
     }
 
 
