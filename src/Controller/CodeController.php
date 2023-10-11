@@ -54,7 +54,7 @@ class CodeController extends AbstractController
     {
          /** @var User $user */
          $user=$this->getUser();
-         $form=$this->createForm(CodeGeneratorType::class,[],['pollings'=>$this->pollingService->getPollingsToCodeGenerator($user)]);
+         $form=$this->createForm(CodeGeneratorType::class,(new Code()),['pollings'=>$this->pollingService->getPollingsToCodeGenerator($user)]);
          $form->handleRequest($request);
          if($form->isSubmitted()&&$form->isValid())
          {

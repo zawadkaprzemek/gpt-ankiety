@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Code;
 use App\Entity\Polling;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,6 +48,7 @@ class CodeGeneratorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => Code::class,
             // Configure your form options here
             'pollings' => null
         ]);
