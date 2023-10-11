@@ -32,6 +32,8 @@ class PollingService
     public function getPollingsToCodeGenerator(User $user)
     {
         $repo = $this->em->getRepository(Code::class);
+        dump($repo->findAll());
+        dd((new ArrayCollection($repo->findAll()))->toArray());
         return $user->isAdmin() ? (new ArrayCollection($repo->findAll()))->toArray() : $user->getPollings()->toArray();
     }
 
