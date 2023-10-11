@@ -32,7 +32,7 @@ class PollingService
     public function getPollingsToCodeGenerator(User $user)
     {
         $repo = $this->em->getRepository(Code::class);
-        return !$user->isAdmin() ? new ArrayCollection($repo->findAll()) : $user->getPollings()->toArray();
+        return $user->isAdmin() ? (new ArrayCollection($repo->findAll()))->toArray() : $user->getPollings()->toArray();
     }
 
 
