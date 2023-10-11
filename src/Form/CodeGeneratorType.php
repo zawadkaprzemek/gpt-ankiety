@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Polling;
-use App\Entity\User;
-use App\Service\PollingService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,21 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CodeGeneratorType extends AbstractType
 {
-    private $token;
-
-    public function __construct(TokenStorageInterface $token)
-    {
-        $this->token = $token;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User $user */
-        $user=$this->token->getToken()->getUser();
         $pollings= $options['pollings'];
         $builder
             ->add('prefix',TextType::class)
