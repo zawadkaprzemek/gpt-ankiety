@@ -2,10 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Code;
 use App\Entity\Polling;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,8 +27,6 @@ class CodeGeneratorType extends AbstractType
     {
         /** @var User $user */
         $user=$this->token->getToken()->getUser();
-        /** @var EntityManagerInterface $em */
-        $em = $options['entityManager'];
         $builder
             ->add('prefix',TextType::class)
             ->add('count',NumberType::class,[
@@ -50,7 +46,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => ($user->isAdmin() ? $em->getRepository(Code::class)->findAll() : $user->getPollings()),
+                'choices' => $user->getPollings(),
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])
@@ -61,7 +57,6 @@ class CodeGeneratorType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            'entityManager' => null
         ]);
     }
 }

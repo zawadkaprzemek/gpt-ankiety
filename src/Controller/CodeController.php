@@ -44,15 +44,14 @@ class CodeController extends AbstractController
      */
     public function createCodes(Request $request)
     {
-        $em=$this->getDoctrine()->getManager();
          /** @var User $user */
          $user=$this->getUser();
-         $form=$this->createForm(CodeGeneratorType::class, [], ['entityManager'=>$em]);
+         $form=$this->createForm(CodeGeneratorType::class, []);
          $form->handleRequest($request);
          if($form->isSubmitted()&&$form->isValid())
          {
             $data=$form->getData();
-
+            $em=$this->getDoctrine()->getManager();
             for($i=0;$i<$data['count'];$i++)
             {
                 /** @var Code $code */
