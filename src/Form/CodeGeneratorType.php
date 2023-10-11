@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Code;
 use App\Entity\Polling;
 use App\Entity\User;
-use App\Repository\CodeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class CodeGeneratorType extends AbstractType
 {
     private $token;
-    private $repository;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(TokenStorageInterface $token, CodeRepository $repository)
+    public function __construct(TokenStorageInterface $token, EntityManagerInterface $entityManager)
     {
         $this->token = $token;
-        $this->repository = $repository;
+        $this->entityManager = $entityManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -50,7 +50,7 @@ class CodeGeneratorType extends AbstractType
                 'label'=>'Ankieta',
                 'class'=>Polling::class,
                 'choice_label' => 'name',
-                'choices' => ($user->isAdmin() ? $this->repository->findAll() : $user->getPollings()),
+                'choices' => $this->getPollings($user),
                 'placeholder'=>'Wybierz ankiętę'
             ])
             ->add('submit',SubmitType::class,['label'=>'Generuj'])
@@ -62,5 +62,10 @@ class CodeGeneratorType extends AbstractType
         $resolver->setDefaults([
             // Configure your form options here
         ]);
+    }
+
+    private function getPollings(User $user)
+    {
+        return $user->isAdmin() ? $this->entityManager->getRepository(Code::class)->findAll() : $user->getPollings();
     }
 }
