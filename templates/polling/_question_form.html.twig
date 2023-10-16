@@ -25,10 +25,10 @@
         </div>
     </div>
     
-    {% include 'form/_switch_input.html.twig' with {'field':form.required, 'extra_class':''} %}
+    {% include 'form/_switch_input.html.twig' with {'field':form.required, 'extra_class':'type-4-h'} %}
 
-    {% include 'form/_switch_input.html.twig' with {'field':form.commentOn, 'extra_class':''} %}
-    <div class="row form-group comment d-none">
+    {% include 'form/_switch_input.html.twig' with {'field':form.commentOn, 'extra_class':'type-4-h'} %}
+    <div class="row form-group comment type-4-h d-none">
         <div class="col-12 col-sm-3 col-form-label">
             {{form_label(form.comment) }}
         </div>
@@ -68,8 +68,7 @@
 
 <div class="type-2 d-none">
 <button type="button" class="btn btn-secondary add-answer btn-sm mb-2" 
-data-list-selector=".answers-list"
->Dodaj odpowiedź</button>
+data-list-selector=".answers-list">Dodaj odpowiedź</button>
 <h5 class="mb-3">{% trans %}answers{% endtrans %}:</h5>
     <div class="answers-list sortable"
     data-prototype="{{ form_row(form.answers.vars.prototype)|e }}" 

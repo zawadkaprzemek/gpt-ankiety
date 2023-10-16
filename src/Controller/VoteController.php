@@ -34,7 +34,7 @@ class VoteController extends AbstractController
     /**
      * @Route("/{hash}/{page}", name="app_vote_polling", requirements={"page"="\d+"}, defaults={"page":1})
      */
-    public function index(Polling $polling,int $page=1,Request $request): Response
+    public function index(Polling $polling,Request $request,int $page=1): Response
     {
         $em=$this->getDoctrine()->getManager();
         $page=$em->getRepository(Page::class)->findOneBy(['polling'=>$polling,'number'=>$page]);

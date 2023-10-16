@@ -1,73 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{polling.name}}{% endblock %}
+{% block title %}{{ polling.name }}{% endblock %}
 
 {% block body %}
 
+    {% set wstawki = 0 %}
 
-<div class="row">
-<div class="col-9 mb-3">
-    <div class="btn-group btn-group-sm">
-        <a href="{{path('app_polling_panel',{'id':polling.id})}}" class="btn btn-outline-primary active">Pytania</a>
-        <a href="{{path('app_polling_logic_list',{id:polling.id})}}" class="btn btn-outline-primary">Logika</a>
-        <a href="{{path('app_polling_codes_list',{id:polling.id})}}" class="btn btn-outline-primary">Kody</a>
+    <div class="row">
+        <div class="col-9 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary active">Pytania</a>
+                <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
+                   class="btn btn-outline-primary">Logika</a>
+                <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
+            </div>
+        </div>
+        <div class="col-3 text-right">
+            {% include 'polling/_duplicate_polling_form.html.twig' with {'polling':polling} %}
+        </div>
     </div>
-</div>
-<div class="col-3 text-right">
-    {% include 'polling/_duplicate_polling_form.html.twig' with {'polling':polling} %}
-</div>
-</div>
 
 
-{% if polling|polling_answers %}
-<div class="row">
-    <div class="col-12 text-center py-4 px-3 ">
-    <i class="fas fa-exclamation-triangle"></i> Posiadasz już odpowiedzi, pamiętaj, że edytowanie pytań może wpłynąć na zebrane już wyniki.
+    {% if polling|polling_answers %}
+        <div class="row">
+            <div class="col-12 text-center py-4 px-3 ">
+                <i class="fas fa-exclamation-triangle"></i> Posiadasz już odpowiedzi, pamiętaj, że edytowanie pytań może
+                wpłynąć na zebrane już wyniki.
+            </div>
+        </div>
+    {% endif %}
+    <div class="pages-list">
+        {% for page in polling.pages %}
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_polling_panel',{'id':polling.id,'page':page.number}) }}"
+                   class="btn btn-outline-primary {% if page.number ==current_page.number %}active{% endif %}">Strona {{ page.number }}</a>
+                <form method="post"
+                      action="{{ path('app_polling_delete_page', {'id':polling.id, 'page':page.number}) }}"
+                      onsubmit="return confirm('Na pewno chcesz usunąć tą stronę?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
+                    <button class="btn btn-sm btn-outline-primary rounded-left-0">&times</button>
+                </form>
+            </div>
+        {% endfor %}
+        <a href="{{ path('app_polling_add_page',{'id':polling.id}) }}" class="btn btn-sm btn-outline-primary ml-3">+
+            Dodaj stronę</a>
     </div>
-</div>
-{%endif%}
-<div class="pages-list">
-    {%for page in polling.pages%}
-    <div class="btn-group btn-group-sm">
-        <a href="{{path('app_polling_panel',{'id':polling.id,'page':page.number})}}" class="btn btn-outline-primary {%if page.number ==current_page.number%}active{%endif%}">Strona {{page.number}}</a>
-        <form method="post" action="{{ path('app_polling_delete_page', {'id':polling.id, 'page':page.number}) }}"
-      onsubmit="return confirm('Na pewno chcesz usunąć tą stronę?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
-    <button class="btn btn-sm btn-outline-primary rounded-left-0">&times</button>
-</form>
+
+    {% if current_page.number==1 %}
+        <div class="row">
+            <div class="col-12 pt-2"><p class="mb-0 text-muted">Nagłówek</p></div>
+            <div class="col-9">
+                <h1>{{ polling.name }}</h1>
+                <h4>{{ polling.textContent }}</h4>
+            </div>
+            <div class="col-3 text-right">
+                <a href="{{ path('app_polling_edit',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary btn-sm">Edytuj</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_polling_add_question',{'id':polling.id,'page':current_page.number}) }}"
+       class="btn btn-sm btn-primary mt-3">Dodaj pytanie</a>
+    {% if current_page.number >1 %}
+        <a href="{{ path('app_polling_edit_page',{'id':polling.id,'page':current_page.number}) }}"
+           class="btn btn-sm btn-secondary mt-3">Wiadomość powitalna</a>
+
+        {% if current_page.introText is not null %}
+            <h4 class="mt-3">{{ current_page.introText }}</h4>
+        {% endif %}
+    {% endif %}
+    <div class="sortable" data-polling="{{ polling.id }}">
+        {% for question in questions %}
+            {% if question.type.id == 4 %}{% set wstawki = wstawki+1 %}{% endif %}
+            {% include 'polling/question_view.html.twig' with {'question':question, 'disabled':true, 'wstawki': wstawki} %}
+        {% endfor %}
     </div>
-    {%endfor%}
-     <a href="{{path('app_polling_add_page',{'id':polling.id})}}" class="btn btn-sm btn-outline-primary ml-3">+ Dodaj stronę</a>
-</div>
-
-{%if current_page.number==1 %}
-<div class="row">
-<div class="col-12 pt-2"><p class="mb-0 text-muted">Nagłówek</p></div>
-    <div class="col-9">
-        <h1>{{polling.name}}</h1>
-        <h4>{{polling.textContent}}</h4>
-    </div>
-    <div class="col-3 text-right">
-        <a href="{{path('app_polling_edit',{'id':polling.id})}}" class="btn btn-outline-primary btn-sm">Edytuj</a>
-    </div>
-</div>
-{%endif%}
-
-<a href="{{path('app_polling_add_question',{'id':polling.id,'page':current_page.number})}}" class="btn btn-sm btn-primary mt-3">Dodaj pytanie</a>
-{% if current_page.number >1%}
-<a href="{{path('app_polling_edit_page',{'id':polling.id,'page':current_page.number})}}" class="btn btn-sm btn-secondary mt-3">Wiadomość powitalna</a>
-
-    {%if current_page.introText is not null%}
-    <h4 class="mt-3">{{current_page.introText}}</h4>
-    {%endif%}
-{%endif%}
-<div class="sortable" data-polling="{{polling.id}}">
-{%for question in questions%}
-
-{% include 'polling/question_view.html.twig' with {'question':question, 'disabled':true} %}
-{%endfor%}
-</div>
 
 
 

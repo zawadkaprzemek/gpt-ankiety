@@ -16,9 +16,12 @@ class QuestionTypeFixtures extends Fixture
         $type2->setName('Zamknięte');
         $type3=new QuestionType();
         $type3->setName('NPS');
+        $type4=new QuestionType();
+        $type4->setName('Wstawka');
         $manager->persist($type);
         $manager->persist($type2);
         $manager->persist($type3);
+        $manager->persist($type4);
         $manager->flush();
     }
 }

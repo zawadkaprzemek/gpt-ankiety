@@ -36,28 +36,42 @@ function showQuestionTypeFields(type)
     switch(type)
     {
         case '1':
-            $('.type-2').addClass('d-none');
-            $('.type-2 input').prop('required',false).prop('disabled',true);
-            $('.type-3').addClass('d-none');
-            $('.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-2,.type-3').addClass('d-none');
+            $('.type-2 input,.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-4-h:not(.comment)').removeClass('d-none');
+            $('.type-4-h input').prop('disabled',false);
             break;
         case '2':
             $('.type-2').removeClass('d-none');
             $('.type-2 input').prop('required',true).prop('disabled',false);
             $('.type-3').addClass('d-none');
             $('.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-4-h:not(.comment)').removeClass('d-none');
+            $('.type-4-h input').prop('disabled',false);
             break;
         case '3':
             $('.type-2').addClass('d-none');
             $('.type-2 input').prop('required',false).prop('disabled',true);
             $('.type-3').removeClass('d-none');
             $('.type-3 input').prop('required',false).prop('disabled',false);
+            $('.type-4-h:not(.comment)').removeClass('d-none');
+            $('.type-4-h input').prop('disabled',false);
+            if(!$('#question_valueLabels').prop('checked')){
+                $('.value-labels').addClass('d-none');
+                $('.value-labels input').disabled(true);
+            }
+            break;
+        case '4':
+            $('.type-2,.type-3').addClass('d-none');
+            $('.type-2 input,.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-4-h').addClass('d-none');
+            $('.type-4-h input').prop('checked',false).prop('disabled',true);
             break;
         default:
-            $('.type-2').addClass('d-none');
-            $('.type-2 input').prop('required',false).prop('disabled',true);
-            $('.type-3').addClass('d-none');
-            $('.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-2,.type-3').addClass('d-none');
+            $('.type-2 input,.type-3 input').prop('required',false).prop('disabled',true);
+            $('.type-4-h:not(.comment)').removeClass('d-none');
+            $('.type-4-h input').prop('disabled',false);
             break;
     }
 }

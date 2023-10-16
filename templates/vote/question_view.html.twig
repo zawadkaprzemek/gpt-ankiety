@@ -1,83 +1,97 @@
 <div class="question">
-<div class="row">
-  <div class="col-12">
-    <p class="{%if question.required%}required{%endif%}">{{question|question_number}}. {{question.content}}</p>
-  </div>
+    <div class="row">
+        <div class="col-12">
+            <p class="{% if question.required %}required{% endif %}">
+                {% if question.type.id != 4 %}
+                    {{ (question|question_number)-wstawki }}.
+                {% endif %}
+                {{ question.content }}</p>
+        </div>
 
 
-{%if question.comment is not null %}
-<div class="col-12">
-  <p class="small text-muted">{{question.comment}}</p>
-</div>
-{%endif%}
+        {% if question.comment is not null %}
+            <div class="col-12">
+                <p class="small text-muted">{{ question.comment }}</p>
+            </div>
+        {% endif %}
 
-{%if question.type.id==1%}
-<div class="col-12">
-<textarea id="question-{{question.id}}" minlength="{{text_answer_min_lenght}}" {%if question.required%}required{%endif%}  type="textarea"
-data-question="{{question.id}}" name="question-{{question.id}}" class="form-control mb-2" rows="2">
-{% if question.id in votes|keys %}{{votes[question.id].answers[0]|trim}}{%endif%}</textarea>
-  <div id="question-error-{{question.id}}" class="mt-2 question-error {%if question.id in errors%}d-block{%endif%}">
+        {% if question.type.id==1 %}
+            <div class="col-12">
+<textarea id="question-{{ question.id }}" minlength="{{ text_answer_min_lenght }}"
+          {% if question.required %}required{% endif %}  type="textarea"
+          data-question="{{ question.id }}" name="question-{{ question.id }}" class="form-control mb-2" rows="2">
+{% if question.id in votes|keys %}{{ votes[question.id].answers[0]|trim }}{% endif %}</textarea>
+                <div id="question-error-{{ question.id }}"
+                     class="mt-2 question-error {% if question.id in errors %}d-block{% endif %}">
     <span class="invalid-feedback d-block">
       <span class="d-block">
         <span class="form-error-icon badge badge-danger text-uppercase">Błąd</span> 
-        <span class="form-error-message">Treść nie może być pusta i musi mieć conajmniej {{text_answer_min_lenght}} znaków</span>
+        <span class="form-error-message">Treść nie może być pusta i musi mieć conajmniej {{ text_answer_min_lenght }} znaków</span>
       </span>
     </span>
-  </div>
-</div>
-{% elseif question.type.id==2 %}
-{%for answer in question.answers %}
-<div class="col-12">
-<div class="custom-control custom-radio form-check">
-  <input class="custom-control-input form-check-input" data-question="{{question.id}}" type="radio" {%if question.required%}required{%endif%} name="question-{{question.id}}"
-   id="question-{{question.id}}-answer-{{answer.id}}" value="{{answer.id}}"
-   {%if votes[question.id] is defined and answer.id in votes[question.id].answers %}checked{%endif%}
-   >
-  <label class="custom-control-label form-check-label" for="question-{{question.id}}-answer-{{answer.id}}">
-    {{answer.content}}
-  </label>
-</div>
-</div>
-{%endfor%}
-<div id="question-error-{{question.id}}" class="mt-2 question-error {%if question.id in errors%}d-block{%endif%}">
+                </div>
+            </div>
+        {% elseif question.type.id==2 %}
+            {% for answer in question.answers %}
+                <div class="col-12">
+                    <div class="custom-control custom-radio form-check">
+                        <input class="custom-control-input form-check-input" data-question="{{ question.id }}"
+                               type="radio" {% if question.required %}required{% endif %}
+                               name="question-{{ question.id }}"
+                               id="question-{{ question.id }}-answer-{{ answer.id }}" value="{{ answer.id }}"
+                                {% if votes[question.id] is defined and answer.id in votes[question.id].answers %}checked{% endif %}
+                        >
+                        <label class="custom-control-label form-check-label"
+                               for="question-{{ question.id }}-answer-{{ answer.id }}">
+                            {{ answer.content }}
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+            <div id="question-error-{{ question.id }}"
+                 class="mt-2 question-error {% if question.id in errors %}d-block{% endif %}">
     <span class="invalid-feedback d-block">
       <span class="d-block">
         <span class="form-error-icon badge badge-danger text-uppercase">Błąd</span> 
         <span class="form-error-message">Wybierz jedną odpowiedź</span>
       </span>
     </span>
-  </div>
-{%else%}
-<div class="col-12">
-<div class="d-flex nps-answers w-100">
-    {% for i in 0..10 %}
-    <input class="form-check-input" data-question="{{question.id}}" type="radio" {%if question.required%}required{%endif%}
-    name="question-{{question.id}}" id="question-{{question.id}}-answer-{{i}}" value="{{i}}"
-    {%if votes[question.id] is defined and i in votes[question.id].answers %}checked{%endif%}
-    >
-    <label class="col form-check-label" for="question-{{question.id}}-answer-{{i}}">{{i}}</label>
-    {%endfor%}
-</div>
-<div id="question-error-{{question.id}}" class="mt-2 question-error {%if question.id in errors%}d-block{%endif%}">
+            </div>
+        {% elseif question.type.id ==3 %}
+            <div class="col-12">
+                <div class="d-flex nps-answers w-100">
+                    {% for i in 0..10 %}
+                        <input class="form-check-input" data-question="{{ question.id }}" type="radio"
+                               {% if question.required %}required{% endif %}
+                               name="question-{{ question.id }}" id="question-{{ question.id }}-answer-{{ i }}"
+                               value="{{ i }}"
+                                {% if votes[question.id] is defined and i in votes[question.id].answers %}checked{% endif %}
+                        >
+                        <label class="col form-check-label"
+                               for="question-{{ question.id }}-answer-{{ i }}">{{ i }}</label>
+                    {% endfor %}
+                </div>
+                <div id="question-error-{{ question.id }}"
+                     class="mt-2 question-error {% if question.id in errors %}d-block{% endif %}">
     <span class="invalid-feedback d-block">
       <span class="d-block">
         <span class="form-error-icon badge badge-danger text-uppercase">Błąd</span> 
         <span class="form-error-message">Wybierz jedną wartość</span>
       </span>
     </span>
-  </div>
-</div>
-{% if question.minValText is not null%}
-    <div class="col-12">
-    <div class="row w-100 pt-2">
-        <div class="col-{%if question.middleValText is not null %}4{%else%}6{%endif%}">{{question.minValText}}</div>
-        {%if question.middleValText is not null %}
-        <div class="col-4 text-center">{{question.middleValText}}</div>
-        {%endif%}
-        <div class="col-{%if question.middleValText is not null %}4{%else%}6{%endif%} text-right">{{question.maxValText}}</div>
+                </div>
+            </div>
+            {% if question.minValText is not null %}
+                <div class="col-12">
+                    <div class="row w-100 pt-2">
+                        <div class="col-{% if question.middleValText is not null %}4{% else %}6{% endif %}">{{ question.minValText }}</div>
+                        {% if question.middleValText is not null %}
+                            <div class="col-4 text-center">{{ question.middleValText }}</div>
+                        {% endif %}
+                        <div class="col-{% if question.middleValText is not null %}4{% else %}6{% endif %} text-right">{{ question.maxValText }}</div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
-    </div>
-{%endif%}
-{%endif%}
-</div>
 </div>

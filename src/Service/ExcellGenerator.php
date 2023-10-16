@@ -7,6 +7,8 @@ namespace App\Service;
 use App\Entity\Polling;
 use App\Entity\Question;
 use App\Entity\SessionUser;
+use App\Entity\Vote;
+use App\Repository\SessionUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -52,10 +54,18 @@ class ExcellGenerator
      
     }
 
-    private function generateSheets(Spreadsheet $excell,Polling $polling)
+    private function generateSheets(Spreadsheet $excell,Polling $polling): Spreadsheet
     {
+        $wstawki = 0;
         foreach ($polling->getQuestions() as $key => $question)
         {
+            if($question->getType()->getId()===4)
+            {
+                $wstawki++;
+                continue;
+            }
+
+            $key=$key-$wstawki;
             if($key ==0)
             {
                 $sheet=$excell->getActiveSheet();
@@ -66,7 +76,7 @@ class ExcellGenerator
             $sheet->setTitle('Pytanie '.($key+1));
             $sheet->getDefaultColumnDimension()->setWidth(15);
             $sheet=$this->printVotingTitle($sheet,$question);
-            
+
 
         }
         $excell->setActiveSheetIndex(0);
@@ -74,7 +84,7 @@ class ExcellGenerator
         return $excell;
     }
 
-    private function generateOneSheet(Spreadsheet $excell,Polling $polling)
+    private function generateOneSheet(Spreadsheet $excell,Polling $polling): Spreadsheet
     {
         $sheet=$excell->getActiveSheet();
         $sheet->setTitle('Analiza');
@@ -82,8 +92,16 @@ class ExcellGenerator
         $sheet= $this->printResultHeaders($sheet);
         $questions=$polling->getQuestions();
         $number=4;
+        $wstawki= 0;
         foreach ($questions as $key => $question)
         {
+            if($question->getType()->getId()===4){
+                $wstawki++;
+                continue;
+            }
+
+            $key=$key-$wstawki;
+
             if($number<sizeof(self::LETTERS))
             {
                 $letter=self::LETTERS[$number];
@@ -108,7 +126,7 @@ class ExcellGenerator
         $writer->save($file);
     }
 
-    private function printResultHeaders(Worksheet $sheet)
+    private function printResultHeaders(Worksheet $sheet): Worksheet
     {
         $sheet
             ->setCellValue('A1','ID')
@@ -120,7 +138,7 @@ class ExcellGenerator
         return $sheet;
     }
 
-    private function printVotingTitle(Worksheet $sheet, Question $question)
+    private function printVotingTitle(Worksheet $sheet, Question $question): Worksheet
     {
         $sheet
             ->mergeCells('A1:B1')
@@ -134,7 +152,7 @@ class ExcellGenerator
         return $this->printVotesHeaders($sheet);
     }
 
-    private function printUsersAnswers(Worksheet $sheet,Polling $polling,$questions)
+    private function printUsersAnswers(Worksheet $sheet,Polling $polling,$questions): Worksheet
     {
         /** @var $users SessionUser[] */
         $users=$this->service->getPollingUsers($polling);
@@ -192,7 +210,9 @@ class ExcellGenerator
                 {
                     $sheet->setCellValue($letter.$number,'');
                 }
-                $letter_number++;
+                if($question->getType()->getId()!==4) {
+                    $letter_number++;
+                }
             }
 
             $number++;
@@ -216,7 +236,7 @@ class ExcellGenerator
         return $days+$hours+$minutes+$seconds;
     }
 
-    private function printAnswers(Worksheet $sheet,Question $question)
+    private function printAnswers(Worksheet $sheet,Question $question): Worksheet
     {
         $answers=[];
         $votes=$question->getVotes();
@@ -244,7 +264,6 @@ class ExcellGenerator
                 }
                 break;
             default:
-            $answers=[];
                 break;
         }
         /** @var $repo SessionUserRepository */
@@ -337,7 +356,7 @@ class ExcellGenerator
         return $sheet;
     }
 
-    private function printVotesHeaders(Worksheet $sheet)
+    private function printVotesHeaders(Worksheet $sheet): Worksheet
     {
         $sheet
             ->setCellValue('D1',"Odpowiedzi:")

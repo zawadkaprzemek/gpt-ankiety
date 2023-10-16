@@ -1,34 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{polling.name}}{% endblock %}
+{% block title %}{{ polling.name }}{% endblock %}
 
 {% block body %}
+{% set wstawki =0 %}
 
 
+    {% if current_page.number==1 %}
+        <div class="row">
+            <div class="col-9">
+                <h1>{{ polling.name }}</h1>
+                <h4>{{ polling.textContent }}</h4>
+            </div>
+        </div>
+    {% endif %}
 
-{%if current_page.number==1 %}
-<div class="row">
-    <div class="col-9">
-        <h1>{{polling.name}}</h1>
-        <h4>{{polling.textContent}}</h4>
-    </div>
-</div>
-{%endif%}
+    {% if current_page.introText is not null %}
+        <h4 class="mt-3">{{ current_page.introText }}</h4>
+    {% endif %}
 
-{%if current_page.introText is not null%}
-    <h4 class="mt-3">{{current_page.introText}}</h4>
-{%endif%}
-
-<form id="voteForm" method="POST" data-polling="{{polling.id}}" data-save-url="{{path("app_vote_save",{"hash":polling.hash})}}" action="{{path('app_vote_polling',{'hash':polling.hash,'page':current_page.number})}}">
-{%for question in questions%}
-{% include 'vote/question_view.html.twig' with {'question':question,'votes':votes,'errors':errors} %}
-{%endfor%}
+    <form id="voteForm" method="POST" data-polling="{{ polling.id }}"
+          data-save-url="{{ path("app_vote_save",{"hash":polling.hash}) }}"
+          action="{{ path('app_vote_polling',{'hash':polling.hash,'page':current_page.number}) }}">
+        {% for question in questions %}
+            {% if question.type.id == 4 %}{% set wstawki = wstawki+1 %}{% endif %}
+            {% include 'vote/question_view.html.twig' with {'question':question,'votes':votes,'errors':errors, 'wstawki': wstawki} %}
+        {% endfor %}
 
 
-<div class="w-100 text-center">
-    <button type="submit" class="btn btn-primary">DALEJ</button>
-</div>
-</form>
+        <div class="w-100 text-center">
+            <button type="submit" class="btn btn-primary">DALEJ</button>
+        </div>
+    </form>
 
 
 
