@@ -4,57 +4,63 @@
 
 {% block body %}
 
-<div class="row">
-<div class="col-12 mb-3">
-    <div class="btn-group btn-group-sm">
-        <a href="{{path('app_polling_panel',{'id':polling.id})}}" class="btn btn-outline-primary">Pytania</a>
-        <a href="{{path('app_polling_logic_list',{id:polling.id})}}" class="btn btn-outline-primary active">Logika</a>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
+                <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}" class="btn btn-outline-primary active">Logika</a>
+                <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 
-<h1>{{polling.name}} - Logika</h1>
+    <h1>{{ polling.name }} - Logika</h1>
 
-<div class="row logic-list">
-{%set number=1%}
-{%for page in polling.pages%}
-<div class="col-12"><h3 class="text-muted">Strona {{page.number}}</h3></div>
+    <div class="row logic-list">
+        {% set number=1 %}
+        {% for page in polling.pages %}
+            <div class="col-12"><h3 class="text-muted">Strona {{ page.number }}</h3></div>
 
 
 
-{%for question in page.questions|sort((a, b) => a.sort <=> b.sort)%}
-<div class="col-12">
-<div class="white-box">
-<p class="mb-0">
-<span class="question_number">{{number}}</span>. {{question.content}} <span class="text-muted">{{question.type.name}}</span>
-</p>
-<a href="{{path('app_polling_logic_add',{id:polling.id,q_id:question.id})}}" class="btn btn-sm btn-outline-primary">Dodaj regułę</a>
-</div>
-</div>
-{%if question.logics|length >0 %}
-<ul class="logic-info">
-{%for logic in question.logics%}
-<li>
-    {{logic|logic_info}} 
-    <div class="btn-group btn-group-sm">
-    <a href="{{path('app_polling_logic_edit',{id:polling.id,q_id:question.id,l_id:logic.id})}}" class="btn btn-outline-secondary">Edytuj</a>
-    <form method="post" action="{{path('app_polling_logic_delete',{id:polling.id,q_id:question.id,l_id:logic.id})}}"
-      onsubmit="return confirm('Na pewno chcesz usunąć tą regułę?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ logic.id) }}">
-    <button class="btn btn-sm btn-outline-danger rounded-left-0">{% trans %}delete{% endtrans %}</button>
-</form>
+            {% for question in page.questions|sort((a, b) => a.sort <=> b.sort) %}
+                <div class="col-12">
+                    <div class="white-box">
+                        <p class="mb-0">
+                            <span class="question_number">{{ number }}</span>. {{ question.content }} <span
+                                    class="text-muted">{{ question.type.name }}</span>
+                        </p>
+                        <a href="{{ path('app_polling_logic_add',{id:polling.id,q_id:question.id}) }}"
+                           class="btn btn-sm btn-outline-primary">Dodaj regułę</a>
+                    </div>
+                </div>
+                {% if question.logics|length >0 %}
+                    <ul class="logic-info">
+                        {% for logic in question.logics %}
+                            <li>
+                                {{ logic|logic_info }}
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ path('app_polling_logic_edit',{id:polling.id,q_id:question.id,l_id:logic.id}) }}"
+                                       class="btn btn-outline-secondary">Edytuj</a>
+                                    <form method="post"
+                                          action="{{ path('app_polling_logic_delete',{id:polling.id,q_id:question.id,l_id:logic.id}) }}"
+                                          onsubmit="return confirm('Na pewno chcesz usunąć tą regułę?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ logic.id) }}">
+                                        <button class="btn btn-sm btn-outline-danger rounded-left-0">{% trans %}delete{% endtrans %}</button>
+                                    </form>
 
-    
+
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% set number=number+1 %}
+            {% endfor %}
+        {% endfor %}
     </div>
-</li>
-{%endfor%}
-</ul>
-{%endif%}
-{%set number=number+1%}
-{%endfor%}
-{%endfor%}
-</div>
 
 
 

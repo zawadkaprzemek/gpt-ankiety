@@ -6,6 +6,7 @@ use App\Entity\Polling;
 use App\Entity\User;
 use App\Service\PollingService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,9 +42,40 @@ class CodeGeneratorType extends AbstractType
                     'max'=>200
                 ]
             ])
+            ->add('randomLength',NumberType::class,[
+                'label'=> 'Długość losowego ciągu znaków',
+                'html5' => true,
+                'data' => 4,
+                'attr'=>[
+                    'min'=>4,
+                    'step'=>1,
+                    'max'=>15
+                ]
+            ])
+            ->add('randomContent',ChoiceType::class,[
+                'label'=>'Skład losowego ciągu znaków',
+                'choices'=>$this->generateRandomContentChoices(),
+                'multiple'=> true,
+                'expanded' => false,
+                'placeholder'=> 'Wybierz skład losowego ciągu znaków'
+            ])
+            ->add('excludeFromRandomContent',TextType::class,[
+                'label'=> 'Wyklucz z losowego ciągu znaków',
+                'required' =>false
+            ])
             ->add('multi',CheckboxType::class,[
                 'label'=>'Wielokrotnego użytku',
                 'required'=>false
+            ])
+            ->add('usesLimit',NumberType::class,[
+                'label' => 'Limit użyc',
+                'html5' => true,
+                'data' => 10,
+                'attr'=>[
+                    'min'=>2,
+                    'step'=>1,
+                    'max'=>100
+                ]
             ])
             ->add('polling',EntityType::class,[
                 'label'=>'Ankieta',
@@ -61,5 +93,15 @@ class CodeGeneratorType extends AbstractType
         $resolver->setDefaults([
             // Configure your form options here
         ]);
+    }
+
+    private function generateRandomContentChoices(): array
+    {
+        return [
+            'Cyfry' =>1,
+            'Małe litery' => 2,
+            'Duże litery' => 3,
+        ];
+
     }
 }

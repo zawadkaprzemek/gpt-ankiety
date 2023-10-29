@@ -7,7 +7,7 @@
 <h1>Generuj kody</h1>
 
 
-{{ form_start(form) }}
+{{ form_start(form, { attr: { id:'code-generator-form'}}) }}
     <div class="row form-group">
         <div class="col-12 col-sm-3 col-form-label">
             {{form_label(form.prefix)}}
@@ -24,7 +24,40 @@
             {{ form_widget(form.count) }}
         </div>
     </div>
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.randomLength)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.randomLength) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.randomContent)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.randomContent) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.excludeFromRandomContent)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.excludeFromRandomContent) }}
+        </div>
+    </div>
         {% include 'form/_switch_input.html.twig' with {'field':form.multi, 'extra_class':''} %}
+
+    <div class="row form-group usesLimit d-none">
+        <div class="col-12 col-sm-3 col-form-label">
+            {{form_label(form.usesLimit)}}
+        </div>
+        <div class="col-12 col-sm-9">
+            {{ form_widget(form.usesLimit) }}
+        </div>
+    </div>
     <div class="row form-group">
         <div class="col-12 col-sm-3 col-form-label">
             {{form_label(form.polling)}}

@@ -232,3 +232,7 @@ body{
 .background .container{
     overflow: auto;
 }
+
+.filter-container .d-flex{
+    gap: 5px;
+}

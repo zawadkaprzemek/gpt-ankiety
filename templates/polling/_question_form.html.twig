@@ -4,6 +4,19 @@
 
 {% block body %}
 
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_my_pollings') }}" class="btn btn-outline-primary">Moje ankiety</a>
+                <a href="{{ path('app_polling_panel',{id:polling.id, 'page': page.number}) }}" class="btn btn-outline-primary">Ankieta: {{ polling.name }}</a>
+                {% if question is defined %}
+                <a href="{{ path('app_polling_edit_question',{'id':polling.id,'page':page.number,'q_id':question.id}) }}) }}" class="btn btn-outline-primary active">Dodaj pytanie</a>
+                {% else %}
+                <a href="{{ path('app_polling_add_question',{'id':polling.id,'page':page.number}) }}" class="btn btn-outline-primary active">Dodaj pytanie</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
 {{ form_start(form,{'attr':{'id':'questionForm'}}) }}
 

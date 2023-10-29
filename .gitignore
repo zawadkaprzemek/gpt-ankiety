@@ -21,7 +21,14 @@ yarn-error.log
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
+
 ###< symfony/phpunit-bridge ###
+/.idea/.gitignore
+/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/phpunit.xml
+/.idea/symfony2.xml
+/.idea/commandlinetools/Symfony_08_10_2023__22_50.xml
+/.idea/vcs.xml
+/.idea/gpt-ankiety.iml

@@ -6,6 +6,7 @@ use App\Entity\Code;
 use App\Entity\User;
 use App\Form\CodeGeneratorType;
 use App\Repository\CodeRepository;
+use App\Service\CodeGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CodeController extends AbstractController
 {
+
+    private CodeGenerator $generator;
+
+    public function __construct(CodeGenerator $generator)
+    {
+        $this->generator = $generator;
+    }
     /**
      * @Route("/", name="app_my_codes")
      */
@@ -53,10 +61,11 @@ class CodeController extends AbstractController
             for ($i = 0; $i < $data['count']; $i++) {
                 /** @var Code $code */
                 $code = new Code();
-                $str = str_replace(" ", '', $data['prefix']) . $this->generateRandomString(6);
+                $str = $this->generator->generateCode($data['prefix'],$data['randomContent'],$data['excludeFromRandomContent'],$data['randomLength']);
                 $code->setContent($str)
                     ->setMulti($data['multi'])
                     ->setPolling($data['polling'])
+                    ->setUsesLimit($data['multi'] ? $data['usesLimit'] : 1)
                     ->setUser($user);
                 $em->persist($code);
             }
@@ -68,11 +77,6 @@ class CodeController extends AbstractController
         return $this->render('code/form.html.twig', [
             'form' => $form->createView()
         ]);
-    }
-
-    private function generateRandomString($length = 10)
-    {
-        return substr(str_shuffle(str_repeat($x = '123456789abcdefghjkmnpqrstuvwxyz', ceil($length / strlen($x)))), 1, $length);
     }
 
     /**

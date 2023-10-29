@@ -49,6 +49,11 @@ class Code
      */
     private $polling;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $usesLimit=1;
+
     public function __construct()
     {
         $this->sessionUsers = new ArrayCollection();
@@ -133,6 +138,18 @@ class Code
     public function setPolling(?Polling $polling): self
     {
         $this->polling = $polling;
+
+        return $this;
+    }
+
+    public function getUsesLimit(): ?int
+    {
+        return $this->usesLimit;
+    }
+
+    public function setUsesLimit(int $usesLimit): self
+    {
+        $this->usesLimit = $usesLimit;
 
         return $this;
     }

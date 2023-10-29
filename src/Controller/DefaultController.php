@@ -29,7 +29,6 @@ class DefaultController extends AbstractController
         $form=$this->createForm(EnterPollingType::class,[]);
         $form->handleRequest($request);
         $pollingCode=$request->query->get('kod_ankiety');
-        //dd($pollingCode);
 
         if(($form->isSubmitted()&&$form->isValid())||($pollingCode!==null&&$pollingCode!==""))
         {
@@ -48,9 +47,8 @@ class DefaultController extends AbstractController
                     $cookieName=$code->getContent();
                     $cookie= $this->reader->getCookie($cookieName);
                     $cookieCode=$this->reader->getCookie('code');
-                    if(!$code->isMulti()&&sizeof($code->getSessionUsers())>0)
+                    if((!$code->isMulti()&&sizeof($code->getSessionUsers())>0)||($code->isMulti() && sizeof($code->getSessionUsers())>=$code->getUsesLimit()))
                     {
-                        $user=$code->getSessionUsers()[0];
                         if($cookieCode!==$code->getContent()&&$cookie==null)
                         {
                             $form->get('code')->addError(new FormError('Kod już został wykorzystany'));
@@ -58,7 +56,6 @@ class DefaultController extends AbstractController
                                 'form' => $form->createView(),
                             ]);
                         }
-                        //return $this->redirectToRoute('app_vote_thankyou_page',['hash'=>$code->getPolling()->getHash()]);
                     }
 
                     if($cookie==null)
@@ -71,7 +68,7 @@ class DefaultController extends AbstractController
                         $user=$em->getRepository(SessionUser::class)->find($data["user"]);
                         if($user->getCode()!==$code)
                         {
-                            $user=$em->getRepository(SessionUser::class)->findOneBy(['code'=>$code,'ipAddress'=>$request->getClientIp()]);
+                            //$user=$em->getRepository(SessionUser::class)->findOneBy(['code'=>$code,'ipAddress'=>$request->getClientIp()]);
                             $user= new SessionUser($code,$request->getClientIp());
                             $em->persist($user);
                             $em->flush();

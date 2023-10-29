@@ -29,7 +29,7 @@
     {% if pollings is defined %}
     <div class="filter-container my-3">
         <p>Filturuj kody po ankiecie</p>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-start">
             <button class="btn btn-outline-secondary btn-sm active" data-filter="all">Wszystkie</button>
             {% for  key,polling in pollings %}
                 <button type="button" class="btn btn-outline-secondary btn-filter btn-sm" data-filter="{{ key }}">{{ polling }}</button>
@@ -52,7 +52,7 @@
 <tr class="polling-row polling-row-{{ code.polling.id }}">
 <td class="text-left">{{code.content}}</td>
 <td>{{code.polling.name}}</td>
-<td>{{code.sessionUsers|length}}/{%if code.multi%}<span class="font-big">&#8734;</span>{%else%}1{%endif%}</td>
+<td>{{code.sessionUsers|length}}/{%if code.multi%}{{ code.usesLimit }}{#<span class="font-big">&#8734;</span>#}{%else%}1{%endif%}</td>
 <td>{{code.createdAt|date('d/m/Y H:i')}}</td>
 <td>
 {%if code.sessionUsers|length ==0 %}

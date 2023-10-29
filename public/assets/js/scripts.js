@@ -256,6 +256,20 @@ $('.polling-box i').on('click',function(){
     });
 });
 
+if($('#code-generator-form'))
+{
+    $('#code_generator_multi').on('change',function (){
+        let usesLimit = $('.usesLimit');
+       if($(this).prop('checked')){
+           usesLimit.removeClass('d-none');
+           usesLimit.find('input').prop('disabled',false);
+       }else {
+           usesLimit.addClass('d-none');
+           usesLimit.find('input').prop('disabled',true);
+       }
+    });
+}
+
 
 
 let sortable=$('.sortable');

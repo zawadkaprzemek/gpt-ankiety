@@ -4,6 +4,19 @@
 
 {% block body %}
 
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_my_pollings') }}" class="btn btn-outline-primary">Moje ankiety</a>
+                {% if new %}
+                    <a href="{{ path('app_polling_new') }}) }}" class="btn btn-outline-primary active">Nowa ankieta</a>
+                {% else %}
+                    <a href="{{ path('app_polling_edit',{'id':polling.id}) }}" class="btn btn-outline-primary active">Ankieta: {{ polling.name }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
 
 {{ form_start(form) }}
     <div class="row form-group">
