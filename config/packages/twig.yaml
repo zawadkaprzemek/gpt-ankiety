@@ -8,6 +8,7 @@ twig:
         upload_image_directory: '/assets/uploads/images/'
         text_answer_min_lenght: '%text_answer_min_lenght%'
         without_header_routes: '%without_header_routes%'
+        domain: '%domain%'
 
 when@test:
     twig:
