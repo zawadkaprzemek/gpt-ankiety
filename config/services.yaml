@@ -6,7 +6,7 @@
 parameters:
     text_answer_min_lenght: 10
     without_header_routes: ['app_vote_thankyou_page','app_vote_polling','app_home']
-    domain: 'http://bolprzewlekly.pl'
+    domain: 'https://ankiety.oopiece.pl'
 services:
     # default configuration for services in *this* file
     _defaults:
