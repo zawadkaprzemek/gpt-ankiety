@@ -58,7 +58,7 @@ function showQuestionTypeFields(type)
             $('.type-4-h input').prop('disabled',false);
             if(!$('#question_valueLabels').prop('checked')){
                 $('.value-labels').addClass('d-none');
-                $('.value-labels input').disabled(true);
+                $('.value-labels input').prop('disabled', true);
             }
             break;
         case '4':
