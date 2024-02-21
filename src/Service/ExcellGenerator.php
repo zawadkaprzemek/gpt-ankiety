@@ -115,7 +115,7 @@ class ExcellGenerator
                 $prefix_num=floor($number/sizeof(self::LETTERS));
                 $letter_num=$number - $prefix_num* sizeof(self::LETTERS);
                 $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
-                dd($prefix_num , $number, $letter_num, $letter, sizeof(self::LETTERS));
+                //dd($prefix_num , $number, $letter_num, $letter, sizeof(self::LETTERS));
             }
             //dump($letter.' '.($key+1));
             $sheet->setCellValue($letter."1",($key+1)." ".$question->getContent());
