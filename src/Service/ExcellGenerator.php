@@ -214,6 +214,7 @@ class ExcellGenerator
 
                 if(!$find)
                 {
+                    dump($letter.' '.$number);
                     $sheet->setCellValue($letter.$number,'');
                 }
                 if($question->getType()->getId()!==4) {
