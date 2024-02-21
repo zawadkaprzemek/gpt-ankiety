@@ -40,16 +40,22 @@ class ExcellGenerator
 
     public function createExcel(Polling $polling,bool $split=false): Spreadsheet
     {
-        $excell=new Spreadsheet();
-        $excell->getDefaultStyle()->getFont()->setName('Arial');
-        $excell->getDefaultStyle()->getFont()->setSize(8);
+        try{
+            $excell=new Spreadsheet();
+            $excell->getDefaultStyle()->getFont()->setName('Arial');
+            $excell->getDefaultStyle()->getFont()->setSize(8);
 
-        if($split)
+            if($split)
+            {
+                return $this->generateSheets($excell,$polling);
+            }else{
+                return $this->generateOneSheet($excell,$polling);
+            }
+        }catch (\Exception $e)
         {
-            return $this->generateSheets($excell,$polling);
-        }else{
-            return $this->generateOneSheet($excell,$polling);
+            dd($e);
         }
+
         
      
     }
