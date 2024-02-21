@@ -107,21 +107,27 @@ class ExcellGenerator
             }
 
             $key=$key-$wstawki;
+            $letter= $this->getLetter($number);
 
-            if($number<sizeof(self::LETTERS))
-            {
-                $letter=self::LETTERS[$number];
-            }else{
-                $prefix_num=floor($number/sizeof(self::LETTERS))-1;
-                $letter_num=$number - $prefix_num* sizeof(self::LETTERS);
-                $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
-                //dd($prefix_num , $number, $letter_num, $letter, sizeof(self::LETTERS));
-            }
             $sheet->setCellValue($letter."1",($key+1)." ".$question->getContent());
             $number++;
         }
         $sheet=$this->printUsersAnswers($sheet,$polling,$questions);
         return $excell;
+    }
+
+    private function getLetter(int $number): string
+    {
+        if($number<sizeof(self::LETTERS))
+        {
+            $letter=self::LETTERS[$number];
+        }else{
+            $prefix_num=floor($number/sizeof(self::LETTERS))-1;
+            $letter_num=$number - $prefix_num* sizeof(self::LETTERS);
+            $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
+            //dd($prefix_num , $number, $letter_num, $letter, sizeof(self::LETTERS));
+        }
+        return $letter;
     }
 
     private function saveFile($excell)
@@ -181,13 +187,7 @@ class ExcellGenerator
             foreach ($questions as $question)
             {
                 $find=false;
-                if($letter_number<sizeof(self::LETTERS)){
-                    $letter=self::LETTERS[$letter_number];
-                }else{
-                    $prefix_num=floor($letter_number/sizeof(self::LETTERS),0);
-                    $letter_num=$letter_number - $prefix_num* sizeof(self::LETTERS);
-                    $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
-                }
+                $letter= $this->getLetter($number);
 
                 foreach($votes as $vote)
                 {
@@ -214,7 +214,6 @@ class ExcellGenerator
 
                 if(!$find)
                 {
-                    dump($letter.' '.$number);
                     $sheet->setCellValue($letter.$number,'');
                 }
                 if($question->getType()->getId()!==4) {
