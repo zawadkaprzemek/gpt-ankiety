@@ -376,8 +376,8 @@ class PollingController extends AbstractController
 
         $filename = str_replace(' ', '_', strtolower($polling->getName())) . '_wyniki.xlsx';
         $streamedResponse = new StreamedResponse();
-        $streamedResponse->setCallback(function () use ($generator, $polling) {
-            $excel = $generator->createExcel($polling);
+        $excel = $generator->createExcel($polling);
+        $streamedResponse->setCallback(function () use ($generator, $polling, $excel) {
             $writer = new Xlsx($excel);
             $writer->save('php://output');
         });
