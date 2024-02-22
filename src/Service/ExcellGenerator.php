@@ -122,7 +122,7 @@ class ExcellGenerator
         {
             $letter=self::LETTERS[$number];
         }else{
-            $prefix_num=floor($number/sizeof(self::LETTERS))-1;
+            $prefix_num=floor($number/sizeof(self::LETTERS));
             $letter_num=$number - $prefix_num* sizeof(self::LETTERS);
             $letter=self::LETTERS[$prefix_num].self::LETTERS[$letter_num];
             //dd($prefix_num , $number, $letter_num, $letter, sizeof(self::LETTERS));
