@@ -187,7 +187,7 @@ class ExcellGenerator
             foreach ($questions as $question)
             {
                 $find=false;
-                $letter= $this->getLetter($number);
+                $letter= $this->getLetter($letter_number);
 
                 foreach($votes as $vote)
                 {
