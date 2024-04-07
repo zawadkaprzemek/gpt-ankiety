@@ -189,6 +189,7 @@ $(document).ready(function () {
         $('.question-error').removeClass('d-block');
         let data = $(this).serializeArray(),
             errors = 0;
+        let errorField = null;
         $(data).each(function (i, elem) {
             let question = elem.name.replace('question-', '');
             let field = form.find('[data-question="' + question + '"]'),
@@ -199,11 +200,17 @@ $(document).ready(function () {
                     if (elem.value === '' || elem.value.length < minlenght) {
                         $('#question-error-' + question).addClass('d-block');
                         errors++;
+                        if(errorField===null){
+                            errorField = field;
+                        }
                     }
                 } else {
                     if (elem.value === '') {
                         $('#question-error-' + question).addClass('d-block');
                         errors++;
+                        if(errorField===null){
+                            errorField = field;
+                        }
                     }
                 }
             }
@@ -212,6 +219,10 @@ $(document).ready(function () {
 
         if (errors > 0) {
             e.preventDefault();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: (errorField.offset().top-500)
+            }, 2000);
+            return false;
         }
     });
 
