@@ -20,12 +20,10 @@ final class Version20240226000800 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE session_user DROP hash');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE session_user ADD hash VARCHAR(255) NOT NULL');
     }
 }
