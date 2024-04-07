@@ -52,6 +52,21 @@ class SessionUserRepository extends ServiceEntityRepository
             ;
     }
 
+    public function getAllUsersForPollingByDate(Polling $polling, \DateTime $start, \DateTime $end)
+    {
+        return $this->createQueryBuilder('su')
+            ->join('su.code','c')
+            ->andWhere('c.polling = :polling')
+            ->andWhere('su.createdAt between :start and :end')
+            ->setParameter('polling',$polling)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->addOrderBy('su.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return SessionUser[] Returns an array of SessionUser objects
 //     */

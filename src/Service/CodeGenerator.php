@@ -19,6 +19,22 @@ class CodeGenerator
         return $prefix . substr(str_shuffle(str_repeat($letters, ceil($length / strlen($letters)))), 1, $length);
     }
 
+    public function generateManyCodes(int $count, string $prefix, array $choices, ?string $exclude, int $length=10): array
+    {
+        $codes = [];
+        $letters = $this->generateLettersForCode($choices,$exclude);
+        $letters = implode('',$letters);
+
+        while (count($codes) < $count) {
+            $code = $prefix . substr(str_shuffle(str_repeat($letters, ceil($length / strlen($letters)))), 1, $length);
+            if (!in_array($code, $codes)) {
+                $codes[] = $code;
+            }
+        }
+
+        return $codes;
+    }
+
     private function parseChoicesArray(array $choices): array
     {
         $letters = [];

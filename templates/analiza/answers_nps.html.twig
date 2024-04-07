@@ -1,0 +1,38 @@
+<table class="table nps-table">
+    <tbody>
+    <tr>
+        <td style="width: 70%;">
+            <div class="nps-results">
+                {% for i in 1..10 %}
+                    <div class="nps-result-box">
+                        <div class="progress-container">
+                            <div class="progress vertical">
+                                <div class="progress-bar {{ i|result_colorNPS }}" role="progressbar"
+                                     style="width:100%;height: {{ results.summary.results[i].percent }}%"
+                                     aria-valuenow="{{ results.summary.results[(i)].percent }}" aria-valuemin="0"
+                                     title="{{ results.summary.results[(i)].count }}"
+                                     aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="nps-value">{{ i }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </td>
+        <td style="width: 30%">
+            <div>
+                <p>
+                    <span class="badge bg-success text-white">{{ results.summary.promotors|resultPercent(results.summary.voted) }}%</span> promotorów
+                </p>
+                <p>
+                    <span class="badge bg-danger text-white">{{ results.summary.destruktors|resultPercent(results.summary.voted) }}%</span> destruktorów
+                </p>
+                <h3 class="nps-result">
+                    NPS: {{ results.summary.nps }}
+                </h3>
+            </div>
+
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -81,6 +81,8 @@ class VoteController extends AbstractController
         if ($request->getMethod() == "POST") {
             $answers = $request->request->all();
             $errors = $this->checkErrors($answers, $questions);
+            $this->saveAnswers($answers, $questions, $user);
+
             if (sizeof($errors) === 0) {
                 $logic = $this->pollingService->checkLogic($votesArray, $questions);
                 if (!empty($logic)) {
@@ -117,7 +119,7 @@ class VoteController extends AbstractController
         ]);
     }
 
-    private function prepareVotes(array $votes = null)
+    private function prepareVotes(array $votes = null): array
     {
         $array = [];
         foreach ($votes as $vote) {
@@ -129,7 +131,27 @@ class VoteController extends AbstractController
         return $array;
     }
 
-    private function checkErrors(array $answers, array $questions)
+    private function saveAnswers(array $answers, array $questions, SessionUser $user): void
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Vote::class);
+        $answers = $this->reorganizeAnswers($answers);
+        foreach ($questions as $question) {
+            if (array_key_exists($question->getId(), $answers)) {
+                $vote = $repository->findOneBy(['sessionUser' => $user, 'question' => $question]);
+                $value = $answers[$question->getId()];
+                if (!$vote) {
+                    $vote = new Vote();
+                    $vote->setSessionUser($user)->setQuestion($question);
+                }
+                $vote->setAnswer([trim($value)]);
+                $em->persist($vote);
+            }
+        }
+        $em->flush();
+    }
+
+    private function checkErrors(array $answers, array $questions): array
     {
         $errors = [];
         $answers = $this->reorganizeAnswers($answers);
@@ -154,7 +176,7 @@ class VoteController extends AbstractController
         return $errors;
     }
 
-    private function reorganizeAnswers(array $answers)
+    private function reorganizeAnswers(array $answers): array
     {
         $array = [];
         foreach ($answers as $key => $value) {

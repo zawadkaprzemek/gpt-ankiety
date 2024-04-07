@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="row mb-3">
+    <div class="col-6 col-lg-3">
+        {{ form_widget(form.date_from) }}
+    </div>
+    <div class="col-6 col-lg-3">
+        {{ form_widget(form.date_to) }}
+    </div>
+    <div class="mt-2 mt-lg-0 col-6 col-lg-3 d-flex flex-column justify-content-center align-items-start">
+        {{ form_widget(form.all_data) }}
+    </div>
+    <div class="mt-2 mt-lg-0 col-6 col-lg-3 text-right">
+        {{ form_widget(form.submit) }}
+    </div>
+
+</div>
+{{ form_end(form) }}

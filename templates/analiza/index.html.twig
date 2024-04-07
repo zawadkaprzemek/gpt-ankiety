@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wyniki surowe{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-9 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
+                <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
+                   class="btn btn-outline-primary">Logika</a>
+                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary active">Analiza</a>
+                <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
+            </div>
+        </div>
+
+        <div class="col-3 text-right">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary active">Wyniki surowe</a>
+                <a href="{{ path('app_panel_analiza_zbiorcza',{'id':polling.id}) }}" class="btn btn-outline-primary">Wyniki
+                    zbiorcze</a>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'analiza/form.html.twig' with form %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Wyniki surowe</h3>
+            {% set questionsId = [] %}
+            <table class="table table-striped analiza-table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Data rozpoczęcia</th>
+                    <th>Czas wypełnienia</th>
+                    {% set i =0 %}
+                    {% for question in results.questions %}
+                        {% if question.type.id != 4 %}
+                            {% set i = i +1 %}
+                            <th>{{ i ~'. '~question.content }}</th>
+                            {% set questionsId = questionsId|merge([question.id]) %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in results.users %}
+                    <tr>
+                        <td></td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.createdAt|date('Y-m-d H:i') }}</td>
+                        <td>{{ user.createdAt|answer_time(user.votes) }}</td>
+                        {% for qId in questionsId %}
+                            {% set find = false %}
+                            {% for vote in user.votes %}
+                                {% if vote.question.id == qId %}
+                                    {% set find = true %}
+                                    <td>{{ vote.answer|print_answer(vote.question) }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            {% if not find %}
+                                <td>.</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

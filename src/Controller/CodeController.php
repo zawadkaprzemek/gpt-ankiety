@@ -26,6 +26,7 @@ class CodeController extends AbstractController
     {
         $this->generator = $generator;
     }
+
     /**
      * @Route("/", name="app_my_codes")
      */
@@ -58,10 +59,11 @@ class CodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
+            $codes = $this->generator->generateManyCodes($data['count'], $data['prefix'],$data['randomContent'], $data['excludeFromRandomContent'], $data['randomLength']);
             for ($i = 0; $i < $data['count']; $i++) {
                 /** @var Code $code */
                 $code = new Code();
-                $str = $this->generator->generateCode($data['prefix'],$data['randomContent'],$data['excludeFromRandomContent'],$data['randomLength']);
+                $str = $codes[$i];
                 $code->setContent($str)
                     ->setMulti($data['multi'])
                     ->setPolling($data['polling'])

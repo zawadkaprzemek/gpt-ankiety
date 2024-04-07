@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wyniki zbiorcze{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-9 mb-3">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
+                <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
+                   class="btn btn-outline-primary">Logika</a>
+                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary active">Analiza</a>
+                <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
+            </div>
+        </div>
+
+        <div class="col-3 text-right">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary">Wyniki surowe</a>
+                <a href="{{ path('app_panel_analiza_zbiorcza',{'id':polling.id}) }}"
+                   class="btn btn-outline-primary active">Wyniki
+                    zbiorcze</a>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'analiza/form.html.twig' with form %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Wyniki zbiorcze</h3>
+
+            {% set index = 0 %}
+            {% for question in polling.questions %}
+                {% if question.type.id !=4 %}
+                    {% set index = index+1 %}
+                    {% include 'analiza/question_box.html.twig' with {index, question, results: results[question.id], totalCount: results.totalCount} %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

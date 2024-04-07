@@ -1,0 +1,23 @@
+<div class="row questionBox mb-4 bg-white">
+    <div class="col">
+        <h2 class="number-box">{{ index }}</h2>
+    </div>
+    <div class="col-8 question-content">
+        {{ question.content }}
+    </div>
+    <div class="col-3 votesInfoBox">
+        <p class="mb-0">Odpowiedzi: {{ results.summary.voted }}
+            ({{ results.summary.voted|resultPercent(totalCount)~'%' }})</p>
+        <p class="mb-0">Pominięć: {{ results.summary.skipped }}
+            ({{ results.summary.skipped|resultPercent(totalCount)~'%' }})</p>
+    </div>
+    <div class="col-12">
+        {% if question.type.id == 1 %}
+            {% include 'analiza/answers_open.html.twig' with {question, results} %}
+        {% elseif question.type.id == 2 %}
+            {% include 'analiza/answers_closed.html.twig' with {question, results} %}
+        {% elseif question.type.id == 3 %}
+            {% include 'analiza/answers_nps.html.twig' with {question, results} %}
+        {% endif %}
+    </div>
+</div>
