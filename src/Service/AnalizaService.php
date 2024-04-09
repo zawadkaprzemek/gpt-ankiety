@@ -64,11 +64,14 @@ class AnalizaService
         $totalCount = count($tmpresults['users']);
 
         foreach ($results as $qId => &$result) {
-            dump($questionArray, $results);
-            $result['summary'] = $this->generateVotesSumary($result['votes'], $questionArray[$qId], $totalCount);
-            if ($questionArray[$qId]->getType()->getId() === 3) {
-                $result = $this->generateNPSSummary($result, $totalCount);
+            if(array_key_exists($qId,$questionArray))
+            {
+                $result['summary'] = $this->generateVotesSumary($result['votes'], $questionArray[$qId], $totalCount);
+                if ($questionArray[$qId]->getType()->getId() === 3) {
+                    $result = $this->generateNPSSummary($result, $totalCount);
+                }
             }
+
         }
 
         $results['totalCount'] = $totalCount;
