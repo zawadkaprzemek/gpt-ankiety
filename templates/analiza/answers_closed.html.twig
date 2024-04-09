@@ -13,6 +13,7 @@
     </thead>
     <tbody>
         {% for index,answer in question.answers %}
+            {% if results.summary.results[(index+1)] is defined %}
             <tr>
                 <td>{{ answer.content }}</td>
                 <td>
@@ -23,6 +24,7 @@
                 <td>{{ results.summary.results[(index+1)].percent~'%' }}</td>
                 <td>{{ results.summary.results[(index+1)].count }}</td>
             </tr>
+            {% endif %}
         {% endfor %}
 
     </tbody>
