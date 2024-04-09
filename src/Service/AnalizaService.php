@@ -96,7 +96,7 @@ class AnalizaService
 
 
             foreach ($votes as $vote) {
-                $answer = $vote->getAnswer()[0];
+                $answer = $vote->getAnswer()[0] ?? null;
                 $answers[$answer]++;
             }
 
