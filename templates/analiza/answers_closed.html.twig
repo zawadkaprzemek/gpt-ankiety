@@ -13,20 +13,16 @@
     </thead>
     <tbody>
         {% for index,answer in question.answers %}
-            {% if results.summary.results[(index+1)] is defined %}
             <tr>
                 <td>{{ answer.content }}</td>
                 <td>
                     <div class="progress">
-                        <div class="progress-bar {{ results.summary.results[(index+1)].percent|result_colorClosed(results.summary.results) }}" role="progressbar" style="width: {{ results.summary.results[(index+1)].percent }}%" aria-valuenow="{{ results.summary.results[(index+1)].percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar {{ results.summary.results[answer.id].percent|result_colorClosed(results.summary.results) }}" role="progressbar" style="width: {{ results.summary.results[(index+1)].percent }}%" aria-valuenow="{{ results.summary.results[(index+1)].percent }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </td>
-                <td>{{ results.summary.results[(index+1)].percent~'%' }}</td>
-                <td>{{ results.summary.results[(index+1)].count }}</td>
+                <td>{{ results.summary.results[answer.id].percent~'%' }}</td>
+                <td>{{ results.summary.results[answer.id].count }}</td>
             </tr>
-                {% else %}
-                {{ dump(results.summary.results, question.id, question.answers) }}
-            {% endif %}
         {% endfor %}
 
     </tbody>
