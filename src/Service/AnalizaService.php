@@ -96,8 +96,11 @@ class AnalizaService
 
 
             foreach ($votes as $vote) {
-                $answer = $vote->getAnswer()[0] ?? null;
-                $answers[$answer]++;
+                $answer = $vote->getAnswer()[0];
+                if(array_key_exists($answer, $answers)){
+                    $answers[$answer]++;
+                }
+
             }
 
 
