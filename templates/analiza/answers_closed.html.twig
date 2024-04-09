@@ -24,6 +24,8 @@
                 <td>{{ results.summary.results[(index+1)].percent~'%' }}</td>
                 <td>{{ results.summary.results[(index+1)].count }}</td>
             </tr>
+                {% else %}
+                {{ dump(results.summary.results, index) }}
             {% endif %}
         {% endfor %}
 
