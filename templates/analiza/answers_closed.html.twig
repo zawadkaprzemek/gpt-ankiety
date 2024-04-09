@@ -25,7 +25,7 @@
                 <td>{{ results.summary.results[(index+1)].count }}</td>
             </tr>
                 {% else %}
-                {{ dump(results.summary.results, index) }}
+                {{ dump(results.summary.results, question.id, question.answers) }}
             {% endif %}
         {% endfor %}
 
