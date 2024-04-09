@@ -23,7 +23,7 @@ class AnalizaService
         return [
             'date_from' => (new \DateTime('first day of this month'))->setTime(0, 0),
             'date_to' => (new \DateTime('last day of this month'))->setTime(23, 59, 59),
-            'all_data' => false
+            'all_data' => true
         ];
     }
 
