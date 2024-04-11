@@ -33,7 +33,19 @@
 
     <div class="row">
         <div class="col-12">
-            <h3>Wyniki zbiorcze</h3>
+            {% if respondent is not null %}
+                <a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id}) }}">Wróć do listy</a>
+                {{ dump(respondent) }}
+                <div class="row respondentInfoBox">
+                    <div class="col-12">
+                        <p><i class="fa fa-user fa-2x"></i>
+                            Repondent {{ respondent.id }}</p>
+                    </div>
+                    <p>Wypełniono: {{ respondent.updatedAt|date('H:i d/m/Y') }} ({{ respondent.createdAt|answer_time(respondent.votes) }})</p>
+                </div>
+            {% else %}
+                <h3>Wyniki zbiorcze</h3>
+            {% endif %}
 
             {% set index = 0 %}
             {% for question in polling.questions %}

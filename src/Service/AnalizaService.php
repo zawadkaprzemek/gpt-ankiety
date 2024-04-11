@@ -28,17 +28,17 @@ class AnalizaService
     }
 
 
-    public function getPollingResults(Polling $polling, array $data): array
+    public function getPollingResults(Polling $polling, array $data, ?SessionUser $respondent = null): array
     {
         return [
-            'users' => $this->getSessionUsers($polling, $data),
+            'users' => $respondent ? [$respondent] : $this->getSessionUsers($polling, $data),
             'questions' => $polling->getQuestions(),
         ];
     }
 
-    public function getPollingResultsPerQuestion(Polling $polling, array $data)
+    public function getPollingResultsPerQuestion(Polling $polling, array $data, ?SessionUser $respondent): array
     {
-        $tmpresults = $this->getPollingResults($polling, $data);
+        $tmpresults = $this->getPollingResults($polling, $data, $respondent);
 
         $questionArray = [];
         $results = [];
@@ -64,8 +64,7 @@ class AnalizaService
         $totalCount = count($tmpresults['users']);
 
         foreach ($results as $qId => &$result) {
-            if(array_key_exists($qId,$questionArray))
-            {
+            if (array_key_exists($qId, $questionArray)) {
                 $result['summary'] = $this->generateVotesSumary($result['votes'], $questionArray[$qId], $totalCount);
                 if ($questionArray[$qId]->getType()->getId() === 3) {
                     $result = $this->generateNPSSummary($result, $totalCount);
@@ -101,7 +100,7 @@ class AnalizaService
 
             foreach ($votes as $vote) {
                 $answer = $vote->getAnswer()[0];
-                if(array_key_exists($answer, $answers)){
+                if (array_key_exists($answer, $answers)) {
                     $answers[$answer]++;
                 }
 
@@ -149,5 +148,10 @@ class AnalizaService
         $result['summary']['destruktors'] = $destruktors;
         $result['summary']['nps'] = $totalCount > 0 ? number_format(($promotors / $result['summary']['voted'] - $destruktors / $result['summary']['voted']) * 100) : 0;
         return $result;
+    }
+
+    public function getRespondent(int $respondentId): ?SessionUser
+    {
+        return $this->em->getRepository(SessionUser::class)->find($respondentId);
     }
 }

@@ -58,18 +58,21 @@ class AnalizaController extends AbstractController
     {
         $data = $this->service->getDefaultDataForForm();
         $form = $this->createForm(AnalizaSettingsType::class, $data);
+        $respondent = (int)$request->get('respondent');
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
             $data = $form->getData();
         }
+        $respondent = $this->service->getRespondent($respondent);
 
-        $results = $this->service->getPollingResultsPerQuestion($polling, $data);
-//dd($results);
+        $results = $this->service->getPollingResultsPerQuestion($polling, $data, $respondent);
+
         return $this->render('analiza/summary.html.twig', [
             'form' => $form->createView(),
             'results' => $results,
             'polling' => $polling,
+            'respondent' => $respondent,
         ]);
     }
 
