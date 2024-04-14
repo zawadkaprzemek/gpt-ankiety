@@ -423,26 +423,42 @@ $(document).ready(function () {
         }
     }
 
-    $('.analiza-table').dataTable(
-        {
-            "bLengthChange": false,
-            "language": {
-                "search": "Szukaj: ",
-                "info": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
-                "infoEmpty": "Pozycji 0 z 0 dostępnych",
-                "infoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
-                "zeroRecords": "Nie znaleziono pasujących pozycji",
-                "emptyTable": "Nie znaleziono pasujących pozycji",
-                "loadingRecords": "Ładowanie...",
-                "paginate": {
-                    "previous": "Poprzednia",
-                    "first": "Pierwsza",
-                    "next": "Następna",
-                    "last": "Ostatnia",
-                }
+    $('.analiza-table').DataTable({
+        layout: {
+            topStart: {
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Pobierz plik Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Pobierz plik Pdf'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Wydrukuj wyniki'
+                    }
+                ]
             }
-        }
-    )
+        },
+        "bLengthChange": false,
+        "language": {
+            "search": "Szukaj: ",
+            "info": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+            "infoEmpty": "Pozycji 0 z 0 dostępnych",
+            "infoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+            "zeroRecords": "Nie znaleziono pasujących pozycji",
+            "emptyTable": "Nie znaleziono pasujących pozycji",
+            "loadingRecords": "Ładowanie...",
+            "paginate": {
+                "previous": "Poprzednia",
+                "first": "Pierwsza",
+                "next": "Następna",
+                "last": "Ostatnia",
+            }
+        },
+    });
 });
 
 

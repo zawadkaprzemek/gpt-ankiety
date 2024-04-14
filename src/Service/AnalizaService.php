@@ -146,7 +146,12 @@ class AnalizaService
 
         $result['summary']['promotors'] = $promotors;
         $result['summary']['destruktors'] = $destruktors;
-        $result['summary']['nps'] = $totalCount > 0 ? number_format(($promotors / $result['summary']['voted'] - $destruktors / $result['summary']['voted']) * 100) : 0;
+        if($result['summary']['voted'] > 0) {
+            $result['summary']['nps'] = $totalCount > 0 ? number_format(($promotors / $result['summary']['voted'] - $destruktors / $result['summary']['voted']) * 100) : 0;
+        }else{
+            $result['summary']['nps'] = 0;
+        }
+
         return $result;
     }
 

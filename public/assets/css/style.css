@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url('../fonts/Roboto-Regular.ttf') format('truetype'); /* Ścieżka do pliku fontu */
+}
+
 .img-logo {
     max-width: 100px;
 }
@@ -357,4 +362,25 @@ body {
 
 .bg-gray{
     background-color: #ddd;
+}
+
+.respondentInfoBox{
+    border-radius: 10px;
+    border: 1px solid #fff;
+    margin: 10px 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.respondent-name{
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+    gap:8px;
+
+    span{
+        font-size: 18px;
+    }
 }
