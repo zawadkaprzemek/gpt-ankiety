@@ -110,7 +110,8 @@ textarea {
 }
 
 .nps-answers input {
-    display: none;
+    opacity: 0;
+    margin: 30px 45%;
 }
 
 .nps-answers input[type="radio"]:checked + label {
