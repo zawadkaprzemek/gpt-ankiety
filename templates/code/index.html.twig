@@ -32,7 +32,7 @@
     {% if pollings is defined %}
     <div class="filter-container my-3">
         <p>Filturuj kody po ankiecie</p>
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-start flex-wrap">
             <button class="btn btn-outline-secondary btn-sm active" data-filter="all">Wszystkie</button>
             {% for  key,polling in pollings %}
                 <button type="button" class="btn btn-outline-secondary btn-filter btn-sm" data-filter="{{ key }}">{{ polling }}</button>
