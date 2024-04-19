@@ -238,14 +238,15 @@ class PollingController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if ($orgType != $question->getType()->getId()) {
-                if ($orgType == 2) {
-                    foreach ($orgAnswers as $answer) {
+
+            if ($orgType === 2) {
+                foreach ($orgAnswers as $answer) {
+                    if (!in_array($answer, $question->getAnswers()->toArray())) {
                         $em->remove($answer);
                     }
+
                 }
             }
-
 
             $em->persist($question);
             $em->flush();

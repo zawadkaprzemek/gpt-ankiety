@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-9 mb-3">
         <div class="btn-group btn-group-sm">
+            <a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary">Moje ankiety</a>
             <a href="{{path('app_polling_panel',{'id':polling.id})}}" class="btn btn-outline-primary">Pytania</a>
             <a href="{{path('app_polling_logic_list',{id:polling.id})}}" class="btn btn-outline-primary">Logika</a>
             <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"

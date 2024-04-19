@@ -7,6 +7,7 @@
     <div class="row">
         <div class="col-9 mb-3">
             <div class="btn-group btn-group-sm">
+                <a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary">Moje ankiety</a>
                 <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
                 <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
                    class="btn btn-outline-primary">Logika</a>
@@ -49,7 +50,7 @@
                     {% for question in results.questions %}
                         {% if question.type.id != 4 %}
                             {% set i = i +1 %}
-                            <th>{{ i ~'. '~question.content }}</th>
+                            <th>{{ i ~'. '~question.content|slice(0, 50) ~ '...' }}</th>
                             {% set questionsId = questionsId|merge([question.id]) %}
                         {% endif %}
                     {% endfor %}
