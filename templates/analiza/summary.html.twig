@@ -33,13 +33,25 @@
 
 
     <div class="row">
+        <div class="col-12 mb-2">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ path('app_pdf_generalmeetingresultspdf',{
+                    'id':polling.id,
+                    'date_from': form.vars.value.date_from|date('Y-m-d'),
+                    'date_to': form.vars.value.date_to|date('Y-m-d'),
+                    'all_data': form.vars.value.all_data,
+                    'respondent': respondent.id ?? 0
+                }) }}"
+                   class="btn btn-outline-primary active">Pobierz PDF</a>
+            </div>
+        </div>
         <div class="col-12">
             {% if respondent is not null %}
                 <a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id}) }}">Wróć do listy</a>
                 <div class="row respondentInfoBox">
                     <div class="col-12">
                         <p class="mt-1 respondent-name mb-0"><i class="fa fa-user fa-2x"></i>
-                            <span>Repondent {{ respondent.id }}</span></p>
+                            <span>Respondent {{ respondent.id }}</span></p>
                         <p class="mb-0">Wypełniono: {{ respondent.updatedAt|date('H:i d/m/Y') }} ({{ respondent.createdAt|answer_time(respondent.votes) }})</p>
                         <p class="mb-0">Użyty kod: {{ respondent.code.content }}</p>
                     </div>

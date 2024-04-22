@@ -9,7 +9,9 @@
         {% for vote in results.votes %}
             <tr>
                 <td>{{ vote.answer|print_answer(question) }}</td>
-                <td><a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id, respondent: vote.sessionUser.id}) }}" class="btn btn-link">{{ 'respondent_'~vote.sessionUser.id }}</a></td>
+                <td><a {% if base_dir is not defined %}href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id, respondent: vote.sessionUser.id}) }}"{% endif%} class="btn btn-link">
+                        {{ 'respondent_'~vote.sessionUser.id }}
+                    </a></td>
             </tr>
         {% endfor %}
     </tbody>

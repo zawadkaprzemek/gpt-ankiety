@@ -1,0 +1,33 @@
+{% extends 'base-pdf.html.twig' %}
+
+{% block title %}Wyniki zbiorcze{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-12">
+            {% if respondent is not null %}
+                <div class="row respondentInfoBox">
+                    <div class="col-12">
+                        <p class="mt-1 respondent-name mb-0"><i class="fa fa-user fa-2x"></i>
+                            <span>Respondent {{ respondent.id }}</span></p>
+                        <p class="mb-0">Wypełniono: {{ respondent.updatedAt|date('H:i d/m/Y') }} ({{ respondent.createdAt|answer_time(respondent.votes) }})</p>
+                        <p class="mb-0">Użyty kod: {{ respondent.code.content }}</p>
+                    </div>
+
+                </div>
+            {% else %}
+                <h3>Wyniki zbiorcze</h3>
+            {% endif %}
+
+            {% set index = 0 %}
+            {% for question in polling.questions %}
+                {% if question.type.id !=4 %}
+                    {% set index = index+1 %}
+                    {% include 'analiza/question_box.html.twig' with {index, question, results: results[question.id], totalCount: results.totalCount} %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

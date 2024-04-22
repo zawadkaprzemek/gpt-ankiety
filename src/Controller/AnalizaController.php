@@ -6,6 +6,8 @@ use App\Entity\Polling;
 use App\Entity\Vote;
 use App\Service\AnalizaService;
 use App\Form\AnalizaSettingsType;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,8 +79,37 @@ class AnalizaController extends AbstractController
     }
 
 
-    public function deleteVote(Request $request, Vote $vote)
+    /**
+     * @Route("{id}/analiza/zbiorcze/pdf", name="app_pdf_generalmeetingresultspdf")
+     * @param Pdf $knpSnappyPdf
+     * @param Polling $polling
+     * @param Request $request
+     * @return PdfResponse
+     */
+    public function generalMeetingResultsPdf(Pdf $knpSnappyPdf,Polling $polling,Request $request): PdfResponse
     {
+        $data = [
+            'date_from' => $request->get('date_from'),
+            'date_to' => $request->get('date_to'),
+            'all_data' => $request->get('all_data'),
+        ];
+        $respondent = (int)$request->get('respondent');
 
+        $respondent = $this->service->getRespondent($respondent);
+
+        $results = $this->service->getPollingResultsPerQuestion($polling, $data, $respondent);
+
+        $html = $this->render('analiza/summary-pdf.html.twig', [
+            'results' => $results,
+            'polling' => $polling,
+            'respondent' => $respondent,
+            'base_dir' => $request->getScheme()."://".$request->server->get('HTTP_HOST')
+        ]);
+        $knpSnappyPdf->setOption("enable-local-file-access",true);
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html->getContent()),
+            $polling->getName().'.pdf'
+        );
     }
 }
