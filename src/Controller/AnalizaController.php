@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Polling;
+use App\Entity\SessionUser;
 use App\Entity\Vote;
 use App\Service\AnalizaService;
 use App\Form\AnalizaSettingsType;
@@ -107,9 +108,11 @@ class AnalizaController extends AbstractController
         ]);
         $knpSnappyPdf->setOption("enable-local-file-access",true);
 
+        $filename= $polling->getName() .($respondent instanceof SessionUser ? ' Respondent_'.$respondent->getId() : '');
+
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html->getContent()),
-            $polling->getName().'.pdf'
+            $filename.'.pdf'
         );
     }
 }
