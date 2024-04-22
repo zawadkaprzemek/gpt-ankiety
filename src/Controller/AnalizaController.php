@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Polling;
 use App\Entity\SessionUser;
-use App\Entity\Vote;
 use App\Service\AnalizaService;
 use App\Form\AnalizaSettingsType;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -14,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 
 /**
@@ -110,9 +110,12 @@ class AnalizaController extends AbstractController
 
         $filename= $polling->getName() .($respondent instanceof SessionUser ? ' Respondent_'.$respondent->getId() : '');
 
+        $slugger = new AsciiSlugger();
+        $filename = $slugger->slug($filename);
+
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html->getContent()),
-            $filename.'.pdf'
+            $filename->toString().'.pdf'
         );
     }
 }
