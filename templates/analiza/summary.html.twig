@@ -43,6 +43,14 @@
                     'respondent': respondent.id ?? 0
                 }) }}"
                    class="btn btn-outline-primary active">Pobierz PDF</a>
+                <a href="{{ path('app_polling_analysis_zbiorcza_excell',{
+                    'id':polling.id,
+                    'date_from': form.vars.value.date_from|date('Y-m-d'),
+                    'date_to': form.vars.value.date_to|date('Y-m-d'),
+                    'all_data': form.vars.value.all_data,
+                    'respondent': respondent.id ?? 0
+                }) }}"
+                   class="btn btn-outline-primary active">Pobierz Excel</a>
             </div>
         </div>
         <div class="col-12">

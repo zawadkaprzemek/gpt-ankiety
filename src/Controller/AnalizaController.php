@@ -6,12 +6,15 @@ use App\Entity\Polling;
 use App\Entity\SessionUser;
 use App\Service\AnalizaService;
 use App\Form\AnalizaSettingsType;
+use App\Service\ExcellGenerator;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -117,5 +120,39 @@ class AnalizaController extends AbstractController
             $knpSnappyPdf->getOutputFromHtml($html->getContent()),
             $filename->toString().'.pdf'
         );
+    }
+
+    /**
+     * @Route("{id}/analiza/zbiorcze/excell", name="app_polling_analysis_zbiorcza_excell")
+     * @param Request $request
+     * @param Polling $polling
+     * @param ExcellGenerator $generator
+     * @return StreamedResponse
+     */
+    public function analizaZbiorczaExcell(Request $request, Polling $polling, ExcellGenerator $generator): StreamedResponse
+    {
+        $data = [
+            'date_from' => $request->get('date_from'),
+            'date_to' => $request->get('date_to'),
+            'all_data' => $request->get('all_data'),
+        ];
+        $respondent = (int)$request->get('respondent');
+
+        $respondent = $this->service->getRespondent($respondent);
+
+        $results = $this->service->getPollingResultsPerQuestion($polling, $data, $respondent);
+        $excel = $generator->createAnalizaZbiorczaExcel($polling, $results);
+        $filename = str_replace(' ', '_', strtolower($polling->getName())) . '_analiza_zbiorcza.xlsx';
+        $streamedResponse = new StreamedResponse();
+        $streamedResponse->setCallback(function () use ($generator, $polling, $results) {
+            $excel = $generator->createAnalizaZbiorczaExcel($polling, $results);
+            $writer = new Xlsx($excel);
+            $writer->save('php://output');
+        });
+        $streamedResponse->setStatusCode(Response::HTTP_OK);
+        $streamedResponse->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+        return $streamedResponse->send();
     }
 }
