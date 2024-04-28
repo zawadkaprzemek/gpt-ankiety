@@ -465,7 +465,15 @@ $(document).ready(function () {
     $('.pdf-btn').on('click', function (){
         const element = document.getElementById('analiza-zbiorcza');
         // Choose the element and save the PDF for your user.
-        html2pdf().from(element).save();
+        var opt = {
+            margin:       0.25,
+            filename:     'myfile.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait', hotfixes: 'px_scaling'  },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+
+        };
+        html2pdf().set(opt).from(element).save();
     });
 });
 
