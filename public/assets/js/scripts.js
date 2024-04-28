@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    //window.html2pdf = window.html2pdf.html2pdf;
+
     const QUESTION_PROTOTYPE = '<div class="form-group row" data-item="__X__" data-index="__NUMBER__">' +
         '<div class="col-1 drag-icon"><i class="fa-solid fa-sort"></i></div>' +
         '<div class="col-11 col-sm-3 col-form-label"><label for="question_answers___name___content" class="required">Odpowiedź __X__</label></div>' +
@@ -458,6 +460,12 @@ $(document).ready(function () {
                 "last": "Ostatnia",
             }
         },
+    });
+
+    $('.pdf-btn').on('click', function (){
+        const element = document.getElementById('analiza-zbiorcza');
+        // Choose the element and save the PDF for your user.
+        html2pdf().from(element).save();
     });
 });
 

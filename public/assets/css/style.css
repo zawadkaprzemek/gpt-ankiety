@@ -386,3 +386,11 @@ body {
 .respondent-name span {
     font-size: 18px;
 }
+
+#analiza-zbiorcza{
+    padding-top: 30px;
+}
+
+#analiza-zbiorcza h3{
+    padding-bottom: 30px;
+}

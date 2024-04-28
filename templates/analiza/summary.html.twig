@@ -43,6 +43,7 @@
                     'respondent': respondent.id ?? 0
                 }) }}"
                    class="btn btn-outline-primary active">Pobierz PDF</a>
+                <button class="btn btn-outline-primary pdf-btn">PDF</button>
                 <a href="{{ path('app_polling_analysis_zbiorcza_excell',{
                     'id':polling.id,
                     'date_from': form.vars.value.date_from|date('Y-m-d'),
@@ -53,7 +54,7 @@
                    class="btn btn-outline-primary active">Pobierz Excel</a>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12" id="analiza-zbiorcza">
             {% if respondent is not null %}
                 <a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id}) }}">Wróć do listy</a>
                 <div class="row respondentInfoBox">
