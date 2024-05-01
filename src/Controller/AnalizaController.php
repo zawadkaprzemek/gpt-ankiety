@@ -109,7 +109,10 @@ class AnalizaController extends AbstractController
             'respondent' => $respondent,
             'base_dir' => $request->getScheme()."://".$request->server->get('HTTP_HOST')
         ]);
-        $knpSnappyPdf->setOption("enable-local-file-access",true);
+        $knpSnappyPdf->setOptions([
+            "enable-local-file-access" => true,
+            'no-outline' => true,
+        ]);
 
         $filename= $polling->getName() .($respondent instanceof SessionUser ? ' Respondent_'.$respondent->getId() : '');
 
