@@ -79,6 +79,7 @@ class AnalizaController extends AbstractController
             'results' => $results,
             'polling' => $polling,
             'respondent' => $respondent,
+            'base_dir' => $request->getScheme()."://".$request->server->get('HTTP_HOST')
         ]);
     }
 
