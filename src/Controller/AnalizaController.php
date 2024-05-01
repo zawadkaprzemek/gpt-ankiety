@@ -74,7 +74,7 @@ class AnalizaController extends AbstractController
 
         $results = $this->service->getPollingResultsPerQuestion($polling, $data, $respondent);
 
-        return $this->render('analiza/summary-pdf.html.twig', [
+        return $this->render('analiza/summary.html.twig', [
             'form' => $form->createView(),
             'results' => $results,
             'polling' => $polling,
