@@ -113,6 +113,12 @@ class AnalizaController extends AbstractController
         $knpSnappyPdf->setOptions([
             "enable-local-file-access" => true,
             'no-outline' => true,
+            'page-size' => 'A4',
+            'dpi' => 300,
+            'margin-top' => 0,
+            'margin-left' => 0,
+            'margin-right' => 0,
+            'margin-bottom' => 0,
         ]);
 
         $filename= $polling->getName() .($respondent instanceof SessionUser ? ' Respondent_'.$respondent->getId() : '');
@@ -145,7 +151,6 @@ class AnalizaController extends AbstractController
         $respondent = $this->service->getRespondent($respondent);
 
         $results = $this->service->getPollingResultsPerQuestion($polling, $data, $respondent);
-        $excel = $generator->createAnalizaZbiorczaExcel($polling, $results);
         $filename = str_replace(' ', '_', strtolower($polling->getName())) . '_analiza_zbiorcza.xlsx';
         $streamedResponse = new StreamedResponse();
         $streamedResponse->setCallback(function () use ($generator, $polling, $results) {
