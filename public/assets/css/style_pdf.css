@@ -412,3 +412,16 @@ body {
     display: block;
     content: "";
 }
+
+#analiza-zbiorcza .progress{
+    display: block;
+}
+
+#analiza-zbiorcza .progress-bar{
+    display: block;
+    min-height: 1rem;
+}
+
+#analiza-zbiorcza .progress.vertical .progress-bar{
+    min-height: 1%;
+}
