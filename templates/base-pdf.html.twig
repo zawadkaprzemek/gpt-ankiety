@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{base_dir ~  asset('css/bootstrap-select.min.css') }}">
         <link rel="stylesheet" href="{{base_dir ~  asset('css/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{base_dir ~  asset('css/style.css') }}">
-        {{ encore_entry_link_tags('app') }}
+        {{ base_dir ~ encore_entry_link_tags('app') }}
     {% endblock %}
     {% block js_top %}
         {#<script src="{{base_dir ~ asset('js/jquery-3.5.1.min.js') }}"></script>
