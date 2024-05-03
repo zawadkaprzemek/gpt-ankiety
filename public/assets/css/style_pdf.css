@@ -425,3 +425,12 @@ body {
 #analiza-zbiorcza .progress.vertical .progress-bar{
     min-height: 1%;
 }
+
+#analiza-zbiorcza .nps-results{
+    display: block;
+}
+
+#analiza-zbiorcza .nps-results .nps-result-box{
+    float: left;
+    display: block;
+}

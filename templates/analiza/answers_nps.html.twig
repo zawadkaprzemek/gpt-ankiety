@@ -7,6 +7,11 @@
                     <div class="nps-result-box">
                         <div class="progress-container">
                             <div class="progress vertical">
+                                <div class="transparent-space" style="height: {% if results.summary.results[(i)].percent >0  %}
+                                    {{ (100 - results.summary.results[i].percent) ~ '%' }}
+                                {% else %}
+                                        99%
+                                {% endif %}"></div>
                                 <div class="progress-bar {{ i|result_colorNPS }}" role="progressbar"
                                      style="width:100%;height: {{ results.summary.results[i].percent }}%"
                                      aria-valuenow="{{ results.summary.results[(i)].percent }}" aria-valuemin="0"

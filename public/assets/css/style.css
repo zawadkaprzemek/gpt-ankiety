@@ -394,3 +394,7 @@ body {
 #analiza-zbiorcza h3{
     padding-bottom: 30px;
 }
+
+.transparent-space{
+    display: none;
+}
