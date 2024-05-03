@@ -91,7 +91,7 @@ class AnalizaController extends AbstractController
      * @param Request $request
      * @return PdfResponse
      */
-    public function generalMeetingResultsPdf(Pdf $knpSnappyPdf,Polling $polling,Request $request): PdfResponse
+    public function generalMeetingResultsPdf(Pdf $knpSnappyPdf,Polling $polling,Request $request): Response
     {
         $data = [
             'date_from' => $request->get('date_from'),
@@ -110,6 +110,7 @@ class AnalizaController extends AbstractController
             'respondent' => $respondent,
             'base_dir' => $request->getScheme()."://".$request->server->get('HTTP_HOST')
         ]);
+        return $html;
         $knpSnappyPdf->setOptions([
             "enable-local-file-access" => true,
             'no-outline' => true,
