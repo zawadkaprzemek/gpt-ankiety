@@ -110,7 +110,7 @@ class AnalizaController extends AbstractController
             'respondent' => $respondent,
             'base_dir' => $request->getScheme()."://".$request->server->get('HTTP_HOST')
         ]);
-        return $html;
+        //return $html;
         $knpSnappyPdf->setOptions([
             "enable-local-file-access" => true,
             'no-outline' => true,
