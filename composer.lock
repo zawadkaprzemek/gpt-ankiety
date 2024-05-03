@@ -1562,6 +1562,68 @@
             "time": "2021-11-05T11:11:14+00:00"
         },
         {
+            "name": "dompdf/dompdf",
+            "version": "v2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/dompdf.git",
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c20247574601700e1f7c8dab39310fca1964dc52",
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "masterminds/html5": "^2.0",
+                "phenx/php-font-lib": ">=0.5.4 <1.0.0",
+                "phenx/php-svg-lib": ">=0.5.2 <1.0.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "ext-zip": "*",
+                "mockery/mockery": "^1.3",
+                "phpunit/phpunit": "^7.5 || ^8 || ^9",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "suggest": {
+                "ext-gd": "Needed to process images",
+                "ext-gmagick": "Improves image processing performance",
+                "ext-imagick": "Improves image processing performance",
+                "ext-zlib": "Needed for pdf stream compression"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dompdf\\": "src/"
+                },
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "The Dompdf Community",
+                    "homepage": "https://github.com/dompdf/dompdf/blob/master/AUTHORS.md"
+                }
+            ],
+            "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
+            "homepage": "https://github.com/dompdf/dompdf",
+            "support": {
+                "issues": "https://github.com/dompdf/dompdf/issues",
+                "source": "https://github.com/dompdf/dompdf/tree/v2.0.8"
+            },
+            "time": "2024-04-29T13:06:17+00:00"
+        },
+        {
             "name": "egulias/email-validator",
             "version": "3.2",
             "source": {
@@ -2953,6 +3015,73 @@
             "time": "2021-07-01T19:01:15+00:00"
         },
         {
+            "name": "masterminds/html5",
+            "version": "2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Masterminds/html5-php.git",
+                "reference": "f5ac2c0b0a2eefca70b2ce32a5809992227e75a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/f5ac2c0b0a2eefca70b2ce32a5809992227e75a6",
+                "reference": "f5ac2c0b0a2eefca70b2ce32a5809992227e75a6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7 || ^8 || ^9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Masterminds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Butcher",
+                    "email": "technosophos@gmail.com"
+                },
+                {
+                    "name": "Matt Farina",
+                    "email": "matt@mattfarina.com"
+                },
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                }
+            ],
+            "description": "An HTML5 parser and serializer.",
+            "homepage": "http://masterminds.github.io/html5-php",
+            "keywords": [
+                "HTML5",
+                "dom",
+                "html",
+                "parser",
+                "querypath",
+                "serializer",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Masterminds/html5-php/issues",
+                "source": "https://github.com/Masterminds/html5-php/tree/2.9.0"
+            },
+            "time": "2024-03-31T07:05:07+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.6.0",
             "source": {
@@ -3057,6 +3186,238 @@
             "time": "2022-05-10T09:36:00+00:00"
         },
         {
+            "name": "mpdf/mpdf",
+            "version": "v8.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpdf/mpdf.git",
+                "reference": "6f723a96becf989a831e38caf758d28364a69939"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/6f723a96becf989a831e38caf758d28364a69939",
+                "reference": "6f723a96becf989a831e38caf758d28364a69939",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "mpdf/psr-http-message-shim": "^1.0 || ^2.0",
+                "mpdf/psr-log-aware-trait": "^2.0 || ^3.0",
+                "myclabs/deep-copy": "^1.7",
+                "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
+                "php": "^5.6 || ^7.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
+                "psr/http-message": "^1.0 || ^2.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "setasign/fpdi": "^2.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.0",
+                "mpdf/qrcode": "^1.1.0",
+                "squizlabs/php_codesniffer": "^3.5.0",
+                "tracy/tracy": "~2.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-bcmath": "Needed for generation of some types of barcodes",
+                "ext-xml": "Needed mainly for SVG manipulation",
+                "ext-zlib": "Needed for compression of embedded resources, such as fonts"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Mpdf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Matěj Humpál",
+                    "role": "Developer, maintainer"
+                },
+                {
+                    "name": "Ian Back",
+                    "role": "Developer (retired)"
+                }
+            ],
+            "description": "PHP library generating PDF files from UTF-8 encoded HTML",
+            "homepage": "https://mpdf.github.io",
+            "keywords": [
+                "pdf",
+                "php",
+                "utf-8"
+            ],
+            "support": {
+                "docs": "http://mpdf.github.io",
+                "issues": "https://github.com/mpdf/mpdf/issues",
+                "source": "https://github.com/mpdf/mpdf"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/mpdf",
+                    "type": "custom"
+                }
+            ],
+            "time": "2024-03-11T12:55:53+00:00"
+        },
+        {
+            "name": "mpdf/psr-http-message-shim",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpdf/psr-http-message-shim.git",
+                "reference": "3206e6b80b6d2479e148ee497e9f2bebadc919db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpdf/psr-http-message-shim/zipball/3206e6b80b6d2479e148ee497e9f2bebadc919db",
+                "reference": "3206e6b80b6d2479e148ee497e9f2bebadc919db",
+                "shasum": ""
+            },
+            "require": {
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mpdf\\PsrHttpMessageShim\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Dorison",
+                    "email": "mark@chromatichq.com"
+                },
+                {
+                    "name": "Kristofer Widholm",
+                    "email": "kristofer@chromatichq.com"
+                },
+                {
+                    "name": "Nigel Cunningham",
+                    "email": "nigel.cunningham@technocrat.com.au"
+                }
+            ],
+            "description": "Shim to allow support of different psr/message versions.",
+            "support": {
+                "issues": "https://github.com/mpdf/psr-http-message-shim/issues",
+                "source": "https://github.com/mpdf/psr-http-message-shim/tree/1.0.0"
+            },
+            "time": "2023-09-01T05:59:47+00:00"
+        },
+        {
+            "name": "mpdf/psr-log-aware-trait",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpdf/psr-log-aware-trait.git",
+                "reference": "7a077416e8f39eb626dee4246e0af99dd9ace275"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpdf/psr-log-aware-trait/zipball/7a077416e8f39eb626dee4246e0af99dd9ace275",
+                "reference": "7a077416e8f39eb626dee4246e0af99dd9ace275",
+                "shasum": ""
+            },
+            "require": {
+                "psr/log": "^1.0 || ^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mpdf\\PsrLogAwareTrait\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Dorison",
+                    "email": "mark@chromatichq.com"
+                },
+                {
+                    "name": "Kristofer Widholm",
+                    "email": "kristofer@chromatichq.com"
+                }
+            ],
+            "description": "Trait to allow support of different psr/log versions.",
+            "support": {
+                "issues": "https://github.com/mpdf/psr-log-aware-trait/issues",
+                "source": "https://github.com/mpdf/psr-log-aware-trait/tree/v2.0.0"
+            },
+            "time": "2023-05-03T06:18:28+00:00"
+        },
+        {
+            "name": "myclabs/deep-copy",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myclabs/DeepCopy.git",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "doctrine/collections": "<1.6.8",
+                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+            },
+            "require-dev": {
+                "doctrine/collections": "^1.6.8",
+                "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Create deep copies (clones) of your objects",
+            "keywords": [
+                "clone",
+                "copy",
+                "duplicate",
+                "object",
+                "object graph"
+            ],
+            "support": {
+                "issues": "https://github.com/myclabs/DeepCopy/issues",
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-03-03T13:19:32+00:00"
+        },
+        {
             "name": "myclabs/php-enum",
             "version": "1.8.3",
             "source": {
@@ -3115,6 +3476,96 @@
                 }
             ],
             "time": "2021-07-05T08:18:36+00:00"
+        },
+        {
+            "name": "phenx/php-font-lib",
+            "version": "0.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-font-lib.git",
+                "reference": "a1681e9793040740a405ac5b189275059e2a9863"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-font-lib/zipball/a1681e9793040740a405ac5b189275059e2a9863",
+                "reference": "a1681e9793040740a405ac5b189275059e2a9863",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3 || ^4 || ^5 || ^6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FontLib\\": "src/FontLib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse, export and make subsets of different types of font files.",
+            "homepage": "https://github.com/PhenX/php-font-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-font-lib/issues",
+                "source": "https://github.com/dompdf/php-font-lib/tree/0.5.6"
+            },
+            "time": "2024-01-29T14:45:26+00:00"
+        },
+        {
+            "name": "phenx/php-svg-lib",
+            "version": "0.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-svg-lib.git",
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/46b25da81613a9cf43c83b2a8c2c1bdab27df691",
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.1 || ^8.0",
+                "sabberworm/php-css-parser": "^8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Svg\\": "src/Svg"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse and export to PDF SVG files.",
+            "homepage": "https://github.com/PhenX/php-svg-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-svg-lib/issues",
+                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.4"
+            },
+            "time": "2024-04-08T12:52:34+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4501,6 +4952,71 @@
             "time": "2021-07-11T12:37:55+00:00"
         },
         {
+            "name": "sabberworm/php-css-parser",
+            "version": "v8.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MyIntervals/PHP-CSS-Parser.git",
+                "reference": "4a3d572b0f8b28bb6fd016ae8bbfc445facef152"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/4a3d572b0f8b28bb6fd016ae8bbfc445facef152",
+                "reference": "4a3d572b0f8b28bb6fd016ae8bbfc445facef152",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "php": ">=5.6.20"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.27"
+            },
+            "suggest": {
+                "ext-mbstring": "for parsing UTF-8 CSS"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sabberworm\\CSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raphael Schweikert"
+                },
+                {
+                    "name": "Oliver Klee",
+                    "email": "github@oliverklee.de"
+                },
+                {
+                    "name": "Jake Hotson",
+                    "email": "jake.github@qzdesign.co.uk"
+                }
+            ],
+            "description": "Parser for CSS Files written in PHP",
+            "homepage": "https://www.sabberworm.com/blog/2010/6/10/php-css-parser",
+            "keywords": [
+                "css",
+                "parser",
+                "stylesheet"
+            ],
+            "support": {
+                "issues": "https://github.com/MyIntervals/PHP-CSS-Parser/issues",
+                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.5.1"
+            },
+            "time": "2024-02-15T16:41:13+00:00"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "v6.2.6",
             "source": {
@@ -4577,6 +5093,78 @@
                 "source": "https://github.com/sensiolabs/SensioFrameworkExtraBundle/tree/v6.2.6"
             },
             "time": "2022-01-14T11:51:13+00:00"
+        },
+        {
+            "name": "setasign/fpdi",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI.git",
+                "reference": "a6db878129ec6c7e141316ee71872923e7f1b7ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/a6db878129ec6c7e141316ee71872923e7f1b7ad",
+                "reference": "a6db878129ec6c7e141316ee71872923e7f1b7ad",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "setasign/tfpdf": "<1.31"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.7",
+                "setasign/fpdf": "~1.8.6",
+                "setasign/tfpdf": "~1.33",
+                "squizlabs/php_codesniffer": "^3.5",
+                "tecnickcom/tcpdf": "~6.2"
+            },
+            "suggest": {
+                "setasign/fpdf": "FPDI will extend this class but as it is also possible to use TCPDF or tFPDF as an alternative. There's no fixed dependency configured."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "setasign\\Fpdi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                },
+                {
+                    "name": "Maximilian Kresse",
+                    "email": "maximilian.kresse@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "FPDI is a collection of PHP classes facilitating developers to read pages from existing PDF documents and use them as templates in FPDF. Because it is also possible to use FPDI with TCPDF, there are no fixed dependencies defined. Please see suggestions for packages which evaluates the dependencies automatically.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "fpdf",
+                "fpdi",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/Setasign/FPDI/issues",
+                "source": "https://github.com/Setasign/FPDI/tree/v2.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/setasign/fpdi",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-12-11T16:03:32+00:00"
         },
         {
             "name": "shuchkin/simplexlsx",
@@ -10460,6 +11048,844 @@
             "time": "2022-03-08T22:08:27+00:00"
         },
         {
+            "name": "tecnickcom/tc-lib-barcode",
+            "version": "1.18.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-barcode.git",
+                "reference": "cd81392e6e1e57e0f6ff8519b1edbc11d8e47a44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-barcode/zipball/cd81392e6e1e57e0f6ff8519b1edbc11d8e47a44",
+                "reference": "cd81392e6e1e57e0f6ff8519b1edbc11d8e47a44",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-date": "*",
+                "ext-gd": "*",
+                "ext-pcre": "*",
+                "php": ">=5.6",
+                "tecnickcom/tc-lib-color": "^1.14"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Barcode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library to generate linear and bidimensional barcodes",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "3 of 9",
+                "ANSI MH10.8M-1983",
+                "CBC",
+                "CODABAR",
+                "CODE 11",
+                "CODE 128 A B C",
+                "CODE 39",
+                "CODE 93",
+                "EAN 13",
+                "EAN 8",
+                "ECC200",
+                "ISO IEC 15438 2006",
+                "ISO IEC 16022",
+                "ISO IEC 24778 2008",
+                "Intelligent Mail Barcode",
+                "Interleaved 2 of 5",
+                "KIX",
+                "Klant",
+                "MSI",
+                "Onecode",
+                "PHARMACODE",
+                "PHARMACODE TWO-TRACKS",
+                "POSTNET",
+                "RMS4CC",
+                "Standard 2 of 5",
+                "UPC-A",
+                "UPC-E",
+                "USD-3",
+                "USPS-B-3200",
+                "USS-93",
+                "aztec",
+                "barcode",
+                "datamatrix",
+                "pdf417",
+                "planet",
+                "qr-code",
+                "royal mail",
+                "tc-lib-barcode",
+                "upc"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-barcode/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-barcode/tree/1.18.4"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-barcode%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:30:01+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-color",
+            "version": "1.14.39",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-color.git",
+                "reference": "f7a414e7ddbdcd98105506ca1eecc68d4820fb89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-color/zipball/f7a414e7ddbdcd98105506ca1eecc68d4820fb89",
+                "reference": "f7a414e7ddbdcd98105506ca1eecc68d4820fb89",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Color\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library to manipulate various color representations",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "cmyk",
+                "color",
+                "colors",
+                "colour",
+                "colours",
+                "hsl",
+                "hsla",
+                "javascript",
+                "rgb",
+                "rgba",
+                "tc-lib-color",
+                "web"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-color/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-color/tree/1.14.39"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-color%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:28:20+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-file",
+            "version": "1.7.39",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-file.git",
+                "reference": "06c94a9396343863d27048e7c7695f67d1566096"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-file/zipball/06c94a9396343863d27048e7c7695f67d1566096",
+                "reference": "06c94a9396343863d27048e7c7695f67d1566096",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-pcre": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\File\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library to read byte-level data from files",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "Double",
+                "bit",
+                "byte",
+                "file",
+                "long",
+                "read",
+                "short",
+                "tc-lib-file"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-file/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-file/tree/1.7.39"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-file%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:28:33+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf",
+            "version": "8.0.37",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf.git",
+                "reference": "c0dc40eb8b0f23ad883c7f1c7e1fd504c02fe0a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf/zipball/c0dc40eb8b0f23ad883c7f1c7e1fd504c02fe0a8",
+                "reference": "c0dc40eb8b0f23ad883c7f1c7e1fd504c02fe0a8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-date": "*",
+                "ext-pcre": "*",
+                "php": ">=5.6",
+                "tecnickcom/tc-lib-barcode": "^1.18",
+                "tecnickcom/tc-lib-color": "^1.14",
+                "tecnickcom/tc-lib-file": "^1.7",
+                "tecnickcom/tc-lib-pdf-encrypt": "^1.6",
+                "tecnickcom/tc-lib-pdf-font": "^1.15",
+                "tecnickcom/tc-lib-pdf-graph": "^1.7",
+                "tecnickcom/tc-lib-pdf-image": "^1.4",
+                "tecnickcom/tc-lib-pdf-page": "^3.2",
+                "tecnickcom/tc-lib-unicode": "^1.4",
+                "tecnickcom/tc-lib-unicode-data": "^1.7"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP PDF Library",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "document",
+                "pdf",
+                "tc-lib-pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf/tree/8.0.37"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T08:11:53+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf-encrypt",
+            "version": "1.6.35",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf-encrypt.git",
+                "reference": "b42d1fd2c7b0d6f42268d44690269bdf0ae2a700"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf-encrypt/zipball/b42d1fd2c7b0d6f42268d44690269bdf0ae2a700",
+                "reference": "b42d1fd2c7b0d6f42268d44690269bdf0ae2a700",
+                "shasum": ""
+            },
+            "require": {
+                "ext-date": "*",
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "ext-pcre": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "suggest": {
+                "ext-posix": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\Encrypt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library to encrypt data for PDF",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "aes",
+                "encrypt",
+                "encryption",
+                "pdf",
+                "rc4",
+                "tc-lib-pdf-encrypt"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf-encrypt/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf-encrypt/tree/1.6.35"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf-encrypt%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:28:46+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf-font",
+            "version": "1.16.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf-font.git",
+                "reference": "ada555d664ccdce5c737f61415fcda90e5d45986"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf-font/zipball/ada555d664ccdce5c737f61415fcda90e5d45986",
+                "reference": "ada555d664ccdce5c737f61415fcda90e5d45986",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pcre": "*",
+                "ext-zlib": "*",
+                "php": ">=5.4.0",
+                "tecnickcom/tc-lib-file": "^1.7",
+                "tecnickcom/tc-lib-pdf-encrypt": "^1.6",
+                "tecnickcom/tc-lib-unicode-data": "^1.7"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\Font\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing PDF page formats and definitions",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "PFB",
+                "afm",
+                "font",
+                "import",
+                "pdf",
+                "tc-lib-pdf-font",
+                "ttf"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf-font/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf-font/tree/1.16.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf-font%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-11-02T08:31:59+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf-graph",
+            "version": "1.7.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf-graph.git",
+                "reference": "d523e098ddb69e71e1043958dbb97e2dbbfc93a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf-graph/zipball/d523e098ddb69e71e1043958dbb97e2dbbfc93a5",
+                "reference": "d523e098ddb69e71e1043958dbb97e2dbbfc93a5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": ">=5.4",
+                "tecnickcom/tc-lib-color": "^1.14",
+                "tecnickcom/tc-lib-pdf-encrypt": "^1.6"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\Graph\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing PDF graphic and geometric methods",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "geometry",
+                "graphic",
+                "pdf",
+                "tc-lib-pdf-graph",
+                "transformation"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf-graph/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf-graph/tree/1.7.23"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf-graph%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:31:14+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf-image",
+            "version": "1.4.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf-image.git",
+                "reference": "40433387fa1629c1a13574076df9045f010e1bb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf-image/zipball/40433387fa1629c1a13574076df9045f010e1bb8",
+                "reference": "40433387fa1629c1a13574076df9045f010e1bb8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-zlib": "*",
+                "php": ">=5.4",
+                "tecnickcom/tc-lib-color": "^1.14",
+                "tecnickcom/tc-lib-file": "^1.7",
+                "tecnickcom/tc-lib-pdf-encrypt": "^1.6"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\Image\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing PDF Image methods",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "image",
+                "jpeg",
+                "jpg",
+                "pdf",
+                "png",
+                "tc-lib-pdf-image"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf-image/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf-image/tree/1.4.20"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf-image%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:31:28+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-pdf-page",
+            "version": "3.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-pdf-page.git",
+                "reference": "20b7d448dbb4aacf0d31d09d6535db56afed5d67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-pdf-page/zipball/20b7d448dbb4aacf0d31d09d6535db56afed5d67",
+                "reference": "20b7d448dbb4aacf0d31d09d6535db56afed5d67",
+                "shasum": ""
+            },
+            "require": {
+                "ext-date": "*",
+                "ext-zlib": "*",
+                "php": ">=5.4",
+                "tecnickcom/tc-lib-color": "^1.14",
+                "tecnickcom/tc-lib-pdf-encrypt": "^1.6"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Pdf\\Page\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing PDF page formats and definitions",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "format",
+                "page",
+                "pdf",
+                "tc-lib-pdf-page"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-pdf-page/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-pdf-page/tree/3.2.11"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-pdf-page%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:30:59+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-unicode",
+            "version": "1.4.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-unicode.git",
+                "reference": "889ab8bb2d48dfb7fa510498c16cbd0df3472348"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-unicode/zipball/889ab8bb2d48dfb7fa510498c16cbd0df3472348",
+                "reference": "889ab8bb2d48dfb7fa510498c16cbd0df3472348",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-pcre": "*",
+                "php": ">=5.4",
+                "tecnickcom/tc-lib-unicode-data": "^1.7"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Unicode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing Unicode methods",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "font",
+                "pdf",
+                "tc-lib-unicode",
+                "unicode",
+                "utf-8"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-unicode/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-unicode/tree/1.4.33"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-unicode%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:30:44+00:00"
+        },
+        {
+            "name": "tecnickcom/tc-lib-unicode-data",
+            "version": "1.7.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/tc-lib-unicode-data.git",
+                "reference": "aaef614a8065787ae962e9146ea1eb0dfe74240f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/tc-lib-unicode-data/zipball/aaef614a8065787ae962e9146ea1eb0dfe74240f",
+                "reference": "aaef614a8065787ae962e9146ea1eb0dfe74240f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.13.0",
+                "phpmd/phpmd": "2.13.0",
+                "phpunit/phpunit": "10.1.2 || 9.6.7 || 8.5.31 || 7.5.20 || 6.5.14 || 5.7.27 || 4.8.36",
+                "squizlabs/php_codesniffer": "3.7.2 || 2.9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Com\\Tecnick\\Unicode\\Data\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP library containing Unicode definitions",
+            "homepage": "http://www.tecnick.com",
+            "keywords": [
+                "font",
+                "pdf",
+                "tc-lib-unicode-data",
+                "unicode",
+                "utf-8"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/tc-lib-unicode-data/issues",
+                "source": "https://github.com/tecnickcom/tc-lib-unicode-data/tree/1.7.33"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tc-lib-unicode-data%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-10-23T09:29:17+00:00"
+        },
+        {
+            "name": "tecnickcom/tcpdf",
+            "version": "6.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/TCPDF.git",
+                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
+                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "config",
+                    "include",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+            "homepage": "http://www.tcpdf.org/",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "barcodes",
+                "datamatrix",
+                "pdf",
+                "pdf417",
+                "qrcode"
+            ],
+            "support": {
+                "issues": "https://github.com/tecnickcom/TCPDF/issues",
+                "source": "https://github.com/tecnickcom/TCPDF/tree/6.7.5"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tcpdf%20project",
+                    "type": "custom"
+                }
+            ],
+            "time": "2024-04-20T17:25:10+00:00"
+        },
+        {
             "name": "twig/extra-bundle",
             "version": "v3.4.0",
             "source": {
@@ -10907,65 +12333,6 @@
                 }
             ],
             "time": "2022-04-28T17:58:29+00:00"
-        },
-        {
-            "name": "myclabs/deep-copy",
-            "version": "1.11.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "conflict": {
-                "doctrine/collections": "<1.6.8",
-                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
-            },
-            "require-dev": {
-                "doctrine/collections": "^1.6.8",
-                "doctrine/common": "^2.13.3 || ^3.2.2",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/DeepCopy/deep_copy.php"
-                ],
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Create deep copies (clones) of your objects",
-            "keywords": [
-                "clone",
-                "copy",
-                "duplicate",
-                "object",
-                "object graph"
-            ],
-            "support": {
-                "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
-            },
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-03T13:19:32+00:00"
         },
         {
             "name": "nikic/php-parser",

@@ -115,10 +115,6 @@ class AnalizaController extends AbstractController
             'no-outline' => true,
             'page-size' => 'A4',
             'dpi' => 300,
-            'margin-top' => 0,
-            'margin-left' => 0,
-            'margin-right' => 0,
-            'margin-bottom' => 0,
         ]);
 
         $filename= $polling->getName() .($respondent instanceof SessionUser ? ' Respondent_'.$respondent->getId() : '');

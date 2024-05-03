@@ -101,6 +101,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.2"
     },
+    "dompdf/dompdf": {
+        "version": "v2.0.8"
+    },
     "egulias/email-validator": {
         "version": "3.1.2"
     },
@@ -167,8 +170,20 @@
     "markbaker/matrix": {
         "version": "3.0.0"
     },
+    "masterminds/html5": {
+        "version": "2.9.0"
+    },
     "monolog/monolog": {
         "version": "2.5.0"
+    },
+    "mpdf/mpdf": {
+        "version": "v8.2.3"
+    },
+    "mpdf/psr-http-message-shim": {
+        "version": "1.0.0"
+    },
+    "mpdf/psr-log-aware-trait": {
+        "version": "v2.0.0"
     },
     "myclabs/deep-copy": {
         "version": "1.11.0"
@@ -184,6 +199,12 @@
     },
     "phar-io/version": {
         "version": "3.2.1"
+    },
+    "phenx/php-font-lib": {
+        "version": "0.5.6"
+    },
+    "phenx/php-svg-lib": {
+        "version": "0.5.4"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -283,6 +304,9 @@
     "react/stream": {
         "version": "v1.2.0"
     },
+    "sabberworm/php-css-parser": {
+        "version": "v8.5.1"
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
@@ -342,6 +366,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "setasign/fpdi": {
+        "version": "v2.6.0"
     },
     "shuchkin/simplexlsx": {
         "version": "0.8.33"
@@ -789,6 +816,42 @@
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.10.0"
+    },
+    "tecnickcom/tc-lib-barcode": {
+        "version": "1.18.4"
+    },
+    "tecnickcom/tc-lib-color": {
+        "version": "1.14.39"
+    },
+    "tecnickcom/tc-lib-file": {
+        "version": "1.7.39"
+    },
+    "tecnickcom/tc-lib-pdf": {
+        "version": "8.0.37"
+    },
+    "tecnickcom/tc-lib-pdf-encrypt": {
+        "version": "1.6.35"
+    },
+    "tecnickcom/tc-lib-pdf-font": {
+        "version": "1.16.1"
+    },
+    "tecnickcom/tc-lib-pdf-graph": {
+        "version": "1.7.23"
+    },
+    "tecnickcom/tc-lib-pdf-image": {
+        "version": "1.4.20"
+    },
+    "tecnickcom/tc-lib-pdf-page": {
+        "version": "3.2.11"
+    },
+    "tecnickcom/tc-lib-unicode": {
+        "version": "1.4.33"
+    },
+    "tecnickcom/tc-lib-unicode-data": {
+        "version": "1.7.33"
+    },
+    "tecnickcom/tcpdf": {
+        "version": "6.7.5"
     },
     "theseer/tokenizer": {
         "version": "1.2.1"

@@ -70,6 +70,7 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+    //.addExternals(['fs', 'tls', 'stream', 'net', 'zlib', 'assert', 'constants', 'https', 'os', 'dns', 'http2', 'http', 'child_process', 'crypto', 'module', 'readline' ])
 ;
 
 module.exports = Encore.getWebpackConfig();
