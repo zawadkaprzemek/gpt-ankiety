@@ -43,7 +43,7 @@
                     'respondent': respondent.id ?? 0
                 }) }}"
                    class="btn btn-outline-primary active">Pobierz PDF</a>
-                <button class="btn btn-outline-primary pdf-btn">PDF</button>
+                {#<button class="btn btn-outline-primary pdf-btn">PDF</button>#}
                 <a href="{{ path('app_polling_analysis_zbiorcza_excell',{
                     'id':polling.id,
                     'date_from': form.vars.value.date_from|date('Y-m-d'),
