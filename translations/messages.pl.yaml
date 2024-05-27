@@ -9,3 +9,5 @@ delete: Usuń
 login: Zaloguj
 registration: Rejestracja
 guest: Gość
+
+deletePolling: Usuń ankietę

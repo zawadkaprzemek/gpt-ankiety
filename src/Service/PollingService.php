@@ -253,4 +253,32 @@ class PollingService
 
         $this->em->flush();
     }
+
+    public function deletePolling(Polling $polling):void
+    {
+        $this->em->getConnection()->beginTransaction();
+        try{
+            foreach ($polling->getPages() as $page)
+            {
+                $this->hardDeleteQuestionsFromPage($page);
+                $this->em->remove($page);
+            }
+
+            foreach ($polling->getCodes() as $code)
+            {
+                foreach ($code->getSessionUsers() as $user)
+                {
+                    $this->em->remove($user);
+                }
+                $this->em->remove($code);
+
+            }
+            $this->em->remove($polling);
+            $this->em->flush();
+            $this->em->getConnection()->commit();
+        }catch (\Exception $e){
+            $this->em->getConnection()->rollBack();
+        }
+
+    }
 }

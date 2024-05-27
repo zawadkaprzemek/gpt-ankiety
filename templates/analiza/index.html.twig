@@ -4,36 +4,36 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-9 mb-3">
-            <div class="btn-group btn-group-sm">
-                <a href="{{path('app_my_pollings')}}" class="btn btn-outline-primary">Moje ankiety</a>
-                <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
-                <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
-                   class="btn btn-outline-primary">Logika</a>
-                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
-                   class="btn btn-outline-primary active">Analiza</a>
-                <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
-            </div>
-        </div>
-
-        <div class="col-3 text-right">
-            <div class="btn-group btn-group-sm">
-                <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
-                   class="btn btn-outline-primary active">Wyniki surowe</a>
-                <a href="{{ path('app_panel_analiza_zbiorcza',{'id':polling.id}) }}" class="btn btn-outline-primary">Wyniki
-                    zbiorcze</a>
-            </div>
+<div class="row">
+    <div class="col-9 mb-3">
+        <div class="btn-group btn-group-sm">
+            <a href="{{ path('app_my_pollings') }}" class="btn btn-outline-primary">Moje ankiety</a>
+            <a href="{{ path('app_polling_panel',{'id':polling.id}) }}" class="btn btn-outline-primary">Pytania</a>
+            <a href="{{ path('app_polling_logic_list',{id:polling.id}) }}"
+               class="btn btn-outline-primary">Logika</a>
+            <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+               class="btn btn-outline-primary active">Analiza</a>
+            <a href="{{ path('app_polling_codes_list',{id:polling.id}) }}" class="btn btn-outline-primary">Kody</a>
         </div>
     </div>
 
+    <div class="col-3 text-right">
+        <div class="btn-group btn-group-sm">
+            <a href="{{ path('app_panel_analiza_surowa',{'id':polling.id}) }}"
+               class="btn btn-outline-primary active">Wyniki surowe</a>
+            <a href="{{ path('app_panel_analiza_zbiorcza',{'id':polling.id}) }}" class="btn btn-outline-primary">Wyniki
+                zbiorcze</a>
+        </div>
+    </div>
+</div>
 
-    {% include 'analiza/form.html.twig' with form %}
+
+{% include 'analiza/form.html.twig' with form %}
 
 </div>
-    </div>
-    </div>
-    <div class="container-fluid">
+</div>
+</div>
+<div class="container-fluid">
 
     <div class="row">
         <div class="col-12">
@@ -60,7 +60,12 @@
                 {% for user in results.users %}
                     <tr>
                         <td class="text-center">
-                            <a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id, respondent: user.id}) }}" title="Podgląd odpowiedzi respondenta" class="btn btn-link"><i class="fas fa-eye"></i></a>
+                            <div class="btn-group-sm btn-group">
+                                <a href="{{ path('app_panel_analiza_zbiorcza',{id: polling.id, respondent: user.id}) }}"
+                                   title="Podgląd odpowiedzi respondenta" class="btn btn-link"><i
+                                            class="fas fa-eye"></i></a>
+                                {% include 'analiza/_delete_voting_form.html.twig' with { user} %}
+                            </div>
                         </td>
                         <td>{{ user.id }}</td>
                         <td>{{ user.createdAt|date('Y-m-d H:i') }}</td>
@@ -83,4 +88,4 @@
             </table>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

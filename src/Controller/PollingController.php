@@ -324,7 +324,7 @@ class PollingController extends AbstractController
     /**
      * @Route("/{id}/delete", name="app_polling_delete", methods={"POST"})
      */
-    public function deletePolling(Request $request, Polling $polling, PollingRepository $pollingRepository): Response
+    public function deletePolling(Request $request, Polling $polling): Response
     {
         $user = $this->getUser();
         if ($user !== $polling->getUser() && !$user->isAdmin()) {
@@ -332,7 +332,7 @@ class PollingController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete' . $polling->getId(), $request->request->get('_token'))) {
-            $pollingRepository->remove($polling, true);
+            $this->pollingService->deletePolling($polling);
             $this->addFlash('success', 'Usunięto ankietę');
         }
 

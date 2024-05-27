@@ -7,6 +7,7 @@ use App\Entity\SessionUser;
 use App\Service\AnalizaService;
 use App\Form\AnalizaSettingsType;
 use App\Service\ExcellGenerator;
+use App\Service\PollingService;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -160,5 +161,27 @@ class AnalizaController extends AbstractController
         $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
 
         return $streamedResponse->send();
+    }
+
+    /**
+     *@Route("respondent/{id}/delete_votes", name="app_analiza_removerespondentvotes", methods={"POST"})
+     */
+    public function removeRespondentVotes(Request $request, SessionUser $sessionUser)
+    {
+        $user = $this->getUser();
+        if ($user !== $sessionUser->getCode()->getPolling()->getUser() && !$user->isAdmin()) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $polling = $sessionUser->getCode()->getPolling();
+
+        if ($this->isCsrfTokenValid('delete' . $sessionUser->getId(), $request->request->get('_token'))) {
+            $this->service->deleteSessionUser($sessionUser);
+            $this->addFlash('success', 'Odpowiedzi zostały usunięte');
+        }
+
+        return $this->redirectToRoute('app_panel_analiza_surowa', [
+            'id'=> $polling->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }

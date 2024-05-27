@@ -398,3 +398,7 @@ body {
 .transparent-space{
     display: none;
 }
+
+.btn-link-danger{
+    color: red!important;
+}

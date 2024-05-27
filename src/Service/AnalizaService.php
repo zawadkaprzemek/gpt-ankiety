@@ -159,4 +159,20 @@ class AnalizaService
     {
         return $this->em->getRepository(SessionUser::class)->find($respondentId);
     }
+
+    public function deleteSessionUser(SessionUser $sessionUser)
+    {
+        $this->em->getConnection()->beginTransaction();
+        try{
+            foreach ($sessionUser->getVotes() as $vote) {
+                $this->em->remove($vote);
+            }
+            $this->em->remove($sessionUser);
+            $this->em->flush();
+            $this->em->getConnection()->commit();
+        }catch (\Exception $e)
+        {
+            $this->em->getConnection()->rollback();
+        }
+    }
 }
