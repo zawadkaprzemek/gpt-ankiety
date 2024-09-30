@@ -118,7 +118,7 @@ class PollingExtension extends AbstractExtension
             return $value;
         } else {
             $answer = $this->em->getRepository(Answer::class)->find($value);
-            return $answer->getContent();
+            return $answer ? $answer->getContent() : '';
         }
     }
 
